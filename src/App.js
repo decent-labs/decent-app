@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 
 function App() {
   return (
-    <Container>
+    <Container fluid className="h-100">
       Hello BlockMedx
     </Container>
   );
