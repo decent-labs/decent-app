@@ -14,8 +14,14 @@ function App() {
         <Col className="login-splash d-flex">
           <Image src={BMxLogoTransparent} fluid className="align-self-end mb-5" />
         </Col>
-        <Col>
-          Hello BlockMedx
+        <Col className="d-flex flex-column my-3">
+          <Row className="flex-fill" />
+          <Row>
+            <Col>
+              <p>Hello BlockMedx</p>
+            </Col>
+          </Row>
+          <Row className="flex-fill" />
         </Col>
       </Row>
     </Container>
