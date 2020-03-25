@@ -1,12 +1,10 @@
 import React from 'react';
 
-import Container from 'react-bootstrap/Container';
+import Login from './Login';
 
 function App() {
   return (
-    <Container fluid className="h-100">
-      Hello BlockMedx
-    </Container>
+    <Login />
   );
 }
 

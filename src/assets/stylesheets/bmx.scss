@@ -1,4 +1,24 @@
+@import './fonts.scss';
+
 // Override default variables before the import
+
+$primary: #1C31A6; // 69
+$body-color: #020615; // 172
+$font-family-base: 'Roboto'; // 283
+$headings-margin-bottom: 1.5rem; // 306
+$headings-font-family: 'Rubik'; // 307
+$headings-font-weight: 700; // 308
+$btn-border-radius: 40px; // 448
+$input-font-size: 14px; // 462
+$input-placeholder-color: #C2C2C2; // 494
 
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
+
+.form-label {
+  font-family: 'RobotoMono';
+  font-weight: 700;
+  color: #5A6066;
+  font-size: 12px;
+  margin-left: 1em;
+}
