@@ -84,18 +84,3 @@ workflows:
           filters:
             branches:
               only: develop
-
-#  build_and_deploy_prod:
-#    jobs:
-#      - build:
-#          context: blockmedx-app-prod
-#          filters:
-#            branches:
-#              only: master
-#      - deploy:
-#          context: blockmedx-app-prod
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              only: master
