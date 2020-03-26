@@ -52,7 +52,7 @@ jobs:
           command: az storage blob delete-batch --account-name $AZ_STORAGE_ACCOUNT_NAME --source \$web
       - run:
           name: Deploy the site
-          command: az storage blob upload-batch --account-name $AZ_STORAGE_ACCOUNT_NAME --destination \$web --source ./public
+          command: az storage blob upload-batch --account-name $AZ_STORAGE_ACCOUNT_NAME --destination \$web --source ./build
       - run:
           name: Bust the cache
           command: az cdn endpoint purge --resource-group $AZ_CDN_RESOURCE_GROUP --profile-name $AZ_CDN_PROFILE_NAME --name $AZ_CDN_ENDPOINT_NAME --content-paths '/*' --no-wait
