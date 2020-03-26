@@ -73,17 +73,17 @@ workflows:
   build_and_deploy_dev:
     jobs:
       - build:
-#          context: blockmedx-app-dev
+          context: blockmedx-app-dev
           filters:
             branches:
               only: circleci
-#      - deploy:
-#          context: blockmedx-app-dev
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              only: circleci
+      - deploy:
+          context: blockmedx-app-dev
+          requires:
+            - build
+          filters:
+            branches:
+              only: circleci
 
 #  build_and_deploy_prod:
 #    jobs:
