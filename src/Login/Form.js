@@ -13,7 +13,7 @@ function LoginForm() {
         </Form.Group>
         <Form.Group controlId="formPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="text" autoComplete="current-password" />
+          <Form.Control type="password" placeholder="••••••••" autoComplete="current-password" />
         </Form.Group>
         <Form.Group controlId="form2FA">
           <Form.Label>2 Factor Authentication Code</Form.Label>
