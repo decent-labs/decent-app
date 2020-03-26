@@ -6,12 +6,12 @@ import Row from 'react-bootstrap/Row';
 import Left from './Left';
 import Right from './Right';
 
-function Login() {
+function Login({ authSuccess }) {
   return (
     <Container fluid className="h-100">
       <Row className="h-100">
         <Left className="d-none d-md-flex" />
-        <Right />
+        <Right authSuccess={authSuccess} />
       </Row>
     </Container>
   );

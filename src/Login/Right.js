@@ -7,7 +7,7 @@ import Image from 'react-bootstrap/Image';
 import BMxLogoColor from '../assets/images/bmx-logo-color.svg';
 import Form from './Form';
 
-function Right() {
+function Right({ authSuccess }) {
   return (
     <Col className="d-flex flex-column my-3">
       <Row className="flex-fill mx-auto">
@@ -18,7 +18,7 @@ function Right() {
       <Row className="mx-5">
         <Col>
           <h1>Login</h1>
-          <Form />
+          <Form authSuccess={authSuccess} />
           <div className="text-center my-3">
             <a href="/">Need help signing in?</a>
           </div>
