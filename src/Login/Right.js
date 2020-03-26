@@ -20,7 +20,7 @@ function Right() {
           <h1>Login</h1>
           <Form />
           <div className="text-center my-3">
-            <a href="#">Need help signing in?</a>
+            <a href="/">Need help signing in?</a>
           </div>
         </Col>
       </Row>
