@@ -39,6 +39,7 @@ function Login() {
       .catch(error => {
         setButtonDisabled(false);
         setPassword('');
+        setToken('');
         setError(error);
       });
   }
