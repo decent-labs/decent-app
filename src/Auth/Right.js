@@ -16,13 +16,7 @@ function Right({ authSuccess }) {
         </Col>
       </Row>
       <Row className="mx-5">
-        <Col>
-          <h1>Login</h1>
-          <Login authSuccess={authSuccess} />
-          <div className="text-center my-3">
-            <a href="/">Need help signing in?</a>
-          </div>
-        </Col>
+        <Login authSuccess={authSuccess} />
       </Row>
       <Row className="flex-fill" />
     </Col>

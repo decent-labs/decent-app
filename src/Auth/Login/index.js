@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
@@ -35,7 +36,8 @@ function Login({ authSuccess }) {
   }
 
   return (
-    <>
+    <Col>
+      <h1>Login</h1>
       <Form onSubmit={event => event.preventDefault()}>
         <Form.Group controlId="formEmail">
           <Form.Label>Email</Form.Label>
@@ -80,7 +82,10 @@ function Login({ authSuccess }) {
           Login
         </Button>
       </Form>
-    </>
+      <div className="text-center my-3">
+        <a href="/">Need help signing in?</a>
+      </div>
+    </Col>
   );
 }
 
