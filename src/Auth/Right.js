@@ -12,6 +12,7 @@ import {
 
 import BMxLogoColor from '../assets/images/bmx-logo-color.svg';
 import Login from './Login';
+import Forgot from './Forgot';
 
 function Right() {
   const match = useRouteMatch();
@@ -27,6 +28,9 @@ function Right() {
         <Switch>
           <Route path={`${match.path}/login`}>
             <Login />
+          </Route>
+          <Route path={`${match.path}/forgot`}>
+            <Forgot />
           </Route>
           <Route path={match.path}>
             <Redirect replace to={`${match.path}/login`} />

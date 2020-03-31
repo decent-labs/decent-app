@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { login } from '../../requests';
 
@@ -90,7 +90,7 @@ function Login() {
         </Button>
       </Form>
       <div className='text-center my-3'>
-        <a href='/'>Need help signing in?</a>
+        <Link to='/auth/forgot'>Forgot your password?</Link>
       </div>
     </Col>
   );
