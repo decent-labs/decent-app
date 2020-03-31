@@ -24,7 +24,7 @@ function ForgotPassword({ alert }) {
       .then(_ => {
         setButtonDisabled(false);
         setEmail('');
-        alert({message: 'Password reset link sent to email', variant: 'primary'})
+        alert({ message: 'Password reset link sent to email', variant: 'primary' })
         history.push('/auth/login')
       })
       .catch(error => {
