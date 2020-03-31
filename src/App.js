@@ -1,24 +1,27 @@
 import React from 'react';
-import { useCookies } from 'react-cookie';
 
-import Login from './Login';
+import {
+  BrowserRouter as Router,
+  Switch
+} from 'react-router-dom';
+
+import Auth from './Auth';
 import Home from './Home';
+import PrivateRoute from './Auth/PrivateRoute';
+import UnauthedRoute from './Auth/UnauthedRoute';
 
 function App() {
-  let [cookies, setCookie] = useCookies(['token']);
-
-  const authSuccess = response => {
-    const expires = new Date();
-    expires.setDate(expires.getDate() + parseInt(process.env.REACT_APP_TOKEN_COOKIE_EXPIRATION_DAYS, 10));
-    setCookie('token', response.token, { expires });
-  };
-
-  [cookies] = useCookies(['token']);
-
   return (
-    <>
-      {!cookies.token ? <Login authSuccess={authSuccess} /> : <Home />}
-    </>
+    <Router>
+      <Switch>
+        <UnauthedRoute path='/auth'>
+          <Auth />
+        </UnauthedRoute>
+        <PrivateRoute exact path='/'>
+          <Home />
+        </PrivateRoute>
+      </Switch>
+    </Router>
   );
 }
 
