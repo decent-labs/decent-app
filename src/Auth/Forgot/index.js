@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import { Link, useHistory } from 'react-router-dom';
 
-import { resetPassword } from '../../requests';
+import { forgotPassword } from '../../requests';
 
 function ForgotPassword({ alert }) {
   const history = useHistory();
@@ -20,7 +20,7 @@ function ForgotPassword({ alert }) {
     setError('');
     setButtonDisabled(true);
 
-    return resetPassword(email)
+    return forgotPassword(email)
       .then(_ => {
         setButtonDisabled(false);
         setEmail('');

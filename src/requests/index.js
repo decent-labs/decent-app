@@ -36,7 +36,7 @@ function login(email, password, token) {
   });
 }
 
-function resetPassword(email) {
+function forgotPassword(email) {
   return new Promise((resolve, reject) => {
     return makeRequest('password', 'POST', basicHeaders, { email })
       .then(response => processResponse(response))
@@ -45,4 +45,4 @@ function resetPassword(email) {
   });
 }
 
-export { login, resetPassword };
+export { login, forgotPassword };
