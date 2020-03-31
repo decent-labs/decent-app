@@ -4,11 +4,15 @@ import { useCookies } from 'react-cookie';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { login } from '../../requests';
 
 function Login() {
   const [, setCookie] = useCookies(['token']);
+  const history = useHistory();
+  const location = useLocation();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
@@ -16,6 +20,7 @@ function Login() {
   const [error, setError] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
+  const { from } = location.state || { from: { pathname: '/' } };
 
   const submitForm = () => {
     setError('');
@@ -28,6 +33,7 @@ function Login() {
         const expires = new Date();
         expires.setDate(expires.getDate() + parseInt(process.env.REACT_APP_TOKEN_COOKIE_EXPIRATION_DAYS, 10));
         setCookie('token', response.token, { expires });
+        history.replace(from);
       })
       .catch(error => {
         setButtonDisabled(false);
