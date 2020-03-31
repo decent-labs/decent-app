@@ -36,4 +36,13 @@ function login(email, password, token) {
   });
 }
 
-export { login };
+function resetPassword(email) {
+  return new Promise((resolve, reject) => {
+    return makeRequest('password', 'POST', basicHeaders, { email })
+      .then(response => processResponse(response))
+      .then(response => resolve(response))
+      .catch(error => reject(error));
+  });
+}
+
+export { login, resetPassword };
