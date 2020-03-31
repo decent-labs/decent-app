@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import { login } from '../requests';
+import { login } from '../../requests';
 
-function LoginForm({ authSuccess }) {
+function Login({ authSuccess }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
@@ -84,4 +84,4 @@ function LoginForm({ authSuccess }) {
   );
 }
 
-export default LoginForm;
+export default Login;

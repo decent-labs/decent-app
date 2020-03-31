@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
 
-import Login from './Login';
+import Auth from './Auth';
 import Home from './Home';
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
 
   return (
     <>
-      {!cookies.token ? <Login authSuccess={authSuccess} /> : <Home />}
+      {!cookies.token ? <Auth authSuccess={authSuccess} /> : <Home />}
     </>
   );
 }

@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 
 import BMxLogoColor from '../assets/images/bmx-logo-color.svg';
-import Form from './Form';
+import Login from './Login';
 
 function Right({ authSuccess }) {
   return (
@@ -18,7 +18,7 @@ function Right({ authSuccess }) {
       <Row className="mx-5">
         <Col>
           <h1>Login</h1>
-          <Form authSuccess={authSuccess} />
+          <Login authSuccess={authSuccess} />
           <div className="text-center my-3">
             <a href="/">Need help signing in?</a>
           </div>

@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Left from './Left';
 import Right from './Right';
 
-function Login({ authSuccess }) {
+function Auth({ authSuccess }) {
   return (
     <Container fluid className="h-100">
       <Row className="h-100">
@@ -17,4 +17,4 @@ function Login({ authSuccess }) {
   );
 }
 
-export default Login;
+export default Auth;
