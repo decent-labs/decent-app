@@ -14,6 +14,7 @@ import {
 import BMxLogoColor from '../assets/images/bmx-logo-color.svg';
 import Login from './Login';
 import Forgot from './Forgot';
+import Reset from './Reset';
 
 function Right() {
   const match = useRouteMatch();
@@ -45,6 +46,9 @@ function Right() {
           </Route>
           <Route path={`${match.path}/forgot`}>
             <Forgot alert={setAlert} />
+          </Route>
+          <Route path={`${match.path}/reset`}>
+            <Reset alert={setAlert} />
           </Route>
           <Route path={match.path}>
             <Redirect replace to={`${match.path}/login`} />
