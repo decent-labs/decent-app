@@ -18,7 +18,7 @@ const LeftHero = styled(Col)`
 function Left(props) {
   return (
     <LeftHero className={props.className} md={4} lg={6}>
-      <Image src={BMxLogoTransparent} fluid className="align-self-end mb-5" />
+      <Image src={BMxLogoTransparent} fluid className='align-self-end mb-5' />
     </LeftHero>
   );
 }

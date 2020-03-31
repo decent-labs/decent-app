@@ -8,9 +8,9 @@ import Right from './Right';
 
 function Auth({ authSuccess }) {
   return (
-    <Container fluid className="h-100">
-      <Row className="h-100">
-        <Left className="d-none d-md-flex" />
+    <Container fluid className='h-100'>
+      <Row className='h-100'>
+        <Left className='d-none d-md-flex' />
         <Right authSuccess={authSuccess} />
       </Row>
     </Container>

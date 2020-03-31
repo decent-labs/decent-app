@@ -9,16 +9,16 @@ import Login from './Login';
 
 function Right({ authSuccess }) {
   return (
-    <Col className="d-flex flex-column my-3">
-      <Row className="flex-fill mx-auto">
-        <Col className="my-auto">
+    <Col className='d-flex flex-column my-3'>
+      <Row className='flex-fill mx-auto'>
+        <Col className='my-auto'>
           <Image src={BMxLogoColor} />
         </Col>
       </Row>
-      <Row className="mx-5">
+      <Row className='mx-5'>
         <Login authSuccess={authSuccess} />
       </Row>
-      <Row className="flex-fill" />
+      <Row className='flex-fill' />
     </Col>
   );
 }

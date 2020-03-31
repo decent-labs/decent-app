@@ -7,27 +7,27 @@ import Form from 'react-bootstrap/Form';
 import { login } from '../../requests';
 
 function Login({ authSuccess }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [token, setToken] = useState('');
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
 
   const submitForm = () => {
-    setError("");
+    setError('');
     setButtonDisabled(true);
 
     return login(email, password, token)
       .then(response => {
         setButtonDisabled(false);
-        setPassword("");
+        setPassword('');
         authSuccess(response)
       })
       .catch(error => {
         setButtonDisabled(false);
-        setPassword("");
+        setPassword('');
         setError(error);
       });
   }
@@ -36,51 +36,51 @@ function Login({ authSuccess }) {
     <Col>
       <h1>Login</h1>
       <Form onSubmit={event => event.preventDefault()}>
-        <Form.Group controlId="formEmail">
+        <Form.Group controlId='formEmail'>
           <Form.Label>Email</Form.Label>
           <Form.Control
-            type="email"
-            placeholder="you@email.com"
-            autoComplete="username"
+            type='email'
+            placeholder='you@email.com'
+            autoComplete='username'
             value={email}
             onChange={event => setEmail(event.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId="formPassword">
+        <Form.Group controlId='formPassword'>
           <Form.Label>Password</Form.Label>
           <Form.Control
-            type="password"
-            placeholder="••••••••"
-            autoComplete="current-password"
+            type='password'
+            placeholder='••••••••'
+            autoComplete='current-password'
             value={password}
             onChange={event => setPassword(event.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId="form2FA">
+        <Form.Group controlId='form2FA'>
           <Form.Label>2 Factor Authentication Code</Form.Label>
           <Form.Control
-            type="text"
-            placeholder="123456"
+            type='text'
+            placeholder='123456'
             value={token}
             onChange={event => setToken(event.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId="formError">
-          <Form.Text className="text-danger">{error}</Form.Text>
+        <Form.Group controlId='formError'>
+          <Form.Text className='text-danger'>{error}</Form.Text>
         </Form.Group>
         <Button
-          variant="primary"
-          type="submit"
+          variant='primary'
+          type='submit'
           block
-          className="font-weight-bold"
+          className='font-weight-bold'
           disabled={buttonDisabled}
           onClick={submitForm}
         >
           Login
         </Button>
       </Form>
-      <div className="text-center my-3">
-        <a href="/">Need help signing in?</a>
+      <div className='text-center my-3'>
+        <a href='/'>Need help signing in?</a>
       </div>
     </Col>
   );
