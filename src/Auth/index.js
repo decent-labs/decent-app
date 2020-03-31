@@ -21,7 +21,7 @@ import Login from './Login';
 import Forgot from './Forgot';
 import Reset from './Reset';
 
-const LeftHero = styled(Col)`
+const LeftHeroCol = styled(Col)`
   background: url(${BMxLoginSplash}) no-repeat center center;
   background-size: cover;
   -webkit-background-size: cover;
@@ -36,11 +36,11 @@ function Auth() {
   return (
     <Container fluid className='h-100'>
       <Row className='h-100'>
-        <LeftHero className='d-none d-md-flex' md={4} lg={6}>
+        <LeftHeroCol className='d-none d-md-flex' md={4} lg={6}>
           <Image src={BMxLogoTransparent} fluid className='align-self-end mb-5' />
-        </LeftHero>
+        </LeftHeroCol>
         <Col className='d-flex flex-column my-3'>
-          <Row className='flex-fill mx-auto'>
+          <Row className='mx-auto mt-3 mb-5'>
             <Col className='my-auto'>
               <Image src={BMxLogoColor} />
             </Col>
@@ -73,7 +73,6 @@ function Auth() {
               </Route>
             </Switch>
           </Row>
-          <Row className='flex-fill' />
         </Col>
       </Row>
     </Container>
