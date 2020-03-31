@@ -27,7 +27,7 @@ function Right() {
           <Image src={BMxLogoColor} />
         </Col>
       </Row>
-      <Row className='mx-5'>
+      <Row className='mx-5 mt-3'>
         {alert && <Col>
           <Alert 
             variant={alert.variant}
