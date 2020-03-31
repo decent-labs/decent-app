@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 
+import { useCookies } from 'react-cookie';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 import { login } from '../../requests';
 
-function Login({ authSuccess }) {
+function Login() {
+  const [, setCookie] = useCookies(['token']);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
@@ -23,7 +25,9 @@ function Login({ authSuccess }) {
       .then(response => {
         setButtonDisabled(false);
         setPassword('');
-        authSuccess(response)
+        const expires = new Date();
+        expires.setDate(expires.getDate() + parseInt(process.env.REACT_APP_TOKEN_COOKIE_EXPIRATION_DAYS, 10));
+        setCookie('token', response.token, { expires });
       })
       .catch(error => {
         setButtonDisabled(false);

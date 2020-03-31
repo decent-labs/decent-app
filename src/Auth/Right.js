@@ -7,7 +7,7 @@ import Image from 'react-bootstrap/Image';
 import BMxLogoColor from '../assets/images/bmx-logo-color.svg';
 import Login from './Login';
 
-function Right({ authSuccess }) {
+function Right() {
   return (
     <Col className='d-flex flex-column my-3'>
       <Row className='flex-fill mx-auto'>
@@ -16,7 +16,7 @@ function Right({ authSuccess }) {
         </Col>
       </Row>
       <Row className='mx-5'>
-        <Login authSuccess={authSuccess} />
+        <Login />
       </Row>
       <Row className='flex-fill' />
     </Col>
