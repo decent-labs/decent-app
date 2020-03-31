@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { login } from '../../requests';
@@ -76,7 +77,7 @@ function Login() {
           />
         </Form.Group>
         <Form.Group controlId='formError'>
-          <Form.Text className='text-danger'>{error}</Form.Text>
+          {error && <Alert variant='danger'>{error}</Alert>}
         </Form.Group>
         <Button
           variant='primary'
