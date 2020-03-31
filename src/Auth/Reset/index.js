@@ -66,18 +66,22 @@ function ResetPassword({ alert }) {
         <Form.Group controlId='formError'>
           {error && <Alert variant='danger'>{error}</Alert>}
         </Form.Group>
-        <Button
-          variant='primary'
-          type='submit'
-          block
-          className='font-weight-bold'
-          disabled={buttonDisabled}
-          onClick={submitForm}
-        >
-          Reset Password
-        </Button>
+        <Form.Row className='justify-content-center'>
+          <Form.Group lg={6} md={8} as={Col} controlId='formSubmit'>
+            <Button
+              variant='primary'
+              type='submit'
+              block
+              className='font-weight-bold'
+              disabled={buttonDisabled}
+              onClick={submitForm}
+            >
+              Reset Password
+            </Button>
+          </Form.Group>
+        </Form.Row>
       </Form>
-      <div className='text-center my-3'>
+      <div className='text-center'>
         <Link to='/auth/login'>Back to Login</Link>
       </div>
     </Col>
