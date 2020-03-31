@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
+import Alert from 'react-bootstrap/Alert';
 import {
   Switch,
   Route,
@@ -16,6 +17,7 @@ import Forgot from './Forgot';
 
 function Right() {
   const match = useRouteMatch();
+  const [alert, setAlert] = useState(null);
 
   return (
     <Col className='d-flex flex-column my-3'>
@@ -25,12 +27,24 @@ function Right() {
         </Col>
       </Row>
       <Row className='mx-5'>
+        {alert && <Col>
+          <Alert 
+            variant={alert.variant}
+            dismissible
+            onClose={() => setAlert(null)}
+          >
+            {alert.message}
+          </Alert>
+        </Col>
+        }
+      </Row>
+      <Row className='mx-5'>
         <Switch>
           <Route path={`${match.path}/login`}>
             <Login />
           </Route>
           <Route path={`${match.path}/forgot`}>
-            <Forgot />
+            <Forgot alert={setAlert} />
           </Route>
           <Route path={match.path}>
             <Redirect replace to={`${match.path}/login`} />
