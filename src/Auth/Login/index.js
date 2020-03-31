@@ -14,9 +14,6 @@ function Login({ authSuccess }) {
   const [error, setError] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  const updateEmail = event => setEmail(event.target.value);
-  const updatePassword = event => setPassword(event.target.value);
-  const updateTwoFa = event => setToken(event.target.value);
 
   const submitForm = () => {
     setError("");
@@ -46,7 +43,7 @@ function Login({ authSuccess }) {
             placeholder="you@email.com"
             autoComplete="username"
             value={email}
-            onChange={updateEmail}
+            onChange={event => setEmail(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="formPassword">
@@ -56,7 +53,7 @@ function Login({ authSuccess }) {
             placeholder="••••••••"
             autoComplete="current-password"
             value={password}
-            onChange={updatePassword}
+            onChange={event => setPassword(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="form2FA">
@@ -65,7 +62,7 @@ function Login({ authSuccess }) {
             type="text"
             placeholder="123456"
             value={token}
-            onChange={updateTwoFa}
+            onChange={event => setToken(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId="formError">
