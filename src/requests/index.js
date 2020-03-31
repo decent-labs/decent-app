@@ -44,4 +44,14 @@ function forgotPassword(email) {
   });
 }
 
-export { login, forgotPassword };
+function resetPassword(email, token, newPassword, twoFAToken) {
+  return new Promise((resolve, reject) => {
+    return makeRequest('password', 'PUT', basicHeaders, {
+      email, token, newPassword, twoFAToken
+    })
+      .then(response => resolve(response))
+      .catch(error => reject(error));
+  });
+}
+
+export { login, forgotPassword, resetPassword };
