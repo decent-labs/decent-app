@@ -17,6 +17,11 @@ function ResetPassword({ alert }) {
   const [email] = useState(query.get('email') || '');
   const [token] = useState(query.get('token') || '');
 
+  if (!email || !token) {
+    alert({ message: 'Missing email or password reset token', variant: 'danger' });
+    history.replace('/auth/login');
+  }
+
   const [error, setError] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
