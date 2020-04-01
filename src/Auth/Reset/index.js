@@ -1,71 +1,62 @@
 import React, { useState } from 'react';
 
-import { useCookies } from 'react-cookie';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import { login } from '../../requests';
+import { resetPassword } from '../../requests';
 
-function Login() {
-  const [, setCookie] = useCookies(['token']);
+function ResetPassword({ alert }) {
   const history = useHistory();
-  const location = useLocation();
+  const query = new URLSearchParams(useLocation().search);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [token, setToken] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [twoFaToken, setTwoFaToken] = useState('');
+  const [email] = useState(query.get('email') || '');
+  const [token] = useState(query.get('token') || '');
+
+  if (!email || !token) {
+    alert({ message: 'Missing email or password reset token', variant: 'danger' });
+    history.replace('/auth/login');
+  }
 
   const [error, setError] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
-
-  const { from } = location.state || { from: { pathname: '/' } };
 
   const submitForm = () => {
     setError('');
     setButtonDisabled(true);
 
-    return login(email, password, token)
-      .then(response => {
+    return resetPassword(email, token, newPassword, twoFaToken)
+      .then(_ => {
         setButtonDisabled(false);
-        setPassword('');
-        const expires = new Date();
-        expires.setDate(expires.getDate() + parseInt(process.env.REACT_APP_TOKEN_COOKIE_EXPIRATION_DAYS, 10));
-        setCookie('token', response.token, { expires });
-        history.replace(from);
+        setNewPassword('');
+        alert({ message: 'Password successfully reset!', variant: 'primary' });
+        history.push('/auth/login');
       })
       .catch(error => {
         setButtonDisabled(false);
-        setPassword('');
-        setToken('');
+        setNewPassword('');
+        setTwoFaToken('');
         setError(error);
       });
   }
 
   return (
     <Col>
-      <h1>Login</h1>
+      <h1>Password Reset</h1>
+      <p>Please enter a new password for your account with email address <b>{email}</b>.</p>
       <Form onSubmit={event => event.preventDefault()}>
-        <Form.Group controlId='formEmail'>
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type='email'
-            placeholder='you@email.com'
-            autoComplete='username'
-            value={email}
-            onChange={event => setEmail(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId='formPassword'>
-          <Form.Label>Password</Form.Label>
+        <Form.Group controlId='formNewPassword'>
+          <Form.Label>New Password</Form.Label>
           <Form.Control
             type='password'
             placeholder='••••••••'
-            autoComplete='current-password'
-            value={password}
-            onChange={event => setPassword(event.target.value)}
+            autoComplete='new-password'
+            value={newPassword}
+            onChange={event => setNewPassword(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId='form2FA'>
@@ -73,8 +64,8 @@ function Login() {
           <Form.Control
             type='text'
             placeholder='123456'
-            value={token}
-            onChange={event => setToken(event.target.value)}
+            value={twoFaToken}
+            onChange={event => setTwoFaToken(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId='formError'>
@@ -90,16 +81,16 @@ function Login() {
               disabled={buttonDisabled}
               onClick={submitForm}
             >
-              Login
+              Reset Password
             </Button>
           </Form.Group>
         </Form.Row>
       </Form>
       <div className='text-center'>
-        <Link to='/auth/forgot'>Forgot your password?</Link>
+        <Link to='/auth/login'>Back to Login</Link>
       </div>
     </Col>
   );
 }
 
-export default Login;
+export default ResetPassword;

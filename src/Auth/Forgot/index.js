@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import { Link, useHistory } from 'react-router-dom';
 
-import { resetPassword } from '../../requests';
+import { forgotPassword } from '../../requests';
 
 function ForgotPassword({ alert }) {
   const history = useHistory();
@@ -20,11 +20,11 @@ function ForgotPassword({ alert }) {
     setError('');
     setButtonDisabled(true);
 
-    return resetPassword(email)
+    return forgotPassword(email)
       .then(_ => {
         setButtonDisabled(false);
         setEmail('');
-        alert({message: 'Password reset link sent to email', variant: 'primary'})
+        alert({ message: 'Password reset link sent to email', variant: 'primary' })
         history.push('/auth/login')
       })
       .catch(error => {
@@ -53,18 +53,22 @@ function ForgotPassword({ alert }) {
         <Form.Group controlId='formError'>
           {error && <Alert variant='danger'>{error}</Alert>}
         </Form.Group>
-        <Button
-          variant='primary'
-          type='submit'
-          block
-          className='font-weight-bold'
-          disabled={buttonDisabled}
-          onClick={submitForm}
-        >
-          Send Link
-        </Button>
+        <Form.Row className='justify-content-center'>
+          <Form.Group lg={6} md={8} as={Col} controlId='formSubmit'>
+            <Button
+              variant='primary'
+              type='submit'
+              block
+              className='font-weight-bold'
+              disabled={buttonDisabled}
+              onClick={submitForm}
+            >
+              Send Link
+            </Button>
+          </Form.Group>
+        </Form.Row>
       </Form>
-      <div className='text-center my-3'>
+      <div className='text-center'>
         <Link to='/auth/login'>Back to Login</Link>
       </div>
     </Col>

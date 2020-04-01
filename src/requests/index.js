@@ -9,7 +9,8 @@ function makeRequest(route, method, headers, body = null) {
     headers: headers
   };
   if (body) options.body = JSON.stringify(body);
-  return fetch(`${process.env.REACT_APP_API_URL}/${route}`, options);
+  return fetch(`${process.env.REACT_APP_API_URL}/${route}`, options)
+    .then(response => processResponse(response));
 }
 
 function processResponse(response) {
@@ -30,19 +31,27 @@ function processResponse(response) {
 function login(email, password, token) {
   return new Promise((resolve, reject) => {
     return makeRequest('auth/login', 'POST', basicHeaders, { email, password, token })
-      .then(response => processResponse(response))
       .then(response => resolve(response))
       .catch(error => reject(error));
   });
 }
 
-function resetPassword(email) {
+function forgotPassword(email) {
   return new Promise((resolve, reject) => {
     return makeRequest('password', 'POST', basicHeaders, { email })
-      .then(response => processResponse(response))
       .then(response => resolve(response))
       .catch(error => reject(error));
   });
 }
 
-export { login, resetPassword };
+function resetPassword(email, token, newPassword, twoFAToken) {
+  return new Promise((resolve, reject) => {
+    return makeRequest('password', 'PUT', basicHeaders, {
+      email, token, newPassword, twoFAToken
+    })
+      .then(response => resolve(response))
+      .catch(error => reject(error));
+  });
+}
+
+export { login, forgotPassword, resetPassword };
