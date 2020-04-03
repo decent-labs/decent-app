@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -6,43 +6,35 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import { resetPassword } from '../../requests';
+import { useFetch } from '../../requests';
 
 function ResetPassword({ alert }) {
   const history = useHistory();
+  
   const query = new URLSearchParams(useLocation().search);
+  const [email] = useState(query.get('email') || '');
+  const [token] = useState(query.get('token') || '');
 
   const [newPassword, setNewPassword] = useState('');
   const [twoFaToken, setTwoFaToken] = useState('');
-  const [email] = useState(query.get('email') || '');
-  const [token] = useState(query.get('token') || '');
+
+  const [sendRequest, isLoading, fetchedData, error] = useFetch();
 
   if (!email || !token) {
     alert({ message: 'Missing email or password reset token', variant: 'danger' });
     history.replace('/auth/login');
   }
 
-  const [error, setError] = useState('');
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  useEffect(() => {
+    setNewPassword('');
+    setTwoFaToken('');
+  }, [error, fetchedData]);
 
-  const submitForm = () => {
-    setError('');
-    setButtonDisabled(true);
-
-    return resetPassword(email, token, newPassword, twoFaToken)
-      .then(_ => {
-        setButtonDisabled(false);
-        setNewPassword('');
-        alert({ message: 'Password successfully reset!', variant: 'primary' });
-        history.push('/auth/login');
-      })
-      .catch(error => {
-        setButtonDisabled(false);
-        setNewPassword('');
-        setTwoFaToken('');
-        setError(error);
-      });
-  }
+  useEffect(() => {
+    if (!fetchedData) return;
+    alert({ message: 'Password successfully reset!', variant: 'primary' });
+    history.push('/auth/login');
+  }, [fetchedData, alert, history]);
 
   return (
     <Col>
@@ -78,8 +70,8 @@ function ResetPassword({ alert }) {
               type='submit'
               block
               className='font-weight-bold'
-              disabled={buttonDisabled}
-              onClick={submitForm}
+              disabled={isLoading}
+              onClick={sendRequest('password', 'PUT', { email, token, newPassword, twoFaToken })}
             >
               Reset Password
             </Button>
