@@ -34,14 +34,6 @@ function processResponse(response) {
   });
 }
 
-function forgotPassword(email) {
-  return new Promise((resolve, reject) => {
-    return makeRequest('password', 'POST', basicHeaders, { email })
-      .then(response => resolve(response))
-      .catch(error => reject(error));
-  });
-}
-
 function resetPassword(email, token, newPassword, twoFAToken) {
   return new Promise((resolve, reject) => {
     return makeRequest('password', 'PUT', basicHeaders, {
@@ -107,4 +99,4 @@ const useFetch = () => {
   return [sendRequest, isLoading, fetchedData, error];
 }
 
-export { useFetch, forgotPassword, resetPassword };
+export { useFetch, resetPassword };
