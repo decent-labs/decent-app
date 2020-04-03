@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useCookies } from 'react-cookie';
 import Col from 'react-bootstrap/Col';
@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import { login } from '../../requests';
+import { useFetch } from '../../requests';
 
 function Login() {
   const [, setCookie] = useCookies(['token']);
@@ -18,31 +18,20 @@ function Login() {
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
 
-  const [error, setError] = useState('');
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [sendRequest, isLoading, fetchedData, error] = useFetch();
 
-  const { from } = location.state || { from: { pathname: '/' } };
+  useEffect(() => {
+    setPassword('');
+    setToken('');
+  }, [error, fetchedData]);
 
-  const submitForm = () => {
-    setError('');
-    setButtonDisabled(true);
-
-    return login(email, password, token)
-      .then(response => {
-        setButtonDisabled(false);
-        setPassword('');
-        const expires = new Date();
-        expires.setDate(expires.getDate() + parseInt(process.env.REACT_APP_TOKEN_COOKIE_EXPIRATION_DAYS, 10));
-        setCookie('token', response.token, { expires, path: '/' });
-        history.replace(from);
-      })
-      .catch(error => {
-        setButtonDisabled(false);
-        setPassword('');
-        setToken('');
-        setError(error);
-      });
-  }
+  useEffect(() => {
+    if (!fetchedData) return;
+    const expires = new Date();
+    expires.setDate(expires.getDate() + parseInt(process.env.REACT_APP_TOKEN_COOKIE_EXPIRATION_DAYS, 10));
+    setCookie('token', fetchedData.token, { expires, path: '/' });
+    history.replace(location.state || { from: { pathname: '/' } });
+  }, [fetchedData, location.state, history, setCookie]);
 
   return (
     <Col>
@@ -87,8 +76,8 @@ function Login() {
               type='submit'
               block
               className='font-weight-bold'
-              disabled={buttonDisabled}
-              onClick={submitForm}
+              disabled={isLoading}
+              onClick={sendRequest('auth/login', 'POST', { email, password, token })}
             >
               Login
             </Button>

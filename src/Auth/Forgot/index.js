@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -6,33 +6,24 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import { Link, useHistory } from 'react-router-dom';
 
-import { forgotPassword } from '../../requests';
+import { useFetch } from '../../requests';
 
 function ForgotPassword({ alert }) {
   const history = useHistory();
 
   const [email, setEmail] = useState('');
 
-  const [error, setError] = useState('');
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [sendRequest, isLoading, fetchedData, error] = useFetch();
 
-  const submitForm = () => {
-    setError('');
-    setButtonDisabled(true);
+  useEffect(() => {
+    setEmail('');
+  }, [error, fetchedData]);
 
-    return forgotPassword(email)
-      .then(_ => {
-        setButtonDisabled(false);
-        setEmail('');
-        alert({ message: 'Password reset link sent to email', variant: 'primary' })
-        history.push('/auth/login')
-      })
-      .catch(error => {
-        setButtonDisabled(false);
-        setEmail('');
-        setError(error);
-      });
-  }
+  useEffect(() => {
+    if (!fetchedData) return;
+    alert({ message: 'Password reset link sent to email', variant: 'primary' })
+    history.push('/auth/login')
+  }, [fetchedData, alert, history]);
 
   return (
     <Col>
@@ -60,8 +51,8 @@ function ForgotPassword({ alert }) {
               type='submit'
               block
               className='font-weight-bold'
-              disabled={buttonDisabled}
-              onClick={submitForm}
+              disabled={isLoading}
+              onClick={sendRequest('password', 'POST', { email })}
             >
               Send Link
             </Button>
