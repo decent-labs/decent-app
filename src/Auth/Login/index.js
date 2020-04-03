@@ -33,7 +33,7 @@ function Login() {
         setPassword('');
         const expires = new Date();
         expires.setDate(expires.getDate() + parseInt(process.env.REACT_APP_TOKEN_COOKIE_EXPIRATION_DAYS, 10));
-        setCookie('token', response.token, { expires });
+        setCookie('token', response.token, { expires, path: '/' });
         history.replace(from);
       })
       .catch(error => {

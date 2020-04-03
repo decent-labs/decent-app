@@ -9,22 +9,26 @@ function makeRequest(route, method, headers, body = null) {
     headers: headers
   };
   if (body) options.body = JSON.stringify(body);
-  return fetch(`${process.env.REACT_APP_API_URL}/${route}`, options)
-    .then(response => processResponse(response));
+  return new Promise((resolve, reject) => {
+    return fetch(`${process.env.REACT_APP_API_URL}/${route}`, options)
+      .then(response => {
+        return processResponse(response)
+          .then(response => resolve(response))
+          .catch(error => reject(error))
+      })
+      .catch(error => reject(error.message));
+  });
 }
 
 function processResponse(response) {
   return new Promise((resolve, reject) => {
     if (!response.ok) {
-      return response.json().then(error => {
-        reject(error.error);
-      });
+      return response.json()
+        .then(error => reject(error.error));
     }
-    return response.json().then(response => {
-      resolve(response);
-    }).catch(error => {
-      reject(error.message);
-    });
+    return response.json()
+      .then(response => resolve(response))
+      .catch(error => reject(error.message));
   });
 }
 
