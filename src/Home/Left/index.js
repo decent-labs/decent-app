@@ -4,14 +4,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Button from 'react-bootstrap/Button';
-import { useCookies } from 'react-cookie';
 
 import BMxLogoColor from '../../assets/images/bmx-logo-color.svg';
 
 function Left() {
-  const [, , removeCookie] = useCookies(['token']);
-
   return (
     <>
       <Row className='mx-auto'>
@@ -33,14 +29,7 @@ function Left() {
         </Col>
       </Row>
       <Row className='mx-auto'>
-        <Col>
-          <Button
-            variant='link'
-            onClick={() => removeCookie('token')}
-          >
-            Log Out
-          </Button>
-        </Col>
+        <Col></Col>
       </Row>
     </>
   )
