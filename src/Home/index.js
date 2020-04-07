@@ -1,24 +1,28 @@
 import React from 'react';
 
-import Button from 'react-bootstrap/Button';
-import { useCookies } from 'react-cookie';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+import LeftMenu from './LeftMenu';
+import NavMenu from './NavMenu';
+import Main from './Main';
 
 function Home() {
-  const [cookies, , removeCookie] = useCookies(['token']);
+  
 
   return (
-    <>
-      <h1>Hello User!</h1>
-      <p>Your API token is {cookies.token}</p>
-      <Button
-        variant='link'
-        onClick={() => {
-          removeCookie('token');
-        }}
-      >
-        Log Out
-      </Button>
-    </>
+    <Container fluid className='h-100 main-container'>
+      <Row className='h-100'>
+        <Col xs={4} md={3} lg={2} className='py-5 shadow bg-light d-flex flex-column'>
+          <LeftMenu />
+        </Col>
+        <Col xs={8} md={9} lg={10} className='py-4'>
+          <NavMenu />
+          <Main />
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

@@ -4,15 +4,18 @@
 
 // from node_modules/bootstrap/scss/_variables.scss
 $primary: #1C31A6; // 69
+$secondary: #FFFFFF; // 70
 $danger: #B90315; // 74
+$light: #FCFBFF; // 75
 $body-color: #020615; // 172
 $font-family-base: 'Roboto'; // 283
 $headings-margin-bottom: 1.5rem; // 306
 $headings-font-family: 'Rubik'; // 307
 $headings-font-weight: 700; // 308
-$btn-border-radius: 40px; // 448
 $input-font-size: 14px; // 462
+$input-border-color: #DEE2E6; // 480
 $input-placeholder-color: #C2C2C2; // 494
+$navbar-light-color: $body-color; // 745
 
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
@@ -20,7 +23,16 @@ $input-placeholder-color: #C2C2C2; // 494
 .form-label {
   font-family: 'RobotoMono';
   font-weight: 700;
-  color: #5A6066;
+  color: $gray-600;
   font-size: 12px;
   margin-left: 1em;
+}
+
+div.dropdown button.dropdown-toggle {
+  text-align: left;
+
+  &::after {
+    float: right;
+    margin-top: 9px;
+  }
 }
