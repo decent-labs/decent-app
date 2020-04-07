@@ -13,7 +13,7 @@ import BMxProfileIcon from '../../assets/images/bmx-profile-icon.svg';
 import BMxSearchIcon from '../../assets/images/bmx-search-icon.svg';
 import BMxNotificationIcon from '../../assets/images/bmx-notification-icon.svg';
 
-function Top() {
+function NavMenu() {
   const [, , removeCookie] = useCookies(['token']);
 
   return (
@@ -40,4 +40,4 @@ function Top() {
   );
 }
 
-export default Top;
+export default NavMenu;

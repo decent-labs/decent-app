@@ -7,7 +7,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 import BMxLogoColor from '../../assets/images/bmx-logo-color.svg';
 
-function Left() {
+function LeftMenu() {
   return (
     <>
       <Row className='mx-auto'>
@@ -35,4 +35,4 @@ function Left() {
   )
 }
 
-export default Left;
+export default LeftMenu;
