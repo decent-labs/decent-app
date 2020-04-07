@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import Left from './Left';
+import Top from './Top';
+import Main from './Main';
 
 function Home() {
   
@@ -16,7 +18,8 @@ function Home() {
           <Left />
         </Col>
         <Col xs={8} md={9} lg={10} className='py-4'>
-          
+          <Top />
+          <Main />
         </Col>
       </Row>
     </Container>
