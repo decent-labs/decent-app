@@ -1,21 +1,23 @@
 import { useState, useCallback } from 'react';
+import { useCookies } from 'react-cookie';
 
 const useFetch = () => {
   const [fetchedData, setFetchedData] = useState(null);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [cookies] = useCookies(['token']);
 
   const sendRequest = useCallback((path, method, body) => {
-    const basicHeaders = new Headers({
+    const headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Basic ${btoa(`${process.env.REACT_APP_CLIENT_ID}:${process.env.REACT_APP_CLIENT_SECRET}`)}`
     });
 
-    const options = {
-      method: method,
-      headers: basicHeaders
-    };
+    if (cookies.token) {
+      headers.set('Authorization', `Bearer ${cookies.token}`);
+    }
 
+    const options = { method, headers };
     if (body) options.body = JSON.stringify(body);
 
     setIsLoading(true);
@@ -49,7 +51,7 @@ const useFetch = () => {
         setIsLoading(false);
         setError(error.message);
       });
-  }, [])
+  }, [cookies.token])
 
   return [sendRequest, isLoading, fetchedData, error];
 }
