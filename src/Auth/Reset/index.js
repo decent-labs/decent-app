@@ -71,7 +71,7 @@ function ResetPassword({ alert }) {
               block
               className='font-weight-bold'
               disabled={isLoading}
-              onClick={sendRequest('password', 'PUT', { email, token, newPassword, twoFaToken })}
+              onClick={() => sendRequest('password', 'PUT', { email, token, newPassword, twoFaToken })}
             >
               Reset Password
             </Button>

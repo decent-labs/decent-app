@@ -52,7 +52,7 @@ function ForgotPassword({ alert }) {
               block
               className='font-weight-bold'
               disabled={isLoading}
-              onClick={sendRequest('password', 'POST', { email })}
+              onClick={() => sendRequest('password', 'POST', { email })}
             >
               Send Link
             </Button>

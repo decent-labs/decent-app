@@ -5,7 +5,7 @@ const useFetch = () => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const sendRequest = (path, method, body) => () => {
+  const sendRequest = (path, method, body) => {
     const basicHeaders = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Basic ${btoa(`${process.env.REACT_APP_CLIENT_ID}:${process.env.REACT_APP_CLIENT_SECRET}`)}`

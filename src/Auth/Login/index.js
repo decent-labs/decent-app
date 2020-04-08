@@ -77,7 +77,7 @@ function Login() {
               block
               className='font-weight-bold'
               disabled={isLoading}
-              onClick={sendRequest('auth/login', 'POST', { email, password, token })}
+              onClick={() => sendRequest('auth/login', 'POST', { email, password, token })}
             >
               Login
             </Button>
