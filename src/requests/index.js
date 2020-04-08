@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const useFetch = () => {
   const [fetchedData, setFetchedData] = useState(null);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const sendRequest = (path, method, body) => {
+  const sendRequest = useCallback((path, method, body) => {
     const basicHeaders = new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Basic ${btoa(`${process.env.REACT_APP_CLIENT_ID}:${process.env.REACT_APP_CLIENT_SECRET}`)}`
@@ -17,7 +17,6 @@ const useFetch = () => {
     };
 
     if (body) options.body = JSON.stringify(body);
-    if (isLoading) return;
 
     setIsLoading(true);
     setError(false);
@@ -50,7 +49,7 @@ const useFetch = () => {
         setIsLoading(false);
         setError(error.message);
       });
-  };
+  }, [])
 
   return [sendRequest, isLoading, fetchedData, error];
 }
