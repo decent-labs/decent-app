@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import { useFetch } from '../../requests';
+import { request } from '../../requests';
 
 function ResetPassword({ alert }) {
   const history = useHistory();
@@ -18,7 +18,8 @@ function ResetPassword({ alert }) {
   const [newPassword, setNewPassword] = useState('');
   const [twoFaToken, setTwoFaToken] = useState('');
 
-  const [sendRequest, fetchedData, error, isLoading] = useFetch();
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!email || !token) {
     alert({ message: 'Missing email or password reset token', variant: 'danger' });
@@ -28,13 +29,20 @@ function ResetPassword({ alert }) {
   useEffect(() => {
     setNewPassword('');
     setTwoFaToken('');
-  }, [error, fetchedData]);
+  }, [error]);
 
-  useEffect(() => {
-    if (!fetchedData) return;
-    alert({ message: 'Password successfully reset!', variant: 'primary' });
-    history.push('/auth/login');
-  }, [fetchedData, alert, history]);
+  function sendRequest() {
+    request('password', 'PUT', { email, token, newPassword, twoFaToken })
+      .then(() => {
+        setIsLoading(false);
+        alert({ message: 'Password successfully reset!', variant: 'primary' });
+        history.push('/auth/login');
+      })
+      .catch(error => {
+        setIsLoading(false);
+        setError(error);
+      });
+  }
 
   return (
     <Col>
@@ -71,7 +79,7 @@ function ResetPassword({ alert }) {
               block
               className='font-weight-bold'
               disabled={isLoading}
-              onClick={() => sendRequest('password', 'PUT', { email, token, newPassword, twoFaToken })}
+              onClick={() => sendRequest()}
             >
               Reset Password
             </Button>

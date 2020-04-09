@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import { useFetch } from '../../requests';
+import { request } from '../../requests';
 
 function Login() {
   const [, setCookie] = useCookies(['token']);
@@ -18,20 +18,28 @@ function Login() {
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
 
-  const [sendRequest, fetchedData, error, isLoading] = useFetch();
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setPassword('');
     setToken('');
-  }, [error, fetchedData]);
+  }, [error]);
 
-  useEffect(() => {
-    if (!fetchedData) return;
-    const expires = new Date();
-    expires.setDate(expires.getDate() + parseInt(process.env.REACT_APP_TOKEN_COOKIE_EXPIRATION_DAYS, 10));
-    setCookie('token', fetchedData.token, { expires, path: '/' });
-    history.replace(location.state || { from: { pathname: '/' } });
-  }, [fetchedData, location.state, history, setCookie]);
+  function sendRequest() {
+    request('auth/login', 'POST', { email, password, token })
+      .then(response => {
+        setIsLoading(false);
+        const expires = new Date();
+        expires.setDate(expires.getDate() + parseInt(process.env.REACT_APP_TOKEN_COOKIE_EXPIRATION_DAYS, 10));
+        setCookie('token', response.token, { expires, path: '/' });
+        history.replace(location.state || { from: { pathname: '/' } });
+      })
+      .catch(error => {
+        setIsLoading(false);
+        setError(error);
+      });
+  }
 
   return (
     <Col>
@@ -77,7 +85,7 @@ function Login() {
               block
               className='font-weight-bold'
               disabled={isLoading}
-              onClick={() => sendRequest('auth/login', 'POST', { email, password, token })}
+              onClick={() => sendRequest()}
             >
               Login
             </Button>
