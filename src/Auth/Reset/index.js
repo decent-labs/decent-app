@@ -18,7 +18,7 @@ function ResetPassword({ alert }) {
   const [newPassword, setNewPassword] = useState('');
   const [twoFaToken, setTwoFaToken] = useState('');
 
-  const [sendRequest, isLoading, fetchedData, error] = useFetch();
+  const [sendRequest, fetchedData, error, isLoading] = useFetch();
 
   if (!email || !token) {
     alert({ message: 'Missing email or password reset token', variant: 'danger' });
@@ -71,7 +71,7 @@ function ResetPassword({ alert }) {
               block
               className='font-weight-bold'
               disabled={isLoading}
-              onClick={sendRequest('password', 'PUT', { email, token, newPassword, twoFaToken })}
+              onClick={() => sendRequest('password', 'PUT', { email, token, newPassword, twoFaToken })}
             >
               Reset Password
             </Button>

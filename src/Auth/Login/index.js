@@ -18,7 +18,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
 
-  const [sendRequest, isLoading, fetchedData, error] = useFetch();
+  const [sendRequest, fetchedData, error, isLoading] = useFetch();
 
   useEffect(() => {
     setPassword('');
@@ -77,7 +77,7 @@ function Login() {
               block
               className='font-weight-bold'
               disabled={isLoading}
-              onClick={sendRequest('auth/login', 'POST', { email, password, token })}
+              onClick={() => sendRequest('auth/login', 'POST', { email, password, token })}
             >
               Login
             </Button>
