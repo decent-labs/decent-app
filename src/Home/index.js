@@ -9,8 +9,6 @@ import NavMenu from './NavMenu';
 import Main from './Main';
 
 function Home() {
-  
-
   return (
     <Container fluid className='h-100 main-container'>
       <Row className='h-100'>
