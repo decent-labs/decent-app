@@ -13,8 +13,12 @@ import BMxProfileIcon from '../../assets/images/bmx-profile-icon.svg';
 import BMxSearchIcon from '../../assets/images/bmx-search-icon.svg';
 import BMxNotificationIcon from '../../assets/images/bmx-notification-icon.svg';
 
+import { useFetchAccount } from '../../redux/actions/account';
+
 function NavMenu() {
   const [, , removeCookie] = useCookies(['token']);
+
+  const account = useFetchAccount();
 
   return (
     <Navbar bg='d-flex'>
@@ -36,7 +40,7 @@ function NavMenu() {
           title={
             <>
               <Image src={BMxProfileIcon} />
-              <span className='ml-3'>My Account</span>
+              <span className='ml-3'>{account.name}</span>
             </>
           }
           id='basic-nav-dropdown'

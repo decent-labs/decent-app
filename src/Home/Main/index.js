@@ -1,10 +1,12 @@
 import React from 'react';
 
+import { useFetchAccount } from '../../redux/actions/account';
+
 function Main() {
+  const account = useFetchAccount();
+
   return (
-    <>
-      <div></div>
-    </>
+    <div>{account.email}</div>
   );
 }
 
