@@ -53,7 +53,7 @@ const useFetch = () => {
       });
   }, [cookies.token])
 
-  return [sendRequest, isLoading, fetchedData, error];
+  return [sendRequest, fetchedData, error, isLoading];
 }
 
 export { useFetch };

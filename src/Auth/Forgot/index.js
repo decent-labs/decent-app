@@ -13,7 +13,7 @@ function ForgotPassword({ alert }) {
 
   const [email, setEmail] = useState('');
 
-  const [sendRequest, isLoading, fetchedData, error] = useFetch();
+  const [sendRequest, fetchedData, error, isLoading] = useFetch();
 
   useEffect(() => {
     setEmail('');

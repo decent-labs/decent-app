@@ -18,7 +18,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
 
-  const [sendRequest, isLoading, fetchedData, error] = useFetch();
+  const [sendRequest, fetchedData, error, isLoading] = useFetch();
 
   useEffect(() => {
     setPassword('');
