@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -8,13 +8,23 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Image from 'react-bootstrap/Image';
 
 import { useCookies } from 'react-cookie';
+import { useDispatch } from 'react-redux';
 
 import BMxProfileIcon from '../../assets/images/bmx-profile-icon.svg';
 import BMxSearchIcon from '../../assets/images/bmx-search-icon.svg';
 import BMxNotificationIcon from '../../assets/images/bmx-notification-icon.svg';
 
+import { useAsyncState } from '../../redux/actions/useAsyncState';
+import { StateProperty } from '../../redux/reducers';
+
+import { request } from '../../requests';
+
 function NavMenu() {
+  const dispatch = useDispatch();
   const [, , removeCookie] = useCookies(['token']);
+
+  const accountLoader = useCallback(() => request('auth/me', 'GET'), []);
+  const account = useAsyncState(StateProperty.account, accountLoader);
 
   return (
     <Navbar bg='d-flex'>
@@ -36,7 +46,7 @@ function NavMenu() {
           title={
             <>
               <Image src={BMxProfileIcon} />
-              <span className='ml-3'>My Account</span>
+              <span className='ml-3'>{account.data.name ? account.data.name : '...'}</span>
             </>
           }
           id='basic-nav-dropdown'
@@ -44,7 +54,10 @@ function NavMenu() {
         >
           <NavDropdown.Item href='#me'>Account Details</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item onClick={() => removeCookie('token')}>
+          <NavDropdown.Item onClick={() => {
+            removeCookie('token');
+            dispatch({ type: 'RESET_APP' });
+          }}>
             Log Out
           </NavDropdown.Item>
         </NavDropdown>

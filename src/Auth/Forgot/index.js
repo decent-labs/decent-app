@@ -6,24 +6,32 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import { Link, useHistory } from 'react-router-dom';
 
-import { useFetch } from '../../requests';
+import { request } from '../../requests';
 
 function ForgotPassword({ alert }) {
   const history = useHistory();
 
   const [email, setEmail] = useState('');
 
-  const [sendRequest, fetchedData, error, isLoading] = useFetch();
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setEmail('');
-  }, [error, fetchedData]);
+  }, [error]);
 
-  useEffect(() => {
-    if (!fetchedData) return;
-    alert({ message: 'Password reset link sent to email', variant: 'primary' })
-    history.push('/auth/login')
-  }, [fetchedData, alert, history]);
+  function sendRequest() {
+    request('password', 'POST', { email })
+      .then(() => {
+        alert({ message: 'Password reset link sent to email', variant: 'primary' })
+        history.push('/auth/login')
+        setIsLoading(false);
+      })
+      .catch(error => {
+        setIsLoading(false);
+        setError(error);
+      });
+  }
 
   return (
     <Col>
@@ -52,7 +60,7 @@ function ForgotPassword({ alert }) {
               block
               className='font-weight-bold'
               disabled={isLoading}
-              onClick={() => sendRequest('password', 'POST', { email })}
+              onClick={() => sendRequest()}
             >
               Send Link
             </Button>
