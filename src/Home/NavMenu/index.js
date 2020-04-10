@@ -28,7 +28,7 @@ function NavMenu() {
   const account = useAsyncState(StateProperty.account, accountLoader);
 
   return (
-    <Navbar bg='d-flex'>
+    <Navbar className='d-flex px-0 pt-0'>
       <Form className='flex-grow-1 mr-4'>
         <InputGroup>
           <InputGroup.Prepend>

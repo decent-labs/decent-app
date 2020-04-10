@@ -15,9 +15,13 @@ function Home() {
         <Col xs={4} md={3} lg={2} className='py-5 shadow bg-light d-flex flex-column'>
           <LeftMenu />
         </Col>
-        <Col xs={8} md={9} lg={10} className='py-4'>
+        <Col xs={8} md={9} lg={10} className='py-5 pl-4'>
           <NavMenu />
-          <Main />
+          <Row className='mt-4 pr-2'>
+            <Col className='mt-1'>
+              <Main />
+            </Col>
+          </Row>
         </Col>
       </Row>
     </Container>
