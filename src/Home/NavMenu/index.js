@@ -6,6 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Image from 'react-bootstrap/Image';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
@@ -52,7 +53,9 @@ function NavMenu() {
           id='basic-nav-dropdown'
           alignRight
         >
-          <NavDropdown.Item href='#me'>Account Details</NavDropdown.Item>
+          <LinkContainer to='/me'>
+            <NavDropdown.Item>My Account</NavDropdown.Item>
+          </LinkContainer>
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={() => {
             removeCookie('token');
