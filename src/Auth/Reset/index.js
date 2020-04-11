@@ -32,6 +32,7 @@ function ResetPassword({ alert }) {
   }
 
   function sendRequest() {
+    setIsLoading(true);
     request('password', 'PUT', { email, token, newPassword, twoFAToken })
       .then(() => {
         setIsLoading(false);
