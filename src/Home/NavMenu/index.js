@@ -60,7 +60,7 @@ function NavMenu() {
           </LinkContainer>
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={() => {
-            removeCookie('token');
+            removeCookie('token', { path: '/' });
             dispatch({ type: 'RESET_APP' });
             history.push('/');
           }}>
