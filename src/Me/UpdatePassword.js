@@ -23,6 +23,7 @@ function UpdatePassword() {
   const [oldPass, setOldPass] = useState('');
   const [token, setToken] = useState('');
   const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
 
   const account = useAsyncState(StateProperty.account);
 
@@ -30,7 +31,7 @@ function UpdatePassword() {
     setNewPass('');
     setOldPass('');
     setToken('');
-  }, [success, account.error])
+  }, [success, error])
 
   return (
     <div className='mb-4'>
@@ -66,7 +67,7 @@ function UpdatePassword() {
           />
         </Form.Group>
         <Form.Group controlId='formError'>
-          {account.error && <Alert variant='danger'>{account.error}</Alert>}
+          {error && <Alert variant='danger'>{error}</Alert>}
           {success && <Alert variant='success'>{success}</Alert>}
         </Form.Group>
         <Form.Group controlId='formSubmit'>
@@ -81,7 +82,10 @@ function UpdatePassword() {
               request('auth/account', 'PUT', { newPass, oldPass, token })
                 .then(response => dispatch(dataUpdateAction(StateProperty.account, response)))
                 .then(() => setSuccess('Password succesfully updated!'))
-                .catch(error => dispatch(dataLoadingErrorAction(StateProperty.account, error)));
+                .catch(error => {
+                  dispatch(dataLoadingErrorAction(StateProperty.account, error));
+                  setError(error);
+                });
             }}
           >
             Update Password
