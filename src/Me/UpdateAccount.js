@@ -35,7 +35,7 @@ function UpdateAccount() {
   useEffect(() => {
     setOldPass('');
     setToken('');
-  }, [success])
+  }, [success, account.error])
 
   return (
     <div className='mb-4'>
