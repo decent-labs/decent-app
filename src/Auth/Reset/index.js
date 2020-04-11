@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import { request } from '../../requests';
 
@@ -21,15 +21,15 @@ function ResetPassword({ alert }) {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  if (!email || !token) {
-    alert({ message: 'Missing email or password reset token', variant: 'danger' });
-    history.replace('/auth/login');
-  }
-
   useEffect(() => {
     setNewPassword('');
     setTwoFaToken('');
   }, [error]);
+
+  if (!email || !token) {
+    alert({ message: 'Missing email or password reset token', variant: 'danger' });
+    return <Redirect to='/auth/login' />;
+  }
 
   function sendRequest() {
     request('password', 'PUT', { email, token, newPassword, twoFaToken })

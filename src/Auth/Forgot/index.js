@@ -24,8 +24,8 @@ function ForgotPassword({ alert }) {
     request('password', 'POST', { email })
       .then(() => {
         alert({ message: 'Password reset link sent to email', variant: 'primary' })
-        history.push('/auth/login')
         setIsLoading(false);
+        history.push('/auth/login')
       })
       .catch(error => {
         setIsLoading(false);

@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Image from 'react-bootstrap/Image';
 import { LinkContainer } from 'react-router-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
@@ -21,6 +22,7 @@ import { StateProperty } from '../../redux/reducers';
 import { request } from '../../requests';
 
 function NavMenu() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [, , removeCookie] = useCookies(['token']);
 
@@ -60,6 +62,7 @@ function NavMenu() {
           <NavDropdown.Item onClick={() => {
             removeCookie('token');
             dispatch({ type: 'RESET_APP' });
+            history.push('/');
           }}>
             Log Out
           </NavDropdown.Item>
