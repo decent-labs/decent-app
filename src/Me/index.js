@@ -8,6 +8,7 @@ function Me() {
     <>
       <h1>My Account</h1>
       <UpdateAccount />
+      <hr />
       <UpdatePassword />
     </>
   );
