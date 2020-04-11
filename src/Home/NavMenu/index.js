@@ -41,7 +41,7 @@ function NavMenu() {
           <Form.Control type='text' placeholder='Search by name' className='py-2 border-left-0 border' />
         </InputGroup>
       </Form>
-      <Nav>
+      <Nav activeKey="/">
         <Nav.Link href='#notifications'>
           <Image src={BMxNotificationIcon} />
         </Nav.Link>
