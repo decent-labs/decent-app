@@ -76,6 +76,7 @@ function Register() {
                             autoComplete='email'
                             value={email}
                             onChange={event => setEmail(event.target.value)}
+                            required
                         />
                     </Form.Group></Col>
                 </Form.Row>
@@ -90,6 +91,7 @@ function Register() {
                             onChange={event => setPassword(event.target.value)}
                             onBlur={() => checkPassword()}
                             isInvalid={!passwordIsInvalid}
+                            required
                         />
                     </Form.Group></Col>
                     <Col><Form.Group controlId='formConfirmPAssword'>
@@ -102,6 +104,7 @@ function Register() {
                             onChange={event => setConfirmPassword(event.target.value)}
                             onBlur={() => checkPassword()}
                             isInvalid={!passwordIsInvalid}
+                            required
                         />
                         <Form.Control.Feedback type="invalid">
                             The password does not match
@@ -118,6 +121,7 @@ function Register() {
                                 autoComplete='fname'
                                 value={fname}
                                 onChange={event => setFname(event.target.value)}
+                                required
                             />
                         </Form.Group></Col>
                     <Col><Form.Group controlId='formLName'>
@@ -128,6 +132,7 @@ function Register() {
                             autoComplete='username'
                             value={lname}
                             onChange={event => setLname(event.target.value)}
+                            required
                         />
                     </Form.Group></Col>
                 </Form.Row>
@@ -135,20 +140,22 @@ function Register() {
                     <Col><Form.Group controlId='formDOB'>
                         <Form.Label>Date of birth</Form.Label>
                         <Form.Control
-                            type='email'
+                            type='date'
                             placeholder='mm/dd/yy'
                             autoComplete='dob'
                             value={dob}
                             onChange={event => setDob(event.target.value)}
+                            required
                         />
                     </Form.Group></Col>
                     <Col><Form.Group controlId='formPhone'>
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control
-                            type='text'
+                            type='tel'
                             placeholder='555-555-5555'
                             value={phone}
                             onChange={event => setPhone(event.target.value)}
+                            required
                         />
                     </Form.Group></Col>
                 </Form.Row>
@@ -160,6 +167,7 @@ function Register() {
                             placeholder='555-55-5555'
                             value={ssn}
                             onChange={event => setSsn(event.target.value)}
+                            required
                         />
                     </Form.Group>
                 </Form.Row>
@@ -171,6 +179,7 @@ function Register() {
                             placeholder='e.g., 123 Address Way'
                             value={address1}
                             onChange={event => setAddress1(event.target.value)}
+                            required
                         />
                     </Form.Group></Col>
                 </Form.Row>
@@ -193,6 +202,7 @@ function Register() {
                             placeholder='City'
                             value={city}
                             onChange={event => setCity(event.target.value)}
+                            required
                         />
                     </Form.Group></Col>
                     <Col><Form.Group controlId='formState'>
@@ -202,6 +212,7 @@ function Register() {
                             placeholder='Select'
                             value={state}
                             onChange={event => setState(event.target.value)}
+                            required
                         />
                     </Form.Group></Col>
                     <Col><Form.Group controlId='formZip'>
@@ -211,6 +222,7 @@ function Register() {
                             placeholder='00000'
                             value={zip}
                             onChange={event => setZip(event.target.value)}
+                            required
                         />
                     </Form.Group></Col>
                 </Form.Row>
