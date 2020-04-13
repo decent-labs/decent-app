@@ -6,21 +6,21 @@ import Button from 'react-bootstrap/Button';
 
 import { useDispatch } from 'react-redux';
 
-import { useAsyncState } from '../redux/actions/useAsyncState';
-import { StateProperty } from '../redux/reducers';
+import { useAsyncState } from '../../redux/actions/useAsyncState';
+import { StateProperty } from '../../redux/reducers';
 import {
   dataLoadingAction,
   dataUpdateAction,
   dataLoadingErrorAction
-} from '../redux/reducers/async';
+} from '../../redux/reducers/async';
 
-import { request } from '../requests';
+import { request } from '../../requests';
 
-function UpdatePassword() {
+function UpdateAccount() {
   const dispatch = useDispatch();
 
-  const [newPass, setNewPass] = useState('');
-  const [newPassConf, setNewPassConf] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [newEmail, setNewEmail] = useState('');
   const [oldPass, setOldPass] = useState('');
   const [token, setToken] = useState('');
   const [success, setSuccess] = useState('');
@@ -29,15 +29,18 @@ function UpdatePassword() {
   const account = useAsyncState(StateProperty.account);
 
   useEffect(() => {
-    setNewPass('');
-    setNewPassConf('');
+    setFullName(account.data.name || '');
+    setNewEmail(account.data.email || '');
+  }, [account.data.email, account.data.name]);
+
+  useEffect(() => {
     setOldPass('');
     setToken('');
   }, [success, error])
 
   return (
     <div className='mb-4'>
-      <h3>Update Password</h3>
+      <h3>Update Account</h3>
       <Form onSubmit={event => event.preventDefault()}>
         <Form.Group controlId='formExistingPassword'>
           <Form.Label>Existing Password (for verification)</Form.Label>
@@ -58,24 +61,23 @@ function UpdatePassword() {
             onChange={event => setToken(event.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId='formNewPassword'>
-          <Form.Label>New Password</Form.Label>
+        <Form.Group controlId='formEmail'>
+          <Form.Label>Email</Form.Label>
           <Form.Control
-            type='password'
-            placeholder='••••••••'
-            autoComplete='new-password'
-            value={newPass}
-            onChange={event => setNewPass(event.target.value)}
+            type='email'
+            placeholder={account.data.email}
+            autoComplete='username'
+            value={newEmail}
+            onChange={event => setNewEmail(event.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId='formNewPasswordConfirm'>
-          <Form.Label>Confirm New Password</Form.Label>
+        <Form.Group controlId='formName'>
+          <Form.Label>Name</Form.Label>
           <Form.Control
-            type='password'
-            placeholder='••••••••'
-            autoComplete='new-password'
-            value={newPassConf}
-            onChange={event => setNewPassConf(event.target.value)}
+            type='name'
+            placeholder={account.data.name}
+            value={fullName}
+            onChange={event => setFullName(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId='formError'>
@@ -90,22 +92,17 @@ function UpdatePassword() {
             disabled={account.isLoading}
             onClick={() => {
               setSuccess('');
-              setError('');
-              if (newPass !== newPassConf) {
-                setError('New Password does not match Confirm New Password');
-                return;
-              }
               dispatch(dataLoadingAction(StateProperty.account));
-              request('auth/account', 'PUT', { newPass, oldPass, token })
+              request('auth/account', 'PUT', { fullName, newEmail, oldPass, token })
                 .then(response => dispatch(dataUpdateAction(StateProperty.account, response)))
-                .then(() => setSuccess('Password succesfully updated!'))
+                .then(() => setSuccess('Account succesfully updated!'))
                 .catch(error => {
                   dispatch(dataLoadingErrorAction(StateProperty.account, error));
                   setError(error);
                 });
             }}
           >
-            Update Password
+            Update Account
           </Button>
         </Form.Group>
       </Form>
@@ -113,4 +110,4 @@ function UpdatePassword() {
   );
 }
 
-export default UpdatePassword;
+export default UpdateAccount;
