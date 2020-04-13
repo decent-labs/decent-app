@@ -7,6 +7,7 @@ import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import Account from './Account';
+import OauthManager from './OauthManager';
 
 function Settings() {
   const match = useRouteMatch();
@@ -19,6 +20,11 @@ function Settings() {
             <Nav.Link eventKey='account'>Account</Nav.Link>
           </LinkContainer>
         </Nav.Item>
+        <Nav.Item>
+          <LinkContainer to={`${match.path}/oauth`}>
+            <Nav.Link eventKey='oauth-apps'>OAuth Applications</Nav.Link>
+          </LinkContainer>
+        </Nav.Item>
       </Nav>
 
       <Row className='mt-4'>
@@ -29,6 +35,13 @@ function Settings() {
             </Route>
             <Route path={`${match.path}/account`}>
               <Account />
+            </Route>
+
+            <Route path={`${match.path}/oauth/:unknown`}>
+              <Redirect to={`${match.path}/oauth`} />
+            </Route>
+            <Route path={`${match.path}/oauth`}>
+              <OauthManager />
             </Route>
 
             <Route path={match.path}>
