@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useCookies } from 'react-cookie';
+// import { useCookies } from 'react-cookie';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -10,7 +10,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { request } from '../../requests';
 
 function Register() {
-    const [setCookie] = useCookies(['token']);
+    // const [setCookie] = useCookies(['token']);
     const history = useHistory();
     const location = useLocation();
 
@@ -28,23 +28,23 @@ function Register() {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [zip, setZip] = useState('');
-    const [token, setToken] = useState('');
+    // const [token, setToken] = useState('');
 
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setPassword('');
-        setToken('');
+        setConfirmPassword('');
     }, [error]);
 
     function sendRequest() {
-        request('auth/register', 'POST', { email, password, token })
+        request('auth/register', 'POST', { email, password })
             .then(response => {
                 setIsLoading(false);
                 const expires = new Date();
                 expires.setDate(expires.getDate() + parseInt(process.env.REACT_APP_TOKEN_COOKIE_EXPIRATION_DAYS, 10));
-                setCookie('token', response.token, { expires, path: '/' });
+                // setCookie('token', response.token, { expires, path: '/' });
                 history.replace(location.state || { from: { pathname: '/' } });
             })
             .catch(error => {
