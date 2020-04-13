@@ -69,7 +69,7 @@ function Auth() {
                 <Reset alert={setAlert} />
               </Route>
               <Route path={match.path}>
-                <Redirect replace to={`${match.path}/login`} />
+                <Redirect to={`${match.path}/login`} />
               </Route>
             </Switch>
           </Row>

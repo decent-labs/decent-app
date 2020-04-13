@@ -11,7 +11,7 @@ import BMxLogoColor from '../../assets/images/bmx-logo-color.svg';
 function LeftMenu() {
   return (
     <>
-      <Row className='mx-auto'>
+      <Row className='mx-auto pt-2'>
         <Col>
           <Link to='/'>
             <Image fluid src={BMxLogoColor} />
@@ -19,7 +19,7 @@ function LeftMenu() {
         </Col>
       </Row>
       <Row className='mt-5 mb-4 pb-5 border-bottom'>
-        <Col>
+        <Col className='px-4'>
           <Dropdown className="shadow rounded">
             <Dropdown.Toggle block variant="secondary" id="dropdown-basic">
               Select Profile
