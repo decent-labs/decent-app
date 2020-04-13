@@ -9,7 +9,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import { request } from '../../requests';
 
-function Login() {
+function Register() {
     const [setCookie] = useCookies(['token']);
     const history = useHistory();
     const location = useLocation();
@@ -19,6 +19,7 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordIsInvalid, setPasswordIsInvalid] = useState(true);
     const [dob, setDob] = useState('');
     const [phone, setPhone] = useState('');
     const [ssn, setSsn] = useState('');
@@ -29,7 +30,7 @@ function Login() {
     const [zip, setZip] = useState('');
     const [token, setToken] = useState('');
 
-    const [error, setError] = useState(null);
+    const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -50,6 +51,16 @@ function Login() {
                 setIsLoading(false);
                 setError(error);
             });
+    }
+
+    function checkPassword() {
+        const isPasswordEqual = password !== confirmPassword;
+        if (isPasswordEqual) {
+            setPasswordIsInvalid(false);
+        }else {
+            setPasswordIsInvalid(true);
+        }
+        return isPasswordEqual;
     }
 
     return (
@@ -77,6 +88,8 @@ function Login() {
                             autoComplete='current-password'
                             value={password}
                             onChange={event => setPassword(event.target.value)}
+                            onBlur={() => checkPassword()}
+                            isInvalid={!passwordIsInvalid}
                         />
                     </Form.Group></Col>
                     <Col><Form.Group controlId='formConfirmPAssword'>
@@ -87,7 +100,12 @@ function Login() {
                             autoComplete='current-password'
                             value={confirmPassword}
                             onChange={event => setConfirmPassword(event.target.value)}
+                            onBlur={() => checkPassword()}
+                            isInvalid={!passwordIsInvalid}
                         />
+                        <Form.Control.Feedback type="invalid">
+                            The password does not match
+                        </Form.Control.Feedback>
                     </Form.Group></Col>
                 </Form.Row>
                 <Form.Row>
@@ -208,7 +226,14 @@ function Login() {
                             block
                             className='font-weight-bold'
                             disabled={isLoading}
-                            onClick={() => sendRequest()}
+                            onClick={() => {
+                                setError('');
+                                if (checkPassword()) {
+                                    setError('Password does not match Confirm New Password');
+                                    return;
+                                }
+                                sendRequest()
+                            }}
                         >
                             Signup
                         </Button>
@@ -219,4 +244,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Register;
