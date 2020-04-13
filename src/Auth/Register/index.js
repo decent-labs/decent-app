@@ -153,7 +153,7 @@ function Register() {
                     </Form.Group></Col>
                 </Form.Row>
                 <Form.Row>
-                    <Col><Form.Group controlId='formSsn'>
+                    <Form.Group lg={4} md={8} as={Col} controlId='formSsn'>
                         <Form.Label>Social Security</Form.Label>
                         <Form.Control
                             type='text'
@@ -161,7 +161,7 @@ function Register() {
                             value={ssn}
                             onChange={event => setSsn(event.target.value)}
                         />
-                    </Form.Group></Col>
+                    </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Col><Form.Group controlId='formAddress1'>
