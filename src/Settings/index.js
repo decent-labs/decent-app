@@ -3,7 +3,7 @@ import React from 'react';
 import UpdateAccount from './UpdateAccount';
 import UpdatePassword from './UpdatePassword';
 
-function Me() {
+function Settings() {
   return (
     <>
       <h1>My Account</h1>
@@ -14,4 +14,4 @@ function Me() {
   );
 }
 
-export default Me;
+export default Settings;
