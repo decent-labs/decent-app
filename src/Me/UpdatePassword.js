@@ -20,6 +20,7 @@ function UpdatePassword() {
   const dispatch = useDispatch();
 
   const [newPass, setNewPass] = useState('');
+  const [newPassConf, setNewPassConf] = useState('');
   const [oldPass, setOldPass] = useState('');
   const [token, setToken] = useState('');
   const [success, setSuccess] = useState('');
@@ -29,6 +30,7 @@ function UpdatePassword() {
 
   useEffect(() => {
     setNewPass('');
+    setNewPassConf('');
     setOldPass('');
     setToken('');
   }, [success, error])
@@ -45,6 +47,16 @@ function UpdatePassword() {
             autoComplete='new-password'
             value={newPass}
             onChange={event => setNewPass(event.target.value)}
+          />
+        </Form.Group>
+        <Form.Group controlId='formNewPassword'>
+          <Form.Label>Confirm New Password</Form.Label>
+          <Form.Control
+            type='password'
+            placeholder='••••••••'
+            autoComplete='new-password'
+            value={newPassConf}
+            onChange={event => setNewPassConf(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId='formExistingPassword'>
@@ -78,6 +90,11 @@ function UpdatePassword() {
             disabled={account.isLoading}
             onClick={() => {
               setSuccess('');
+              setError('');
+              if (newPass !== newPassConf) {
+                setError('New Password does not match Confirm New Password');
+                return;
+              }
               dispatch(dataLoadingAction(StateProperty.account));
               request('auth/account', 'PUT', { newPass, oldPass, token })
                 .then(response => dispatch(dataUpdateAction(StateProperty.account, response)))
