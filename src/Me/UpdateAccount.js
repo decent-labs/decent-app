@@ -42,25 +42,6 @@ function UpdateAccount() {
     <div className='mb-4'>
       <h3>Update Account</h3>
       <Form onSubmit={event => event.preventDefault()}>
-        <Form.Group controlId='formEmail'>
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type='email'
-            placeholder={account.data.email}
-            autoComplete='username'
-            value={newEmail}
-            onChange={event => setNewEmail(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId='formName'>
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type='name'
-            placeholder={account.data.name}
-            value={fullName}
-            onChange={event => setFullName(event.target.value)}
-          />
-        </Form.Group>
         <Form.Group controlId='formExistingPassword'>
           <Form.Label>Existing Password (for verification)</Form.Label>
           <Form.Control
@@ -78,6 +59,25 @@ function UpdateAccount() {
             placeholder='123456'
             value={token}
             onChange={event => setToken(event.target.value)}
+          />
+        </Form.Group>
+        <Form.Group controlId='formEmail'>
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type='email'
+            placeholder={account.data.email}
+            autoComplete='username'
+            value={newEmail}
+            onChange={event => setNewEmail(event.target.value)}
+          />
+        </Form.Group>
+        <Form.Group controlId='formName'>
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type='name'
+            placeholder={account.data.name}
+            value={fullName}
+            onChange={event => setFullName(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId='formError'>

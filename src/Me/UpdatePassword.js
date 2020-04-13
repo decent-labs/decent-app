@@ -39,6 +39,25 @@ function UpdatePassword() {
     <div className='mb-4'>
       <h3>Update Password</h3>
       <Form onSubmit={event => event.preventDefault()}>
+        <Form.Group controlId='formExistingPassword'>
+          <Form.Label>Existing Password (for verification)</Form.Label>
+          <Form.Control
+            type='password'
+            placeholder='••••••••'
+            autoComplete='current-password'
+            value={oldPass}
+            onChange={event => setOldPass(event.target.value)}
+          />
+        </Form.Group>
+        <Form.Group controlId='form2FA'>
+          <Form.Label>2 Factor Authentication Code (for verification)</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='123456'
+            value={token}
+            onChange={event => setToken(event.target.value)}
+          />
+        </Form.Group>
         <Form.Group controlId='formNewPassword'>
           <Form.Label>New Password</Form.Label>
           <Form.Control
@@ -57,25 +76,6 @@ function UpdatePassword() {
             autoComplete='new-password'
             value={newPassConf}
             onChange={event => setNewPassConf(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId='formExistingPassword'>
-          <Form.Label>Existing Password (for verification)</Form.Label>
-          <Form.Control
-            type='password'
-            placeholder='••••••••'
-            autoComplete='current-password'
-            value={oldPass}
-            onChange={event => setOldPass(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId='form2FA'>
-          <Form.Label>2 Factor Authentication Code (for verification)</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='123456'
-            value={token}
-            onChange={event => setToken(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId='formError'>
