@@ -68,7 +68,7 @@ function Register() {
             <h1>Register a New Patient</h1>
             <Form onSubmit={event => event.preventDefault()}>
                 <Form.Row>
-                    <Col><Form.Group controlId='formEmail'>
+                    <Form.Group lg={6} md={8} as={Col} controlId='formEmail'>
                         <Form.Label>Email</Form.Label>
                         <Form.Control
                             type='email'
@@ -78,7 +78,7 @@ function Register() {
                             onChange={event => setEmail(event.target.value)}
                             required
                         />
-                    </Form.Group></Col>
+                    </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Col><Form.Group controlId='formPassword'>
@@ -157,7 +157,7 @@ function Register() {
                     </Form.Group></Col>
                 </Form.Row>
                 <Form.Row>
-                    <Form.Group lg={4} md={8} as={Col} controlId='formSsn'>
+                    <Form.Group lg={2} md={4} as={Col} controlId='formSsn'>
                         <Form.Label>Social Security</Form.Label>
                         <Form.Control
                             type='text'
