@@ -133,6 +133,13 @@ function Register() {
         ];
     }
 
+    function isZipCodeValid()
+    {
+        const regexp = /^[0-9]{5}?$/;
+
+        return regexp.test(zipCode);
+    }
+
     return (
         <Col>
             <h1>Register a New Patient</h1>
@@ -306,6 +313,10 @@ function Register() {
                                 setError('');
                                 if (checkPassword()) {
                                     setError('Password does not match Confirm New Password');
+                                    return;
+                                }
+                                if(zipCode !== '' && !isZipCodeValid()) {
+                                    setError('The zipcode is invalid');
                                     return;
                                 }
                                 sendRequest()
