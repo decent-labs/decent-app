@@ -2,7 +2,8 @@ import { combineReducers } from 'redux';
 import { getAsyncDataReducer } from './async';
 
 export const StateProperty = {
-  account: 'account'
+  account: 'account',
+  oauthApps: 'oauthApps'
 };
 
 const allAsyncReducers = Object.keys(StateProperty).reduce(
