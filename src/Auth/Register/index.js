@@ -157,7 +157,7 @@ function Register() {
                     </Form.Group></Col>
                 </Form.Row>
                 <Form.Row>
-                    <Form.Group lg={2} md={4} as={Col} controlId='formSsn'>
+                    <Form.Group lg={4} md={8} as={Col} controlId='formSsn'>
                         <Form.Label>Social Security</Form.Label>
                         <Form.Control
                             type='text'
@@ -224,7 +224,7 @@ function Register() {
                     {error && <Alert variant='danger'>{error}</Alert>}
                 </Form.Group>
                 <Form.Row className='justify-content-center'>
-                    <Form.Group lg={3} md={4} as={Col} controlId='formSubmit'>
+                    <Form.Group lg={6} md={8} as={Col} controlId='formSubmit'>
                         <Button
                             variant='primary'
                             type='submit'
