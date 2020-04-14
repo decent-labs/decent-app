@@ -68,7 +68,7 @@ function Register() {
             <h1>Register a New Patient</h1>
             <Form onSubmit={event => event.preventDefault()}>
                 <Form.Row>
-                    <Form.Group lg={6} md={8} as={Col} controlId='formEmail'>
+                    <Form.Group className='required' lg={6} md={8} as={Col} controlId='formEmail'>
                         <Form.Label>Email</Form.Label>
                         <Form.Control
                             type='email'
@@ -81,7 +81,7 @@ function Register() {
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
-                    <Col><Form.Group controlId='formPassword'>
+                    <Col><Form.Group className='required' controlId='formPassword'>
                         <Form.Label>Password</Form.Label>
                         <Form.Control
                             type='password'
@@ -93,7 +93,7 @@ function Register() {
                             required
                         />
                     </Form.Group></Col>
-                    <Col><Form.Group controlId='formpasswordConfirm'>
+                    <Col><Form.Group className='required' controlId='formpasswordConfirm'>
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control
                             type='password'
@@ -112,7 +112,7 @@ function Register() {
                 </Form.Row>
                 <Form.Row>
                     <Col>
-                        <Form.Group controlId='formFirstName'>
+                        <Form.Group className='required' controlId='formFirstName'>
                             <Form.Label>First name</Form.Label>
                             <Form.Control
                                 type='text'
@@ -123,7 +123,7 @@ function Register() {
                                 required
                             />
                         </Form.Group></Col>
-                    <Col><Form.Group controlId='formLastName'>
+                    <Col><Form.Group className='required' controlId='formLastName'>
                         <Form.Label>Last name</Form.Label>
                         <Form.Control
                             type='text'
@@ -136,7 +136,7 @@ function Register() {
                     </Form.Group></Col>
                 </Form.Row>
                 <Form.Row>
-                    <Col><Form.Group controlId='formDOB'>
+                    <Col><Form.Group className='required' controlId='formDOB'>
                         <Form.Label>Date of birth</Form.Label>
                         <Form.Control
                             type='date'
@@ -158,7 +158,7 @@ function Register() {
                     </Form.Group></Col>
                 </Form.Row>
                 <Form.Row>
-                    <Form.Group lg={4} md={8} as={Col} controlId='formSsn'>
+                    <Form.Group className='required' lg={4} md={8} as={Col} controlId='formSsn'>
                         <Form.Label>Social Security</Form.Label>
                         <Form.Control
                             type='text'

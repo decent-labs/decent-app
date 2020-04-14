@@ -15,7 +15,7 @@ exports[`renders correctly 1`] = `
         class="form-row"
       >
         <div
-          class="form-group col-lg-6 col-md-8"
+          class="required form-group col-lg-6 col-md-8"
         >
           <label
             class="form-label"
@@ -41,7 +41,7 @@ exports[`renders correctly 1`] = `
           class="col"
         >
           <div
-            class="form-group"
+            class="required form-group"
           >
             <label
               class="form-label"
@@ -64,7 +64,7 @@ exports[`renders correctly 1`] = `
           class="col"
         >
           <div
-            class="form-group"
+            class="required form-group"
           >
             <label
               class="form-label"
@@ -96,7 +96,7 @@ exports[`renders correctly 1`] = `
           class="col"
         >
           <div
-            class="form-group"
+            class="required form-group"
           >
             <label
               class="form-label"
@@ -119,7 +119,7 @@ exports[`renders correctly 1`] = `
           class="col"
         >
           <div
-            class="form-group"
+            class="required form-group"
           >
             <label
               class="form-label"
@@ -146,7 +146,7 @@ exports[`renders correctly 1`] = `
           class="col"
         >
           <div
-            class="form-group"
+            class="required form-group"
           >
             <label
               class="form-label"
@@ -191,7 +191,7 @@ exports[`renders correctly 1`] = `
         class="form-row"
       >
         <div
-          class="form-group col-lg-4 col-md-8"
+          class="required form-group col-lg-4 col-md-8"
         >
           <label
             class="form-label"
