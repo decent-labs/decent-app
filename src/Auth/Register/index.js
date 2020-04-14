@@ -1,50 +1,50 @@
 import React, { useState, useEffect } from 'react';
 
-// import { useCookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
-import { useHistory, useLocation } from 'react-router-dom';
+import {Link, useHistory, useLocation} from 'react-router-dom';
+
 
 import { request } from '../../requests';
 
 function Register() {
-    // const [setCookie] = useCookies(['token']);
+    const [, setCookie] = useCookies(['token']);
     const history = useHistory();
     const location = useLocation();
 
-    const [fname, setFname] = useState('');
-    const [lname, setLname] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
     const [passwordIsInvalid, setPasswordIsInvalid] = useState(true);
     const [dob, setDob] = useState('');
-    const [phone, setPhone] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [ssn, setSsn] = useState('');
-    const [address1, setAddress1] = useState('');
-    const [address2, setAddress2] = useState('');
+    const [streetAddress, setStreetAddress] = useState('');
+    const [streetAddress2, setStreetAddress2] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
-    const [zip, setZip] = useState('');
-    // const [token, setToken] = useState('');
+    const [zipCode, setZipCode] = useState('');
 
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setPassword('');
-        setConfirmPassword('');
+        setPasswordConfirm('');
     }, [error]);
 
     function sendRequest() {
-        request('auth/register', 'POST', { email, password })
+        request('auth/registerPatient', 'POST', { email, password, passwordConfirmation: passwordConfirm, firstName, lastName, dob, phoneNumber, ssn, streetAddress, streetAddress2, city, state, zipCode})
             .then(response => {
                 setIsLoading(false);
                 const expires = new Date();
                 expires.setDate(expires.getDate() + parseInt(process.env.REACT_APP_TOKEN_COOKIE_EXPIRATION_DAYS, 10));
-                // setCookie('token', response.token, { expires, path: '/' });
+                setCookie('token', response.token, { expires, path: '/' });
                 history.replace(location.state || { from: { pathname: '/' } });
             })
             .catch(error => {
@@ -54,7 +54,7 @@ function Register() {
     }
 
     function checkPassword() {
-        const isPasswordEqual = password !== confirmPassword;
+        const isPasswordEqual = password !== passwordConfirm;
         if (isPasswordEqual) {
             setPasswordIsInvalid(false);
         }else {
@@ -89,19 +89,18 @@ function Register() {
                             autoComplete='current-password'
                             value={password}
                             onChange={event => setPassword(event.target.value)}
-                            onBlur={() => checkPassword()}
                             isInvalid={!passwordIsInvalid}
                             required
                         />
                     </Form.Group></Col>
-                    <Col><Form.Group controlId='formConfirmPAssword'>
+                    <Col><Form.Group controlId='formpasswordConfirm'>
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control
                             type='password'
                             placeholder='••••••••'
                             autoComplete='current-password'
-                            value={confirmPassword}
-                            onChange={event => setConfirmPassword(event.target.value)}
+                            value={passwordConfirm}
+                            onChange={event => setPasswordConfirm(event.target.value)}
                             onBlur={() => checkPassword()}
                             isInvalid={!passwordIsInvalid}
                             required
@@ -113,25 +112,25 @@ function Register() {
                 </Form.Row>
                 <Form.Row>
                     <Col>
-                        <Form.Group controlId='formFName'>
+                        <Form.Group controlId='formFirstName'>
                             <Form.Label>First name</Form.Label>
                             <Form.Control
                                 type='text'
                                 placeholder='first'
-                                autoComplete='fname'
-                                value={fname}
-                                onChange={event => setFname(event.target.value)}
+                                autoComplete='firstName'
+                                value={firstName}
+                                onChange={event => setFirstName(event.target.value)}
                                 required
                             />
                         </Form.Group></Col>
-                    <Col><Form.Group controlId='formLName'>
+                    <Col><Form.Group controlId='formLastName'>
                         <Form.Label>Last name</Form.Label>
                         <Form.Control
                             type='text'
                             placeholder='Last'
                             autoComplete='username'
-                            value={lname}
-                            onChange={event => setLname(event.target.value)}
+                            value={lastName}
+                            onChange={event => setLastName(event.target.value)}
                             required
                         />
                     </Form.Group></Col>
@@ -145,17 +144,15 @@ function Register() {
                             autoComplete='dob'
                             value={dob}
                             onChange={event => setDob(event.target.value)}
-                            required
                         />
                     </Form.Group></Col>
-                    <Col><Form.Group controlId='formPhone'>
+                    <Col><Form.Group controlId='formPhoneNumber'>
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control
                             type='tel'
                             placeholder='555-555-5555'
-                            value={phone}
-                            onChange={event => setPhone(event.target.value)}
-                            required
+                            value={phoneNumber}
+                            onChange={event => setPhoneNumber(event.target.value)}
                         />
                     </Form.Group></Col>
                 </Form.Row>
@@ -172,25 +169,24 @@ function Register() {
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
-                    <Col><Form.Group controlId='formAddress1'>
+                    <Col><Form.Group controlId='formStreetAddress'>
                         <Form.Label>Address line 1</Form.Label>
                         <Form.Control
                             type='text'
                             placeholder='e.g., 123 Address Way'
-                            value={address1}
-                            onChange={event => setAddress1(event.target.value)}
-                            required
+                            value={streetAddress}
+                            onChange={event => setStreetAddress(event.target.value)}
                         />
                     </Form.Group></Col>
                 </Form.Row>
                 <Form.Row>
-                    <Col><Form.Group controlId='formAddress2'>
+                    <Col><Form.Group controlId='formStreetAddress2'>
                         <Form.Label>Address line 2</Form.Label>
                         <Form.Control
                             type='text'
                             placeholder='e.g., Apt. 8'
-                            value={address2}
-                            onChange={event => setAddress2(event.target.value)}
+                            value={streetAddress2}
+                            onChange={event => setStreetAddress2(event.target.value)}
                         />
                     </Form.Group></Col>
                 </Form.Row>
@@ -202,7 +198,6 @@ function Register() {
                             placeholder='City'
                             value={city}
                             onChange={event => setCity(event.target.value)}
-                            required
                         />
                     </Form.Group></Col>
                     <Col><Form.Group controlId='formState'>
@@ -212,17 +207,15 @@ function Register() {
                             placeholder='Select'
                             value={state}
                             onChange={event => setState(event.target.value)}
-                            required
                         />
                     </Form.Group></Col>
-                    <Col><Form.Group controlId='formZip'>
-                        <Form.Label>Zip</Form.Label>
+                    <Col><Form.Group controlId='formzipCode'>
+                        <Form.Label>zip code</Form.Label>
                         <Form.Control
                             type='text'
                             placeholder='00000'
-                            value={zip}
-                            onChange={event => setZip(event.target.value)}
-                            required
+                            value={zipCode}
+                            onChange={event => setZipCode(event.target.value)}
                         />
                     </Form.Group></Col>
                 </Form.Row>
@@ -252,6 +245,9 @@ function Register() {
                     </Form.Group>
                 </Form.Row>
             </Form>
+            <div className='text-center'>
+                <Link to='/auth/login'>Back to Login</Link>
+            </div>
         </Col>
     );
 }
