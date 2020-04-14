@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import { request } from '../../requests';
 
@@ -16,23 +16,30 @@ function ResetPassword({ alert }) {
   const [token] = useState(query.get('token') || '');
 
   const [newPassword, setNewPassword] = useState('');
-  const [twoFaToken, setTwoFaToken] = useState('');
+  const [newPassConf, setNewPassConf] = useState('');
+  const [twoFAToken, setTwoFAToken] = useState('');
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  if (!email || !token) {
-    alert({ message: 'Missing email or password reset token', variant: 'danger' });
-    history.replace('/auth/login');
-  }
-
   useEffect(() => {
     setNewPassword('');
-    setTwoFaToken('');
+    setTwoFAToken('');
+    setNewPassConf('');
   }, [error]);
 
+  if (!email || !token) {
+    alert({ message: 'Missing email or password reset token', variant: 'danger' });
+    return <Redirect to='/auth/login' />;
+  }
+
   function sendRequest() {
-    request('password', 'PUT', { email, token, newPassword, twoFaToken })
+    if (newPassword !== newPassConf) {
+      setError('New Password does not match Confirm New Password');
+      return;
+    }
+    setIsLoading(true);
+    request('password', 'PUT', { email, token, newPassword, twoFAToken })
       .then(() => {
         setIsLoading(false);
         alert({ message: 'Password successfully reset!', variant: 'primary' });
@@ -59,13 +66,23 @@ function ResetPassword({ alert }) {
             onChange={event => setNewPassword(event.target.value)}
           />
         </Form.Group>
+        <Form.Group controlId='formNewPasswordConfirm'>
+          <Form.Label>Confirm New Password</Form.Label>
+          <Form.Control
+            type='password'
+            placeholder='••••••••'
+            autoComplete='new-password'
+            value={newPassConf}
+            onChange={event => setNewPassConf(event.target.value)}
+          />
+        </Form.Group>
         <Form.Group controlId='form2FA'>
           <Form.Label>2 Factor Authentication Code</Form.Label>
           <Form.Control
             type='text'
             placeholder='123456'
-            value={twoFaToken}
-            onChange={event => setTwoFaToken(event.target.value)}
+            value={twoFAToken}
+            onChange={event => setTwoFAToken(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId='formError'>

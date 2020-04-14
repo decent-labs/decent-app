@@ -4,19 +4,22 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { Link } from 'react-router-dom';
 
 import BMxLogoColor from '../../assets/images/bmx-logo-color.svg';
 
 function LeftMenu() {
   return (
     <>
-      <Row className='mx-auto'>
+      <Row className='mx-auto pt-2'>
         <Col>
-          <Image fluid src={BMxLogoColor} />
+          <Link to='/'>
+            <Image fluid src={BMxLogoColor} />
+          </Link>
         </Col>
       </Row>
       <Row className='mt-5 mb-4 pb-5 border-bottom'>
-        <Col>
+        <Col className='px-4'>
           <Dropdown className="shadow rounded">
             <Dropdown.Toggle block variant="secondary" id="dropdown-basic">
               Select Profile

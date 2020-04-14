@@ -17,7 +17,7 @@ function App() {
         <UnauthedRoute path='/auth'>
           <Auth />
         </UnauthedRoute>
-        <PrivateRoute exact path='/'>
+        <PrivateRoute path='/'>
           <Home />
         </PrivateRoute>
       </Switch>

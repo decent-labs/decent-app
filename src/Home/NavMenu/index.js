@@ -6,6 +6,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Image from 'react-bootstrap/Image';
+import { LinkContainer } from 'react-router-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
@@ -20,6 +22,7 @@ import { StateProperty } from '../../redux/reducers';
 import { request } from '../../requests';
 
 function NavMenu() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [, , removeCookie] = useCookies(['token']);
 
@@ -27,7 +30,7 @@ function NavMenu() {
   const account = useAsyncState(StateProperty.account, accountLoader);
 
   return (
-    <Navbar bg='d-flex'>
+    <Navbar className='d-flex px-0 pt-0'>
       <Form className='flex-grow-1 mr-4'>
         <InputGroup>
           <InputGroup.Prepend>
@@ -38,7 +41,7 @@ function NavMenu() {
           <Form.Control type='text' placeholder='Search by name' className='py-2 border-left-0 border' />
         </InputGroup>
       </Form>
-      <Nav>
+      <Nav activeKey="/">
         <Nav.Link href='#notifications'>
           <Image src={BMxNotificationIcon} />
         </Nav.Link>
@@ -52,11 +55,14 @@ function NavMenu() {
           id='basic-nav-dropdown'
           alignRight
         >
-          <NavDropdown.Item href='#me'>Account Details</NavDropdown.Item>
+          <LinkContainer to='/me'>
+            <NavDropdown.Item>My Account</NavDropdown.Item>
+          </LinkContainer>
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={() => {
-            removeCookie('token');
+            removeCookie('token', { path: '/' });
             dispatch({ type: 'RESET_APP' });
+            history.push('/');
           }}>
             Log Out
           </NavDropdown.Item>
