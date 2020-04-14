@@ -37,9 +37,6 @@ function Settings() {
               <Account />
             </Route>
 
-            <Route path={`${match.path}/oauth/:unknown`}>
-              <Redirect to={`${match.path}/oauth`} />
-            </Route>
             <Route path={`${match.path}/oauth`}>
               <OauthManager />
             </Route>
