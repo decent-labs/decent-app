@@ -144,6 +144,7 @@ function Register() {
                             autoComplete='dob'
                             value={dob}
                             onChange={event => setDob(event.target.value)}
+                            required
                         />
                     </Form.Group></Col>
                     <Col><Form.Group controlId='formPhoneNumber'>

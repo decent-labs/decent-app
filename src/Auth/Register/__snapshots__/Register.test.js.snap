@@ -159,6 +159,7 @@ exports[`renders correctly 1`] = `
               class="form-control"
               id="formDOB"
               placeholder="mm/dd/yy"
+              required=""
               type="date"
               value=""
             />
