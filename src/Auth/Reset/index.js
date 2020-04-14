@@ -16,6 +16,7 @@ function ResetPassword({ alert }) {
   const [token] = useState(query.get('token') || '');
 
   const [newPassword, setNewPassword] = useState('');
+  const [newPassConf, setNewPassConf] = useState('');
   const [twoFAToken, setTwoFAToken] = useState('');
 
   const [error, setError] = useState(null);
@@ -24,6 +25,7 @@ function ResetPassword({ alert }) {
   useEffect(() => {
     setNewPassword('');
     setTwoFAToken('');
+    setNewPassConf('');
   }, [error]);
 
   if (!email || !token) {
@@ -32,6 +34,10 @@ function ResetPassword({ alert }) {
   }
 
   function sendRequest() {
+    if (newPassword !== newPassConf) {
+      setError('New Password does not match Confirm New Password');
+      return;
+    }
     setIsLoading(true);
     request('password', 'PUT', { email, token, newPassword, twoFAToken })
       .then(() => {
@@ -58,6 +64,16 @@ function ResetPassword({ alert }) {
             autoComplete='new-password'
             value={newPassword}
             onChange={event => setNewPassword(event.target.value)}
+          />
+        </Form.Group>
+        <Form.Group controlId='formNewPasswordConfirm'>
+          <Form.Label>Confirm New Password</Form.Label>
+          <Form.Control
+            type='password'
+            placeholder='••••••••'
+            autoComplete='new-password'
+            value={newPassConf}
+            onChange={event => setNewPassConf(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId='form2FA'>
