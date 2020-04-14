@@ -68,7 +68,7 @@ function UpdatePassword() {
             onChange={event => setNewPass(event.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId='formNewPassword'>
+        <Form.Group controlId='formNewPasswordConfirm'>
           <Form.Label>Confirm New Password</Form.Label>
           <Form.Control
             type='password'
