@@ -80,8 +80,12 @@ function Auth() {
               <Route path={`${match.path}/reset`}>
                 <Reset alert={setAlert} />
               </Route>
+              
               <Route path={`${match.path}/register`}>
                 <Register />
+              </Route>
+              <Route path={`${match.path}/register/:unknown`}>
+                <Redirect to={`${match.path}/register`} />
               </Route>
               
               <Route path={match.path}>
