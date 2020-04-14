@@ -20,6 +20,7 @@ import BMxLogoTransparent from '../assets/images/bmx-logo-transparent.png';
 import Login from './Login';
 import Forgot from './Forgot';
 import Reset from './Reset';
+import Register from './Register';
 
 const LeftHeroCol = styled(Col)`
   background: url(${BMxLoginSplash}) no-repeat center center;
@@ -78,6 +79,13 @@ function Auth() {
               </Route>
               <Route path={`${match.path}/reset`}>
                 <Reset alert={setAlert} />
+              </Route>
+
+              <Route path={`${match.path}/register/:unknown`}>
+                <Redirect to={`${match.path}/register`} />
+              </Route>
+              <Route path={`${match.path}/register`}>
+                <Register />
               </Route>
               
               <Route path={match.path}>

@@ -95,6 +95,9 @@ function Login() {
       <div className='text-center'>
         <Link to='/auth/forgot'>Forgot your password?</Link>
       </div>
+      <div className='text-center'>
+        <Link to='/auth/register'>Register a new Account</Link>
+      </div>
     </Col>
   );
 }
