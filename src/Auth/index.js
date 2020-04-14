@@ -59,15 +59,27 @@ function Auth() {
           </Row>
           <Row className='mx-5'>
             <Switch>
+              <Route path={`${match.path}/login/:unknown`}>
+                <Redirect to={`${match.path}/login`} />
+              </Route>
               <Route path={`${match.path}/login`}>
                 <Login />
+              </Route>
+
+              <Route path={`${match.path}/forgot/:unknown`}>
+                <Redirect to={`${match.path}/forgot`} />
               </Route>
               <Route path={`${match.path}/forgot`}>
                 <Forgot alert={setAlert} />
               </Route>
+              
+              <Route path={`${match.path}/reset/:unknown`}>
+                <Redirect to={`${match.path}/reset`} />
+              </Route>
               <Route path={`${match.path}/reset`}>
                 <Reset alert={setAlert} />
               </Route>
+              
               <Route path={match.path}>
                 <Redirect to={`${match.path}/login`} />
               </Route>

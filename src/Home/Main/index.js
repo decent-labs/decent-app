@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Me from '../../Me';
 import Welcome from '../../Welcome';
@@ -10,6 +10,9 @@ function Main() {
     <Switch>
       <Route path='/me'>
         <Me />
+      </Route>
+      <Route path='/:unknown'>
+        <Redirect to='/' />
       </Route>
       <Route path='/'>
         <Welcome />
