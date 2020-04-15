@@ -39,5 +39,5 @@ div.dropdown button.dropdown-toggle {
 
 .form-group.required .form-label:after {
   content:"*";
-  color:red;
+  color:$danger;
 }

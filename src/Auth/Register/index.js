@@ -209,7 +209,7 @@ function Register() {
                             <Form.Label>First name</Form.Label>
                             <Form.Control
                                 type='text'
-                                placeholder='first'
+                                placeholder='First'
                                 autoComplete='firstName'
                                 value={firstName}
                                 onChange={event => setFirstName(event.target.value)}
@@ -271,7 +271,7 @@ function Register() {
                         <Form.Label>Address line 1</Form.Label>
                         <Form.Control
                             type='text'
-                            placeholder='e.g., 123 Address Way'
+                            placeholder='123 Address Way'
                             value={streetAddress}
                             onChange={event => setStreetAddress(event.target.value)}
                         />
@@ -282,7 +282,7 @@ function Register() {
                         <Form.Label>Address line 2</Form.Label>
                         <Form.Control
                             type='text'
-                            placeholder='e.g., Apt. 8'
+                            placeholder='Apt. 8'
                             value={streetAddress2}
                             onChange={event => setStreetAddress2(event.target.value)}
                         />
