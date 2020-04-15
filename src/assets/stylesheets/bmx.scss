@@ -36,3 +36,8 @@ div.dropdown button.dropdown-toggle {
     margin-top: 9px;
   }
 }
+
+.form-group.required .form-label:after {
+  content:"*";
+  color:$danger;
+}
