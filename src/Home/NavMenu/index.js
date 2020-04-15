@@ -55,8 +55,8 @@ function NavMenu() {
           id='basic-nav-dropdown'
           alignRight
         >
-          <LinkContainer to='/me'>
-            <NavDropdown.Item>My Account</NavDropdown.Item>
+          <LinkContainer to='/settings'>
+            <NavDropdown.Item>Settings</NavDropdown.Item>
           </LinkContainer>
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={() => {
