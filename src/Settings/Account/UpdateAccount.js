@@ -42,7 +42,7 @@ function UpdateAccount() {
     <div className='mb-4'>
       <h3>Update Account</h3>
       <Form onSubmit={event => event.preventDefault()}>
-        <Form.Group controlId='formExistingPassword'>
+        <Form.Group controlId='formExistingPasswordUpdateAccount'>
           <Form.Label>Existing Password (for verification)</Form.Label>
           <Form.Control
             type='password'
@@ -52,7 +52,7 @@ function UpdateAccount() {
             onChange={event => setOldPass(event.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId='form2FA'>
+        <Form.Group controlId='form2FAUpdateAccount'>
           <Form.Label>2 Factor Authentication Code (for verification)</Form.Label>
           <Form.Control
             type='text'

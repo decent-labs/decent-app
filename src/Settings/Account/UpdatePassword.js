@@ -39,7 +39,7 @@ function UpdatePassword() {
     <div className='mb-4'>
       <h3>Update Password</h3>
       <Form onSubmit={event => event.preventDefault()}>
-        <Form.Group controlId='formExistingPassword'>
+        <Form.Group controlId='formExistingPasswordUpdatePassword'>
           <Form.Label>Existing Password (for verification)</Form.Label>
           <Form.Control
             type='password'
@@ -49,7 +49,7 @@ function UpdatePassword() {
             onChange={event => setOldPass(event.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId='form2FA'>
+        <Form.Group controlId='form2FAUpatePassword'>
           <Form.Label>2 Factor Authentication Code (for verification)</Form.Label>
           <Form.Control
             type='text'
