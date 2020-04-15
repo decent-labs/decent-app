@@ -20,15 +20,17 @@ function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [passwordIsInvalid, setPasswordIsInvalid] = useState(true);
+    const [passwordIsValid, setPasswordIsValid] = useState(true);
     const [dob, setDob] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [ssn, setSsn] = useState('');
+    const [ssnIsValid, setSsnIsValid] = useState(true);
     const [streetAddress, setStreetAddress] = useState('');
     const [streetAddress2, setStreetAddress2] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [zipCode, setZipCode] = useState('');
+    const [zipCodeIsValid, setZipCodeIsValid] = useState(false);
 
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -53,14 +55,22 @@ function Register() {
             });
     }
 
-    function checkPassword() {
-        const isPasswordEqual = password !== passwordConfirm;
+    function isPasswordValid() {
+        const isPasswordEqual = password === passwordConfirm;
         if (isPasswordEqual) {
-            setPasswordIsInvalid(false);
+            setPasswordIsValid(true);
         }else {
-            setPasswordIsInvalid(true);
+            setPasswordIsValid(false);
         }
         return isPasswordEqual;
+    }
+
+    function formatSsn(){
+        const ssnRegex = /(\d{3})(\d{2})(\d{4})/;
+        const ssnCheck = ssnRegex.test(ssn);
+        setSsnIsValid(ssnCheck);
+        if(ssnCheck)
+            setSsn(ssn.replace(ssnRegex,"$1-$2-$3"));
     }
 
     function getStateList() {
@@ -133,17 +143,23 @@ function Register() {
         ];
     }
 
-    function isZipCodeValid()
+    function validateZipCode(zip)
     {
         const regexp = /^[0-9]{5}?$/;
+        if(zip !== '')
+            setZipCodeIsValid(regexp.test(zip));
+    }
 
-        return regexp.test(zipCode);
+    function handleSubmit(event){
+        event.preventDefault();
+        if(ssnIsValid)
+            sendRequest();
     }
 
     return (
         <Col>
             <h1>Register a New Patient</h1>
-            <Form onSubmit={event => event.preventDefault()}>
+            <Form onSubmit={handleSubmit}>
                 <Form.Row>
                     <Form.Group className='required' lg={6} md={8} as={Col} controlId='formEmail'>
                         <Form.Label>Email</Form.Label>
@@ -166,7 +182,7 @@ function Register() {
                             autoComplete='current-password'
                             value={password}
                             onChange={event => setPassword(event.target.value)}
-                            isInvalid={!passwordIsInvalid}
+                            isInvalid={!passwordIsValid}
                             required
                         />
                     </Form.Group></Col>
@@ -178,8 +194,8 @@ function Register() {
                             autoComplete='current-password'
                             value={passwordConfirm}
                             onChange={event => setPasswordConfirm(event.target.value)}
-                            onBlur={() => checkPassword()}
-                            isInvalid={!passwordIsInvalid}
+                            onBlur={() => isPasswordValid()}
+                            isInvalid={!passwordIsValid}
                             required
                         />
                         <Form.Control.Feedback type="invalid">
@@ -239,9 +255,13 @@ function Register() {
                         <Form.Label>Social Security</Form.Label>
                         <Form.Control
                             type='text'
+                            maxLength={11}
+                            minLength={11}
                             placeholder='555-55-5555'
                             value={ssn}
                             onChange={event => setSsn(event.target.value)}
+                            onBlur={event => formatSsn()}
+                            isInvalid={!ssnIsValid}
                             required
                         />
                     </Form.Group>
@@ -294,7 +314,13 @@ function Register() {
                             placeholder='00000'
                             value={zipCode}
                             onChange={event => setZipCode(event.target.value)}
+                            onBlur={event => validateZipCode(event.target.value)}
+                            isValid={zipCodeIsValid}
+                            isInvalid={(zipCode !== '') && !zipCodeIsValid}
                         />
+                        <Form.Control.Feedback type="invalid">
+                            The entered zip code is invalid
+                        </Form.Control.Feedback>
                     </Form.Group></Col>
                 </Form.Row>
 
@@ -309,18 +335,6 @@ function Register() {
                             block
                             className='font-weight-bold'
                             disabled={isLoading}
-                            onClick={() => {
-                                setError('');
-                                if (checkPassword()) {
-                                    setError('Password does not match Confirm New Password');
-                                    return;
-                                }
-                                if(zipCode !== '' && !isZipCodeValid()) {
-                                    setError('The zipcode is invalid');
-                                    return;
-                                }
-                                sendRequest()
-                            }}
                         >
                             Signup
                         </Button>
