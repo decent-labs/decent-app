@@ -41,3 +41,26 @@ div.dropdown button.dropdown-toggle {
   content:"*";
   color:$danger;
 }
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.table thead th {
+  font-family: 'RobotoMono';
+  font-weight: 700;
+  color: $primary;
+  font-size: 12px;
+  border-top: none;
+  border-bottom: none;
+}
+
+.table tbody td {
+  border-bottom: 1px solid $input-border-color;
+  border-left: 1px solid $input-border-color;
+  
+  &:last-child {
+    border-right: 1px solid $input-border-color;
+  }
+}
