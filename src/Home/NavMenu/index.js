@@ -49,7 +49,7 @@ function NavMenu() {
           title={
             <>
               <Image src={BMxProfileIcon} />
-              <span className='ml-3'>{account.data.name ? account.data.name : '...'}</span>
+              <span className='ml-3'>{account.data.name}</span>
             </>
           }
           id='basic-nav-dropdown'

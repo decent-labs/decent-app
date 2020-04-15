@@ -1,9 +1,9 @@
 const initialState = {
-  name: null,
+  name: "Hello!",
   email: null
 };
 
-function accountSetData(state = initialState, action) {
+function setData(state = initialState, action) {
   return {
     ...state,
     name: action.data.user.fullName,
@@ -11,4 +11,4 @@ function accountSetData(state = initialState, action) {
   };
 }
 
-export { accountSetData };
+export { initialState, setData };
