@@ -11,4 +11,4 @@ function accountSetData(state = initialState, action) {
   };
 }
 
-export { accountSetData };
+export { initialState, accountSetData };

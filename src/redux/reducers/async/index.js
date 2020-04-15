@@ -27,14 +27,18 @@ export const getAsyncDataReducer = stateProperty => {
 
   let specificReducerModule = null;
   let setDataReducer = null;
+  let specificInitialState = null;
   
   try {
     specificReducerModule = require(`./${stateProperty}`);
     setDataReducer = specificReducerModule[`${stateProperty}SetData`];
+    specificInitialState = specificReducerModule['initialState'];
   } catch(error) {
     // swallow
     console.log(`couldn't find a specific module or exported function for ${stateProperty} reducer`)
   }
+
+  if (specificInitialState) initialState.data = specificInitialState;
 
   const reducer = (state = initialState, action) => {
     switch (action.type) {
