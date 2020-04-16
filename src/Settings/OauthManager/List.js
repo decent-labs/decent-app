@@ -8,7 +8,10 @@ import { StateProperty } from '../../redux/reducers';
 import { request } from '../../requests';
 
 function List() {
-  const oauthAppsLoader = useCallback(() => request('hospitalOrgs/5/oauthApplications', 'GET'), []);
+  const profiles = useAsyncState(StateProperty.userProfile);
+  const hospitalOrg = profiles.data.profiles.find(
+    curProfile => curProfile.profileType === 'hospitalOrg');
+  const oauthAppsLoader = useCallback(() => request(`hospitalOrgs/${hospitalOrg.profileId}/oauthApplications`, 'GET'), []);
   const oauthApps = useAsyncState(StateProperty.oauthApps, oauthAppsLoader);
 
   const appRows = oauthApps.data.map((app, index) => (
