@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,8 +7,16 @@ import Col from 'react-bootstrap/Col';
 import LeftMenu from './LeftMenu';
 import NavMenu from './NavMenu';
 import Main from './Main';
+import {request} from "../requests";
+import {useAsyncState} from "../redux/actions/useAsyncState";
+import {StateProperty} from "../redux/reducers";
 
 function Home() {
+  const accountLoader = useCallback(() => request('auth/me', 'GET'), []);
+  useAsyncState(StateProperty.account, accountLoader);
+  const userProfileLoader = useCallback(() => request('auth/profiles', 'GET'), []);
+  useAsyncState(StateProperty.userProfile, userProfileLoader);
+
   return (
     <Container fluid className='h-100 main-container'>
       <Row className='h-100'>
