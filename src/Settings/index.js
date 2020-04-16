@@ -16,10 +16,7 @@ function Settings() {
   const profiles = useAsyncState(StateProperty.userProfile);
 
   function userHasHospitalOrgPerms() {
-    const hospitalOrg = profiles.data.profiles.find(
-      curProfile => curProfile.profileType === 'hospitalOrg');
-
-    return !!hospitalOrg;
+    return profiles.data.currentProfile.profileType === 'hospitalOrg';
   }
 
   return (
