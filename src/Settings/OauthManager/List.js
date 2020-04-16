@@ -11,7 +11,7 @@ function List() {
   const profiles = useAsyncState(StateProperty.userProfile);
   const hospitalOrg = profiles.data.profiles.find(
     curProfile => curProfile.profileType === 'hospitalOrg');
-  const oauthAppsLoader = useCallback(() => request(`hospitalOrgs/${hospitalOrg.profileId}/oauthApplications`, 'GET'), []);
+  const oauthAppsLoader = useCallback(() => request(`hospitalOrgs/${hospitalOrg.profileId}/oauthApplications`, 'GET'), [hospitalOrg]);
   const oauthApps = useAsyncState(StateProperty.oauthApps, oauthAppsLoader);
 
   const appRows = oauthApps.data.map((app, index) => (
