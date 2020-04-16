@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,7 +8,36 @@ import { Link } from 'react-router-dom';
 
 import BMxLogoColor from '../../assets/images/bmx-logo-color.svg';
 
+import {request} from "../../requests";
+import {useAsyncState} from "../../redux/actions/useAsyncState";
+import {StateProperty} from "../../redux/reducers";
+import {dataUpdateAction} from "../../redux/reducers/async";
+import {useDispatch} from "react-redux";
+
 function LeftMenu() {
+  const userProfileLoader = useCallback(() => request('auth/profiles', 'GET'), []);
+  const userProfiles = useAsyncState(StateProperty.userProfile, userProfileLoader);
+  const dispatch = useDispatch();
+
+  const profiles = userProfiles.data.profiles.map((curProfile)=>{
+    return <Dropdown.Item
+      key={curProfile.profileId}
+      onSelect={() => {
+        handleProfileSelect(curProfile.profileId);
+      }}
+    >
+      {
+        curProfile.profileType.charAt(0).toUpperCase() +
+        curProfile.profileType.slice(1)
+      }
+    </Dropdown.Item>;
+  });
+
+  function handleProfileSelect(profile) {
+    const currentProfile = userProfiles.data.profiles.find(curProfile => curProfile.profileId === profile);
+    dispatch(dataUpdateAction(StateProperty.userProfile, {currentProfile, profiles:userProfiles.data.profiles}));
+  }
+
   return (
     <>
       <Row className='mx-auto pt-2'>
@@ -25,8 +54,7 @@ function LeftMenu() {
               Select Profile
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">Patient</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Prescriber</Dropdown.Item>
+              {profiles}
             </Dropdown.Menu>
           </Dropdown>
         </Col>
