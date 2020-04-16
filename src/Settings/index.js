@@ -8,9 +8,19 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import Account from './Account';
 import OauthManager from './OauthManager';
+import {useAsyncState} from "../redux/actions/useAsyncState";
+import {StateProperty} from "../redux/reducers";
 
 function Settings() {
   const match = useRouteMatch();
+  const profiles = useAsyncState(StateProperty.userProfile);
+
+  function userHasHospitalOrgPerms() {
+    const hospitalOrg = profiles.data.profiles.find(
+      curProfile => curProfile.profileType === 'hospitalOrg');
+
+    return !!hospitalOrg;
+  }
 
   return (
     <>
@@ -20,11 +30,14 @@ function Settings() {
             <Nav.Link eventKey='account'>Account</Nav.Link>
           </LinkContainer>
         </Nav.Item>
-        <Nav.Item>
-          <LinkContainer to={`${match.path}/oauth`}>
-            <Nav.Link eventKey='oauth-apps'>OAuth Applications</Nav.Link>
-          </LinkContainer>
-        </Nav.Item>
+        {userHasHospitalOrgPerms() ? (
+          <Nav.Item>
+            <LinkContainer to={`${match.path}/oauth`}>
+              <Nav.Link eventKey='oauth-apps'>OAuth Applications</Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
+          ) : null
+        }
       </Nav>
 
       <Row className='mt-4'>

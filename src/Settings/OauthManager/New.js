@@ -24,6 +24,9 @@ function New({ alert }) {
   const [redirectURI, setRedirectURI] = useState('');
 
   const oauthApps = useAsyncState(StateProperty.oauthApps);
+  const profiles = useAsyncState(StateProperty.userProfile);
+  const hospitalOrg = profiles.data.profiles.find(
+    curProfile => curProfile.profileType === 'hospitalOrg');
 
   return (
     <div>
@@ -56,7 +59,7 @@ function New({ alert }) {
             disabled={oauthApps.isLoading}
             onClick={() => {
               dispatch(dataLoadingAction(StateProperty.oauthApps));
-              request('hospitalOrgs/5/oauthApplications', 'POST', { name, redirectURI }) // TODO: don't hardcode the hospitalOrgId
+              request(`hospitalOrgs/${hospitalOrg.profileId}/oauthApplications`, 'POST', { name, redirectURI }) // TODO: don't hardcode the hospitalOrg
                 .then(response => dispatch(dataAddAction(StateProperty.oauthApps, response)))
                 .then(() => alert({ message: 'OAuth application created succesfully!', variant: 'primary' }))
                 .then(() => history.push('...')) // this goes "up" one level
