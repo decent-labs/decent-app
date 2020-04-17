@@ -64,3 +64,24 @@ div.dropdown button.dropdown-toggle {
     border-right: 1px solid $input-border-color;
   }
 }
+
+.left-menu {
+  .col {
+    align-items: center;
+    display: flex;
+    height: 4em;
+    justify-content: center;
+
+    .active {
+      background: #F5F4FF;
+      border-radius: 2em;
+    }
+  }
+  a {
+    color: $black;
+    &:hover {
+      color: $primary;
+      text-decoration: none;
+    }
+  }
+}

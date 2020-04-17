@@ -1,9 +1,6 @@
 import React from 'react';
 
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Image from 'react-bootstrap/Image';
-import Dropdown from 'react-bootstrap/Dropdown';
+import { Col, Container, Dropdown, Image, Row } from 'react-bootstrap';
 import {Link, useHistory} from 'react-router-dom';
 
 import BMxLogoColor from '../../assets/images/bmx-logo-color.svg';
@@ -59,9 +56,13 @@ function LeftMenu() {
           </Dropdown>
         </Col>
       </Row>
-      <Row className='mx-auto'>
-        <Col></Col>
-      </Row>
+      <Container>
+        <Row className='mx-auto left-menu'>
+          <Col>
+            <Link >Primary</Link>
+          </Col>
+        </Row>
+      </Container>
     </>
   )
 }
