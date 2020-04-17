@@ -21,7 +21,7 @@ references:
 
 jobs:
 
-  build:
+  install:
     <<: *container_config
     steps:
       - checkout
@@ -31,6 +31,23 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .
+
+  test:
+    <<: *container_config
+    steps:
+      - checkout
+      - *restore_repo
+      - run: npm run test
+
+  build:
+    <<: *container_config
+    steps:
+      - checkout
+      - *restore_repo
       - run: npm run build
       - persist_to_workspace:
           root: *workspace_root
@@ -60,26 +77,55 @@ jobs:
 workflows:
   version: 2
 
-  build_feature:
+  install_build_and_test_feature:
     jobs:
+      - install:
+          filters:
+            branches:
+              ignore:
+                - develop
+                - master
       - build:
           context: blockmedx-app-dev
+          requires:
+            - install
+          filters:
+            branches:
+              ignore:
+                - develop
+                - master
+      - test:
+          requires:
+            - install
           filters:
             branches:
               ignore:
                 - develop
                 - master
 
-  build_and_deploy_dev:
+  install_build_test_and_deploy_dev:
     jobs:
+      - install:
+          filters:
+            branches:
+              only: develop
+      - test:
+          requires:
+            - install
+          filters:
+            branches:
+              only: develop
       - build:
           context: blockmedx-app-dev
+          requires:
+            - install
           filters:
             branches:
               only: develop
       - deploy:
           context: blockmedx-app-dev
           requires:
+            - test
             - build
           filters:
             branches:
