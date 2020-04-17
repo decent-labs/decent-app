@@ -16,6 +16,7 @@ import styled from 'styled-components'
 import BMxLogoColor from '../assets/images/bmx-logo-color.svg';
 import BMxLoginSplash from '../assets/images/bmx-login-splash.png';
 import BMxLogoTransparent from '../assets/images/bmx-logo-transparent.png';
+import packageJson from '../../package.json';
 
 import Login from './Login';
 import Forgot from './Forgot';
@@ -37,8 +38,9 @@ function Auth() {
   return (
     <Container fluid className='h-100'>
       <Row className='h-100'>
-        <LeftHeroCol className='d-none d-md-flex' md={4} lg={6}>
-          <Image src={BMxLogoTransparent} fluid className='align-self-end mb-5' />
+        <LeftHeroCol className='d-none d-md-flex flex-md-column justify-content-end' md={4} lg={6}>
+          <Image src={BMxLogoTransparent} fluid className='mb-4' />
+          <small className='text-muted'>v{packageJson.version + '+' + process.env.REACT_APP_GIT_HASH}</small>
         </LeftHeroCol>
         <Col className='d-flex flex-column my-3'>
           <Row className='mx-auto mt-3 mb-5'>
