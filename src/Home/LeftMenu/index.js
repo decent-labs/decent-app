@@ -41,7 +41,7 @@ function LeftMenu() {
     switch (page) {
       case 'patients':
         dispatch(dataUpdateAction(StateProperty.currentPage, { currentPage: 'patients' }));
-        history.push('/newPatient');
+        history.push('/patients');
         break;
       default:
         dispatch(dataUpdateAction(StateProperty.currentPage, { currentPage: '/' }));
@@ -57,7 +57,7 @@ function LeftMenu() {
     <>
       <Row className='mx-auto pt-2'>
         <Col>
-          <Link onClick={() => handleNavigation('/')}>
+          <Link to='' onClick={() => handleNavigation('/')}>
             <Image fluid src={BMxLogoColor} />
           </Link>
         </Col>
