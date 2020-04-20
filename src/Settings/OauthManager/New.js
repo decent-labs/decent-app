@@ -59,7 +59,7 @@ function New({ alert }) {
             disabled={oauthApps.isLoading}
             onClick={() => {
               dispatch(dataLoadingAction(StateProperty.oauthApps));
-              request(`hospitalOrgs/${hospitalOrg.profileId}/oauthApplications`, 'POST', { name, redirectURI }) // TODO: don't hardcode the hospitalOrg
+              request(`hospitalOrgs/${profiles.data.currentProfile.entityId}/oauthApplications`, 'POST', { name, redirectURI })
                 .then(response => dispatch(dataAddAction(StateProperty.oauthApps, response)))
                 .then(() => alert({ message: 'OAuth application created succesfully!', variant: 'primary' }))
                 .then(() => history.push('...')) // this goes "up" one level

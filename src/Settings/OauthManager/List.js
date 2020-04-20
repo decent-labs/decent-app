@@ -10,7 +10,7 @@ import { request } from '../../requests';
 function List() {
   const profiles = useAsyncState(StateProperty.userProfile);
   const oauthAppsLoader = useCallback(() =>
-    request(`hospitalOrgs/${profiles.data.currentProfile.profileId}/oauthApplications`, 'GET'),
+    request(`hospitalOrgs/${profiles.data.currentProfile.entityId}/oauthApplications`, 'GET'),
     [profiles.data.currentProfile]);
   const oauthApps = useAsyncState(StateProperty.oauthApps, oauthAppsLoader);
 
