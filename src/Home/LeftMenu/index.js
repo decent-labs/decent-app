@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Button, Col, Container, Dropdown, Image, Row } from 'react-bootstrap';
-import {Link, useHistory} from 'react-router-dom';
+import { Col, Container, Dropdown, Image, Row } from 'react-bootstrap';
+import {Link, NavLink, useHistory} from 'react-router-dom';
 
 import BMxLogoColor from '../../assets/images/bmx-logo-color.svg';
 
@@ -12,7 +12,6 @@ import {useDispatch} from "react-redux";
 
 function LeftMenu() {
   const userProfiles = useAsyncState(StateProperty.userProfile);
-  const currentPage = useAsyncState(StateProperty.currentPage);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -33,24 +32,17 @@ function LeftMenu() {
   function handleProfileSelect(profile) {
     const currentProfile = userProfiles.data.profiles.find(curProfile => curProfile.profileId === profile);
     dispatch(dataUpdateAction(StateProperty.userProfile, {currentProfile, profiles:userProfiles.data.profiles}));
-    dispatch(dataUpdateAction(StateProperty.currentPage, { currentPage: '/' }));
     history.push('/');
   }
 
   function handleNavigation(page) {
     switch (page) {
       case 'patients':
-        dispatch(dataUpdateAction(StateProperty.currentPage, { currentPage: 'patients' }));
         history.push('/patients');
         break;
       default:
-        dispatch(dataUpdateAction(StateProperty.currentPage, { currentPage: '/' }));
         history.push('/');
     }
-  }
-
-  function isActive(page){
-    return page === currentPage.data.currentPage;
   }
 
   return (
@@ -77,7 +69,7 @@ function LeftMenu() {
       <Container>
         <Row className='mx-auto left-menu'>
           <Col>
-            <Button className={isActive('patients') ? 'currentPage' : ''} onClick={() => handleNavigation('patients')}>Patients</Button>
+            <NavLink to='/patients'>Patients</NavLink>
           </Col>
         </Row>
       </Container>

@@ -3,7 +3,6 @@ import { getAsyncDataReducer } from './async';
 
 export const StateProperty = {
   account: 'account',
-  currentPage: 'currentPage',
   oauthApps: 'oauthApps',
   userProfile: 'userProfile'
 };
