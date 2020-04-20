@@ -7,9 +7,18 @@ import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import Account from './Account';
+import OauthManager from './OauthManager';
+import RouteRule from '../Routes/RouteRule';
+import {useAsyncState} from "../redux/actions/useAsyncState";
+import {StateProperty} from "../redux/reducers";
 
 function Settings() {
   const match = useRouteMatch();
+  const profiles = useAsyncState(StateProperty.userProfile);
+
+  const canManageOauth = 
+    profiles.data.currentProfile.profileType === 'hospitalOrg' &&
+    profiles.data.currentProfile.admin;
 
   return (
     <>
@@ -19,6 +28,13 @@ function Settings() {
             <Nav.Link eventKey='account'>Account</Nav.Link>
           </LinkContainer>
         </Nav.Item>
+        {canManageOauth &&
+          <Nav.Item>
+            <LinkContainer to={`${match.path}/oauth`}>
+              <Nav.Link eventKey='oauth-apps'>OAuth Applications</Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
+        }
       </Nav>
 
       <Row className='mt-4'>
@@ -30,6 +46,13 @@ function Settings() {
             <Route path={`${match.path}/account`}>
               <Account />
             </Route>
+
+            <RouteRule
+              path={`${match.path}/oauth`}
+              rule={canManageOauth}
+            >
+              <OauthManager />
+            </RouteRule>
 
             <Route path={match.path}>
               <Redirect to={`${match.path}/account`} />

@@ -1,23 +1,22 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { Link } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 import BMxLogoColor from '../../assets/images/bmx-logo-color.svg';
 
-import {request} from "../../requests";
 import {useAsyncState} from "../../redux/actions/useAsyncState";
 import {StateProperty} from "../../redux/reducers";
 import {dataUpdateAction} from "../../redux/reducers/async";
 import {useDispatch} from "react-redux";
 
 function LeftMenu() {
-  const userProfileLoader = useCallback(() => request('auth/profiles', 'GET'), []);
-  const userProfiles = useAsyncState(StateProperty.userProfile, userProfileLoader);
+  const userProfiles = useAsyncState(StateProperty.userProfile);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const profiles = userProfiles.data.profiles.map((curProfile)=>{
     return <Dropdown.Item
@@ -36,6 +35,7 @@ function LeftMenu() {
   function handleProfileSelect(profile) {
     const currentProfile = userProfiles.data.profiles.find(curProfile => curProfile.profileId === profile);
     dispatch(dataUpdateAction(StateProperty.userProfile, {currentProfile, profiles:userProfiles.data.profiles}));
+    history.push('/');
   }
 
   return (

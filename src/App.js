@@ -7,8 +7,8 @@ import {
 
 import Auth from './Auth';
 import Home from './Home';
-import PrivateRoute from './Auth/PrivateRoute';
-import UnauthedRoute from './Auth/UnauthedRoute';
+import PrivateRoute from './Routes/PrivateRoute';
+import UnauthedRoute from './Routes/UnauthedRoute';
 
 function App() {
   return (

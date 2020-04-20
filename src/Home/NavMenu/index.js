@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -19,15 +19,12 @@ import BMxNotificationIcon from '../../assets/images/bmx-notification-icon.svg';
 import { useAsyncState } from '../../redux/actions/useAsyncState';
 import { StateProperty } from '../../redux/reducers';
 
-import { request } from '../../requests';
-
 function NavMenu() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [, , removeCookie] = useCookies(['token']);
 
-  const accountLoader = useCallback(() => request('auth/me', 'GET'), []);
-  const account = useAsyncState(StateProperty.account, accountLoader);
+  const account = useAsyncState(StateProperty.account);
 
   return (
     <Navbar className='d-flex px-0 pt-0'>
