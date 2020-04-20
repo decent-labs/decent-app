@@ -16,8 +16,9 @@ function Settings() {
   const match = useRouteMatch();
   const profiles = useAsyncState(StateProperty.userProfile);
 
-  const userHasHospitalOrgPerms = profiles.data.currentProfile.profileType === 'hospitalOrg';
-  const userIsAdmin = profiles.data.currentProfile.admin;
+  const canManageOauth = 
+    profiles.data.currentProfile.profileType === 'hospitalOrg' &&
+    profiles.data.currentProfile.admin;
 
   return (
     <>
@@ -27,7 +28,7 @@ function Settings() {
             <Nav.Link eventKey='account'>Account</Nav.Link>
           </LinkContainer>
         </Nav.Item>
-        {userHasHospitalOrgPerms && userIsAdmin &&
+        {canManageOauth &&
           <Nav.Item>
             <LinkContainer to={`${match.path}/oauth`}>
               <Nav.Link eventKey='oauth-apps'>OAuth Applications</Nav.Link>
@@ -48,7 +49,7 @@ function Settings() {
 
             <RouteRule
               path={`${match.path}/oauth`}
-              rule={userHasHospitalOrgPerms && userIsAdmin}
+              rule={canManageOauth}
             >
               <OauthManager />
             </RouteRule>
