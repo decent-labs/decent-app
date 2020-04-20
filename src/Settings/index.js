@@ -15,9 +15,8 @@ function Settings() {
   const match = useRouteMatch();
   const profiles = useAsyncState(StateProperty.userProfile);
 
-  function userHasHospitalOrgPerms() {
-    return profiles.data.currentProfile.profileType === 'hospitalOrg';
-  }
+  const userHasHospitalOrgPerms = profiles.data.currentProfile.profileType === 'hospitalOrg';
+  // TODO: user needs to be an Admin of the hospital org, too.
 
   return (
     <>
@@ -27,13 +26,12 @@ function Settings() {
             <Nav.Link eventKey='account'>Account</Nav.Link>
           </LinkContainer>
         </Nav.Item>
-        {userHasHospitalOrgPerms() ? (
+        {userHasHospitalOrgPerms &&
           <Nav.Item>
             <LinkContainer to={`${match.path}/oauth`}>
               <Nav.Link eventKey='oauth-apps'>OAuth Applications</Nav.Link>
             </LinkContainer>
           </Nav.Item>
-          ) : null
         }
       </Nav>
 
