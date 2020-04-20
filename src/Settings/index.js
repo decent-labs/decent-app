@@ -8,6 +8,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import Account from './Account';
 import OauthManager from './OauthManager';
+import RouteRule from '../Routes/RouteRule';
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 
@@ -45,9 +46,12 @@ function Settings() {
               <Account />
             </Route>
 
-            <Route path={`${match.path}/oauth`}>
+            <RouteRule
+              path={`${match.path}/oauth`}
+              rule={userHasHospitalOrgPerms}
+            >
               <OauthManager />
-            </Route>
+            </RouteRule>
 
             <Route path={match.path}>
               <Redirect to={`${match.path}/account`} />
