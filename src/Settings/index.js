@@ -17,7 +17,7 @@ function Settings() {
   const profiles = useAsyncState(StateProperty.userProfile);
 
   const userHasHospitalOrgPerms = profiles.data.currentProfile.profileType === 'hospitalOrg';
-  // TODO: user needs to be an Admin of the hospital org, too.
+  const userIsAdmin = profiles.data.currentProfile.admin;
 
   return (
     <>
@@ -27,7 +27,7 @@ function Settings() {
             <Nav.Link eventKey='account'>Account</Nav.Link>
           </LinkContainer>
         </Nav.Item>
-        {userHasHospitalOrgPerms &&
+        {userHasHospitalOrgPerms && userIsAdmin &&
           <Nav.Item>
             <LinkContainer to={`${match.path}/oauth`}>
               <Nav.Link eventKey='oauth-apps'>OAuth Applications</Nav.Link>
@@ -48,7 +48,7 @@ function Settings() {
 
             <RouteRule
               path={`${match.path}/oauth`}
-              rule={userHasHospitalOrgPerms}
+              rule={userHasHospitalOrgPerms && userIsAdmin}
             >
               <OauthManager />
             </RouteRule>

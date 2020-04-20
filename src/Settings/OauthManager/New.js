@@ -25,8 +25,6 @@ function New({ alert }) {
 
   const oauthApps = useAsyncState(StateProperty.oauthApps);
   const profiles = useAsyncState(StateProperty.userProfile);
-  const hospitalOrg = profiles.data.profiles.find(
-    curProfile => curProfile.profileType === 'hospitalOrg');
 
   return (
     <div>
