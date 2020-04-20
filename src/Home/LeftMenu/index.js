@@ -33,6 +33,7 @@ function LeftMenu() {
   function handleProfileSelect(profile) {
     const currentProfile = userProfiles.data.profiles.find(curProfile => curProfile.profileId === profile);
     dispatch(dataUpdateAction(StateProperty.userProfile, {currentProfile, profiles:userProfiles.data.profiles}));
+    dispatch(dataUpdateAction(StateProperty.currentPage, { currentPage: '/' }));
     history.push('/');
   }
 
