@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {Col, Form} from 'react-bootstrap';
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import {NavLink, useHistory} from "react-router-dom";
+import {request} from "../requests";
 function NewPatient() {
-
+  const history = useHistory();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');
@@ -105,10 +107,23 @@ function NewPatient() {
       setZipCodeIsValid(regexp.test(zip));
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    request('patients', 'POST', { firstName, lastName, dob, phoneNumber, ssn, streetAddress, streetAddress2, city, state, zipCode})
+      .then(response => {
+        setIsLoading(false);
+        history.push('/patients');
+      })
+      .catch(error => {
+        setIsLoading(false);
+        setError(error);
+      });
+  }
+
   return (
     <Col>
       <h1>New Patient</h1>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Row>
           <Col>
             <Form.Group className='required' controlId='formFirstName'>
@@ -233,6 +248,20 @@ function NewPatient() {
         <Form.Group controlId='formError'>
           {error && <Alert variant='danger'>{error}</Alert>}
         </Form.Group>
+        <Form.Row className='align-content-end'>
+          <NavLink className='align-middle' to='/patients'>Cancel</NavLink>
+          <Form.Group as={Col} controlId='formSubmit'>
+            <Button
+              variant='primary'
+              type='submit'
+              block
+              className='font-weight-bold w-25'
+              disabled={isLoading}
+            >
+              Save
+            </Button>
+          </Form.Group>
+        </Form.Row>
       </Form>
     </Col>
   )
