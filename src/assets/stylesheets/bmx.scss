@@ -59,7 +59,7 @@ div.dropdown button.dropdown-toggle {
 .table tbody td {
   border-bottom: 1px solid $input-border-color;
   border-left: 1px solid $input-border-color;
-  
+
   &:last-child {
     border-right: 1px solid $input-border-color;
   }
@@ -68,20 +68,27 @@ div.dropdown button.dropdown-toggle {
 .left-menu {
   .col {
     align-items: center;
+    color: $black;
     display: flex;
     height: 4em;
     justify-content: center;
-
-    .active {
-      background: #F5F4FF;
-      border-radius: 2em;
-    }
   }
-  a {
+  button {
+    height: 100%;
+    width: 100%;
+    border-radius: 2em;
     color: $black;
+    background: $light;
+    border-color: $light;
     &:hover {
-      color: $primary;
-      text-decoration: none;
+      color: $black;
+      background: #F5F4FF;
+      border-color: $light;
+    }
+    &.currentPage {
+      color: $black;
+      background: #F5F4FF;
+      border-color: $light;
     }
   }
 }

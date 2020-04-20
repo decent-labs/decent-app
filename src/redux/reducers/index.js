@@ -3,6 +3,7 @@ import { getAsyncDataReducer } from './async';
 
 export const StateProperty = {
   account: 'account',
+  currentPage: 'currentPage',
   oauthApps: 'oauthApps',
   userProfile: 'userProfile'
 };
@@ -19,7 +20,7 @@ function rootReducer(state, action) {
   if (action.type === 'RESET_APP') {
     state = undefined;
   }
-  
+
   const appReducer = combineReducers(allAsyncReducers);
   return appReducer(state, action);
 }
