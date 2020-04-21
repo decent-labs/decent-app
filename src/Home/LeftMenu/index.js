@@ -38,6 +38,11 @@ function LeftMenu() {
     history.push('/');
   }
 
+  function currentProfileDisplay() {
+    return userProfiles.data.currentProfile.profileType.charAt(0).toUpperCase() +
+      userProfiles.data.currentProfile.profileType.slice(1)
+  }
+
   return (
     <>
       <Row className='mx-auto pt-2'>
@@ -52,7 +57,7 @@ function LeftMenu() {
           {userProfiles.data.profiles.length > 1 &&
             <Dropdown className="shadow rounded">
               <Dropdown.Toggle block variant="secondary" id="dropdown-basic">
-                Select Profile
+                {currentProfileDisplay()}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {profiles}
