@@ -34,22 +34,12 @@ function LeftMenu() {
     dispatch(dataUpdateAction(StateProperty.userProfile, {currentProfile, profiles:userProfiles.data.profiles}));
     history.push('/');
   }
-
-  function handleNavigation(page) {
-    switch (page) {
-      case 'patients':
-        history.push('/patients');
-        break;
-      default:
-        history.push('/');
-    }
-  }
-
+  
   return (
     <>
       <Row className='mx-auto pt-2'>
         <Col>
-          <Link to='' onClick={() => handleNavigation('/')}>
+          <Link to='' onClick={() => history.push('/')}>
             <Image fluid src={BMxLogoColor} />
           </Link>
         </Col>
