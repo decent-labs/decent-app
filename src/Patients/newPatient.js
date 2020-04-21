@@ -8,6 +8,7 @@ function NewPatient() {
   const history = useHistory();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [dob, setDob] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [ssn, setSsn] = useState('');
@@ -109,7 +110,7 @@ function NewPatient() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    request('patients', 'POST', { firstName, lastName, dob, phoneNumber, ssn, streetAddress, streetAddress2, city, state, zipCode})
+    request('patients', 'POST', { email, firstName, lastName, dob, phoneNumber, ssn, streetAddress, streetAddress2, city, state, zipCode})
       .then(response => {
         setIsLoading(false);
         history.push('/patients');
@@ -124,6 +125,19 @@ function NewPatient() {
     <Col>
       <h1>New Patient</h1>
       <Form onSubmit={handleSubmit}>
+        <Form.Row>
+          <Form.Group className='required' lg={6} md={8} as={Col} controlId='formEmail'>
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type='email'
+              placeholder='you@email.com'
+              autoComplete='email'
+              value={email}
+              onChange={event => setEmail(event.target.value)}
+              required
+            />
+          </Form.Group>
+        </Form.Row>
         <Form.Row>
           <Col>
             <Form.Group className='required' controlId='formFirstName'>
