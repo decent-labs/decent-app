@@ -49,14 +49,16 @@ function LeftMenu() {
       </Row>
       <Row className='mt-5 mb-4 pb-5 border-bottom'>
         <Col className='px-4'>
-          <Dropdown className="shadow rounded">
-            <Dropdown.Toggle block variant="secondary" id="dropdown-basic">
-              Select Profile
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {profiles}
-            </Dropdown.Menu>
-          </Dropdown>
+          {userProfiles.data.profiles.length > 1 &&
+            <Dropdown className="shadow rounded">
+              <Dropdown.Toggle block variant="secondary" id="dropdown-basic">
+                Select Profile
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {profiles}
+              </Dropdown.Menu>
+            </Dropdown>
+          }
         </Col>
       </Row>
       <Row className='mx-auto'>

@@ -23,8 +23,7 @@ function Home() {
         }
       })
   }, []);
-  const profiles = useAsyncState(StateProperty.userProfile, userProfileLoader);
-
+  useAsyncState(StateProperty.userProfile, userProfileLoader);
 
   return (
     <Container fluid className='h-100 main-container'>
