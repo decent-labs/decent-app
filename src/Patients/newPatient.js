@@ -248,14 +248,14 @@ function NewPatient() {
         <Form.Group controlId='formError'>
           {error && <Alert variant='danger'>{error}</Alert>}
         </Form.Group>
-        <Form.Row className='align-content-end'>
-          <NavLink className='align-middle' to='/patients'>Cancel</NavLink>
-          <Form.Group as={Col} controlId='formSubmit'>
+        <Form.Row className='justify-content-end align-middle'>
+          <Form.Group className='d-flex flex-row align-items-center' controlId='formSubmit'>
+            <NavLink className='font-weight-bold m-2' to='/patients'>Cancel</NavLink>
             <Button
               variant='primary'
               type='submit'
               block
-              className='font-weight-bold w-25'
+              className='font-weight-bold'
               disabled={isLoading}
             >
               Save
