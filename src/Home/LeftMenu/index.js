@@ -59,7 +59,7 @@ function LeftMenu() {
               <Dropdown.Toggle block variant="secondary" id="dropdown-basic">
                 {currentProfileDisplay()}
               </Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Menu style={{margin: 0 }}>
                 {profiles}
               </Dropdown.Menu>
             </Dropdown>
