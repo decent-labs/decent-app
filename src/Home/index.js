@@ -14,8 +14,17 @@ import {StateProperty} from "../redux/reducers";
 function Home() {
   const accountLoader = useCallback(() => request('auth/me', 'GET'), []);
   useAsyncState(StateProperty.account, accountLoader);
-  const userProfileLoader = useCallback(() => request('auth/profiles', 'GET'), []);
-  useAsyncState(StateProperty.userProfile, userProfileLoader);
+  const userProfileLoader = useCallback(() => {
+    return request('auth/profiles', 'GET')
+      .then((response) => {
+        return {
+          currentProfile: response.profiles[0],
+          profiles: response.profiles
+        }
+      })
+  }, []);
+  const profiles = useAsyncState(StateProperty.userProfile, userProfileLoader);
+
 
   return (
     <Container fluid className='h-100 main-container'>
