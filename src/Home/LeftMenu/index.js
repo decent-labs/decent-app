@@ -39,8 +39,9 @@ function LeftMenu() {
   }
 
   function currentProfileDisplay() {
-    return userProfiles.data.currentProfile.profileType.charAt(0).toUpperCase() +
-      userProfiles.data.currentProfile.profileType.slice(1)
+    const profileDisplayText = userProfiles.data.currentProfile.entityName || userProfiles.data.currentProfile.profileType;
+    return profileDisplayText.charAt(0).toUpperCase() +
+      profileDisplayText.slice(1)
   }
 
   return (
