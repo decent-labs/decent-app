@@ -11,8 +11,8 @@ function List() {
         <Col>
           <h1>Patients</h1>
         </Col>
-        <Col>
-          <Button onClick={()=> history.push('/patients/newPatient')}>
+        <Col className='d-flex align-items-center justify-content-end'>
+          <Button className='styled-form-button' onClick={()=> history.push('/patients/newPatient')}>
             New Patient
           </Button>
         </Col>

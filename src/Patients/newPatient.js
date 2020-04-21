@@ -255,7 +255,7 @@ function NewPatient() {
               variant='primary'
               type='submit'
               block
-              className='font-weight-bold'
+              className='styled-form-button ml-5'
               disabled={isLoading}
             >
               Save
