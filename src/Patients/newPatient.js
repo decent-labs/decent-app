@@ -4,6 +4,8 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import {NavLink, useHistory} from "react-router-dom";
 import {request} from "../requests";
+import { toast } from 'react-toastify';
+
 function NewPatient() {
   const history = useHistory();
   const [firstName, setFirstName] = useState('');
@@ -113,6 +115,7 @@ function NewPatient() {
     request('patients', 'POST', { email, firstName, lastName, dob, phoneNumber, ssn, streetAddress, streetAddress2, city, state, zipCode})
       .then(response => {
         setIsLoading(false);
+        toast('New Patient added successfully', {type:"success"});
         history.push('/patients');
       })
       .catch(error => {
