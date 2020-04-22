@@ -1,30 +1,47 @@
-import React from "react";
-import {Redirect, Route, Switch, useRouteMatch} from "react-router-dom";
-import {Col, Row} from "react-bootstrap"
-import NewPatient from "./newPatient";
+import React, {useState} from "react";
+import {Link, Redirect, Route, Switch, useRouteMatch} from "react-router-dom";
+import New from "./new";
 import List from "./list";
+import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 
 function Patients() {
   const match = useRouteMatch();
+  const [alert, setAlert] = useState(null);
+
   return (
-    <Row className='mt-4'>
-      <Col>
-        <Switch>
-          <Route path={`${match.path}/newPatient/:unknown`}>
-            <Redirect to={`${match.path}/`} />
-          </Route>
-          <Route path={`${match.path}/newPatient`}>
-            <NewPatient />
-          </Route>
-          <Route path={`${match.path}/:unknown`}>
-            <Redirect to={`${match.path}/`} />
-          </Route>
-          <Route path={`${match.path}/`}>
-            <List />
-          </Route>
-        </Switch>
-      </Col>
-    </Row>
+    <>
+      {alert &&
+      <Alert
+        className='mt-3'
+        variant={alert.variant}
+        dismissible
+        onClose={() => setAlert(null)}
+      >
+        {alert.message}
+      </Alert>
+      }
+
+      <Route exact path={`${match.path}`}>
+        <Link to={`${match.path}/new`} className='float-right'>
+          <Button>New Patient</Button>
+        </Link>
+      </Route>
+      <Switch>
+        <Route path={`${match.path}/new/:unknown`}>
+          <Redirect to={`${match.path}/new`} />
+        </Route>
+        <Route path={`${match.path}/new`}>
+          <New alert={setAlert} />
+        </Route>
+        <Route path={`${match.path}/:unknown`}>
+          <Redirect to={`${match.path}`} />
+        </Route>
+        <Route path={`${match.path}`}>
+          <List />
+        </Route>
+      </Switch>
+    </>
   );
 }
 

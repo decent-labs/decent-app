@@ -1,20 +1,13 @@
 import React from "react";
-import {Button, Col, Row} from "react-bootstrap";
-import {useHistory} from "react-router-dom";
+import {Col, Row} from "react-bootstrap";
 
 function List() {
-  const history = useHistory();
 
   return(
     <>
       <Row>
         <Col>
           <h1>Patients</h1>
-        </Col>
-        <Col className='d-flex align-items-center justify-content-end'>
-          <Button className='styled-form-button' onClick={()=> history.push('/patients/newPatient')}>
-            New Patient
-          </Button>
         </Col>
       </Row>
       <Row className='mx-auto'>

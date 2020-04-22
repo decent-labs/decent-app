@@ -34,12 +34,12 @@ function LeftMenu() {
     dispatch(dataUpdateAction(StateProperty.userProfile, {currentProfile, profiles:userProfiles.data.profiles}));
     history.push('/');
   }
-  
+
   return (
     <>
       <Row className='mx-auto pt-2'>
         <Col>
-          <Link to='' onClick={() => history.push('/')}>
+          <Link to='/'>
             <Image fluid src={BMxLogoColor} />
           </Link>
         </Col>
