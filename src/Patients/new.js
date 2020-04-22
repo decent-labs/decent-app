@@ -6,14 +6,11 @@ import Form from './form';
 
 function New({ alert }) {
   const history = useHistory();
-  const [, setError] = useState('');
-  const [, setIsLoading] = useState(false);
 
   function handleSubmit(event, data) {
     event.preventDefault();
     return request('patients', 'POST', data)
       .then(response => {
-        setIsLoading(false);
         alert({ message: 'New Patient added successfully', variant: 'primary' });
         history.push('/patients');
       })
