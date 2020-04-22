@@ -1,5 +1,4 @@
 import {Col, Form} from "react-bootstrap";
-import Alert from "react-bootstrap/Alert";
 import {NavLink} from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import React, {useState} from "react";
@@ -18,8 +17,6 @@ function PatientForm({submitHandler}) {
   const [state, setState] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [zipCodeIsValid, setZipCodeIsValid] = useState(false);
-
-  const [error, setError] = useState('');
 
   function getStateList() {
     const states = {
@@ -109,9 +106,6 @@ function PatientForm({submitHandler}) {
   function handleSubmit(event){
     event.preventDefault();
     submitHandler(event, { email, firstName, lastName, dob, phoneNumber, ssn, streetAddress, streetAddress2, city, state, zipCode})
-      .catch(error => {
-        setError(error);
-      });
   }
 
   return (
@@ -249,10 +243,6 @@ function PatientForm({submitHandler}) {
           </Form.Control.Feedback>
         </Form.Group></Col>
       </Form.Row>
-
-      <Form.Group controlId='formError'>
-        {error && <Alert variant='danger'>{error}</Alert>}
-      </Form.Group>
       <Form.Row className='justify-content-end align-middle'>
         <Form.Group className='d-flex flex-row align-items-center' controlId='formSubmit'>
           <NavLink className='font-weight-bold m-2' to='/patients'>Cancel</NavLink>
