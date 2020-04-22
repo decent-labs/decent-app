@@ -24,9 +24,7 @@ function New({ alert }) {
     <Col>
       <h1>New Patient</h1>
       <Form submitHandler={handleSubmit}/>
-      <Form.Group controlId='formError'>
-        {error && <Alert variant='danger'>{error}</Alert>}
-      </Form.Group>
+      {error && <Alert variant='danger'>{error}</Alert>}
     </Col>
   )
 }
