@@ -26,8 +26,8 @@ function LeftMenu() {
       }}
     >
       {
-        curProfile.profileType.charAt(0).toUpperCase() +
-        curProfile.profileType.slice(1)
+        curProfile.entityName.charAt(0).toUpperCase() +
+        curProfile.entityName.slice(1)
       }
     </Dropdown.Item>;
   });
