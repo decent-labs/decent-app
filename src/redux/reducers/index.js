@@ -4,7 +4,8 @@ import { getAsyncDataReducer } from './async';
 export const StateProperty = {
   account: 'account',
   oauthApps: 'oauthApps',
-  userProfile: 'userProfile'
+  userProfile: 'userProfile',
+  patients: 'patients'
 };
 
 const allAsyncReducers = Object.keys(StateProperty).reduce(
