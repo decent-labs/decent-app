@@ -17,28 +17,24 @@ function LeftMenu() {
 
   const profiles = userProfiles.data.profiles.map((curProfile)=>{
     return <Dropdown.Item
-      key={curProfile.profileId}
+      key={(curProfile.profileId || '0') + curProfile.entityId + curProfile.entityName}
       onSelect={() => {
-        handleProfileSelect(curProfile.profileId);
+        handleProfileSelect(curProfile);
       }}
     >
       {
-        curProfile.entityName.charAt(0).toUpperCase() +
-        curProfile.entityName.slice(1)
+        (curProfile.entityName.trim() || curProfile.profileType.trim())
       }
     </Dropdown.Item>;
   });
 
   function handleProfileSelect(profile) {
-    const currentProfile = userProfiles.data.profiles.find(curProfile => curProfile.profileId === profile);
-    dispatch(dataUpdateAction(StateProperty.userProfile, {currentProfile, profiles:userProfiles.data.profiles}));
+    dispatch(dataUpdateAction(StateProperty.userProfile, {currentProfile:profile, profiles:userProfiles.data.profiles}));
     history.push('/');
   }
 
   function currentProfileDisplay() {
-    const profileDisplayText = userProfiles.data.currentProfile.entityName || userProfiles.data.currentProfile.profileType;
-    return profileDisplayText.charAt(0).toUpperCase() +
-      profileDisplayText.slice(1)
+    return userProfiles.data.currentProfile.entityName.trim() || userProfiles.data.currentProfile.profileType.trim();
   }
 
   return (
