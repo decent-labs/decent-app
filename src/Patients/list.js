@@ -19,10 +19,26 @@ function List() {
       }
 
       return Promise.all(patients)
-        .then(profiles => profiles.map(curProfile => curProfile.profile))
+        .then(profiles => Promise.all(profiles.map(curProfile =>
+          request(`patients/${curProfile.profile.id}/rxs`, 'GET')
+            .then(results => {
+              curProfile.profile.prescriptions = results.prescriptions;
+              return curProfile.profile;
+            })
+        )))
     },
     [userProfiles.data.profiles, userProfiles.data.currentProfile]);
   const patients = useAsyncState(StateProperty.patients, patientsLoader);
+
+  function getLatestPrescriptionDate(patient) {
+    if(patient.prescriptions.length === 0){
+      return 'n/a';
+    }
+    var mostRecentDate = new Date(Math.max.apply(null, patient.prescriptions.map( e => {
+      return new Date(e.dateWritten);
+    })));
+    return (`${mostRecentDate.getMonth()}/${mostRecentDate.getDay()}/${mostRecentDate.getFullYear()}`);
+  }
 
   const patientRows = patients.data.patients.map((patient, index) =>{
     const dob = new Date(patient.dob)
@@ -32,7 +48,7 @@ function List() {
         <td>{patient.lastName}</td>
         <td>{patient.firstName}</td>
         <td>{(`${dob.getMonth()}/${dob.getDay()}/${dob.getFullYear()}`)}</td>
-        <td>{}</td>
+        <td>{getLatestPrescriptionDate(patient)}</td>
         <td className='action-items'>
           <Link to=''>
             <div>
