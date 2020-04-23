@@ -17,22 +17,24 @@ function LeftMenu() {
 
   const profiles = userProfiles.data.profiles.map((curProfile)=>{
     return <Dropdown.Item
-      key={curProfile.profileId}
+      key={(curProfile.profileId || '0') + curProfile.entityId + curProfile.entityName}
       onSelect={() => {
-        handleProfileSelect(curProfile.profileId);
+        handleProfileSelect(curProfile);
       }}
     >
       {
-        curProfile.profileType.charAt(0).toUpperCase() +
-        curProfile.profileType.slice(1)
+        (curProfile.entityName.trim() || curProfile.profileType.trim())
       }
     </Dropdown.Item>;
   });
 
   function handleProfileSelect(profile) {
-    const currentProfile = userProfiles.data.profiles.find(curProfile => curProfile.profileId === profile);
-    dispatch(dataUpdateAction(StateProperty.userProfile, {currentProfile, profiles:userProfiles.data.profiles}));
+    dispatch(dataUpdateAction(StateProperty.userProfile, {currentProfile:profile, profiles:userProfiles.data.profiles}));
     history.push('/');
+  }
+
+  function currentProfileDisplay() {
+    return userProfiles.data.currentProfile.entityName.trim() || userProfiles.data.currentProfile.profileType.trim();
   }
 
   return (
@@ -46,14 +48,16 @@ function LeftMenu() {
       </Row>
       <Row className='mt-5 mb-4 pb-5 border-bottom'>
         <Col className='px-4'>
-          <Dropdown className="shadow rounded">
-            <Dropdown.Toggle block variant="secondary" id="dropdown-basic">
-              Select Profile
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {profiles}
-            </Dropdown.Menu>
-          </Dropdown>
+          {userProfiles.data.profiles.length > 1 &&
+            <Dropdown className="shadow rounded">
+              <Dropdown.Toggle block variant="secondary" id="dropdown-basic">
+                {currentProfileDisplay()}
+              </Dropdown.Toggle>
+              <Dropdown.Menu style={{margin: 0 }}>
+                {profiles}
+              </Dropdown.Menu>
+            </Dropdown>
+          }
         </Col>
       </Row>
       <Container>
