@@ -1,13 +1,10 @@
-import React, {useCallback, useState} from "react";
-import {Col, Row, Spinner, Table} from "react-bootstrap";
+import React from "react";
+import {Col, Row, Table} from "react-bootstrap";
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
-import {request} from "../requests";
 import {Link} from "react-router-dom";
 
 function List() {
-  const [isLoading, setIsLoading] = useState(false);
-
   const patients = useAsyncState(StateProperty.patients);
 
   function getLatestPrescriptionDate(patient) {
@@ -56,25 +53,20 @@ function List() {
           <h1>Patients</h1>
         </Col>
       </Row>
-        {isLoading ?
-          <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-          </Spinner> :
-          <Table>
-            <thead>
-            <tr>
-              <th>Last Name</th>
-              <th>First Name</th>
-              <th>Date of Birth</th>
-              <th>Last Rx Date</th>
-              <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {patientRows}
-            </tbody>
-          </Table>
-        }
+      <Table>
+        <thead>
+        <tr>
+          <th>Last Name</th>
+          <th>First Name</th>
+          <th>Date of Birth</th>
+          <th>Last Rx Date</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {patientRows}
+        </tbody>
+      </Table>
     </>
   )
 }
