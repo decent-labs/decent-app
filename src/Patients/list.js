@@ -7,36 +7,11 @@ import {Link} from "react-router-dom";
 
 function List() {
   const [isLoading, setIsLoading] = useState(false);
-  const userProfiles = useAsyncState(StateProperty.userProfile);
 
-  const patientsLoader = useCallback(async () => {
-      let patients;
-      setIsLoading(true);
-      if(userProfiles.data.currentProfile.profileType === 'patient') {
-        patients = userProfiles.data.profiles
-          .filter(curProfile => curProfile.profileType === 'patient')
-          .map(curPatient => request(`patients/${curPatient.profileId}/profile`, 'GET'));
-      }else if(userProfiles.data.currentProfile.profileType === 'prescriber') {
-        let patientProfiles = await request(`prescribers/${userProfiles.data.currentProfile.profileId}/patients`, 'GET')
-        patients = patientProfiles.patients.map(curPatient => request(`patients/${curPatient.patientId}/profile`, 'GET'))
-      }
-
-      return Promise.all(patients)
-        .then(profiles => Promise.all(profiles.map(curProfile =>
-          request(`patients/${curProfile.profile.id}/rxs`, 'GET')
-            .then(results => {
-              curProfile.profile.prescriptions = results.prescriptions;
-              return curProfile.profile;
-            })
-          ))
-          .finally(() => setIsLoading(false))
-        )
-    },
-    [userProfiles.data.profiles, userProfiles.data.currentProfile]);
-  const patients = useAsyncState(StateProperty.patients, patientsLoader);
+  const patients = useAsyncState(StateProperty.patients);
 
   function getLatestPrescriptionDate(patient) {
-    if(patient.prescriptions.length === 0){
+    if(!!patient.prescriptions === false || patient.prescriptions.length === 0){
       return 'n/a';
     }
     var mostRecentDate = new Date(Math.max.apply(null, patient.prescriptions.map( e => {
