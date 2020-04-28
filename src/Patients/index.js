@@ -4,6 +4,7 @@ import New from "./new";
 import List from "./list";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
+import Details from "./details";
 
 function Patients() {
   const match = useRouteMatch();
@@ -33,6 +34,9 @@ function Patients() {
         </Route>
         <Route path={`${match.path}/new`}>
           <New alert={setAlert} />
+        </Route>
+        <Route path={`${match.path}/details/:id`}>
+          <Details alert={setAlert} />
         </Route>
         <Route path={`${match.path}/:unknown`}>
           <Redirect to={`${match.path}`} />
