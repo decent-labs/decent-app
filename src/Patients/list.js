@@ -1,11 +1,39 @@
-import React from "react";
-import {Col, Row, Table} from "react-bootstrap";
+import React, {useCallback, useState} from "react";
+import {Col, Pagination, Row, Table} from "react-bootstrap";
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 import {Link} from "react-router-dom";
+import {request} from "../requests";
 
 function List() {
-  const patients = useAsyncState(StateProperty.patients);
+  const [currentPage, setCurrentPage] = useState(1);
+  const userProfiles = useAsyncState(StateProperty.userProfile);
+  const patientsLoader = useCallback(async () => {
+      let patients;
+      if(userProfiles.data.currentProfile.profileType === 'patient') {
+        patients = userProfiles.data.profiles
+          .filter(curProfile => curProfile.profileType === 'patient')
+          .map(curPatient => request(`patients/${curPatient.profileId}/profile`, 'GET'));
+      }else if(userProfiles.data.currentProfile.profileType === 'prescriber') {
+        let patientProfiles = await request(`prescribers/${userProfiles.data.currentProfile.profileId}/patients`, 'GET')
+        patients = patientProfiles.patients.map(curPatient => request(`patients/${curPatient.patientId}/profile`, 'GET'))
+      }else if(userProfiles.data.currentProfile.profileType === 'internal') {
+        let patientProfiles = await request(`patients/list?currentPage=${currentPage}`, 'GET')
+        patients = patientProfiles.profile.data.map(curPatient => request(`patients/${curPatient.id}/profile`, 'GET'))
+      }
+
+      return Promise.all(patients)
+        .then(profiles => Promise.all(profiles.map(curProfile =>
+            request(`patients/${curProfile.profile.id}/rxs`, 'GET')
+              .then(results => {
+                curProfile.profile.prescriptions = results.prescriptions;
+                return curProfile.profile;
+              })
+          ))
+        )
+    },
+    [userProfiles.data.profiles, userProfiles.data.currentProfile, currentPage]);
+  const patients = useAsyncState(StateProperty.patients, patientsLoader);
 
   function getLatestPrescriptionDate(patient) {
     if(!!patient.prescriptions === false || patient.prescriptions.length === 0){
@@ -67,6 +95,14 @@ function List() {
         {patientRows}
         </tbody>
       </Table>
+      {userProfiles.data.currentProfile.profileType === 'internal' && (
+        <Pagination as={'Container'} className='justify-content-end'>
+          <Pagination.First onClick={() => setCurrentPage(1)}/>
+          <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)}/>
+          <Pagination.Item active>{currentPage}</Pagination.Item>
+          <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)}/>
+        </Pagination>
+      )}
     </>
   )
 }

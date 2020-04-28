@@ -23,33 +23,7 @@ function Home() {
         }
       })
   }, []);
-  const userProfiles = useAsyncState(StateProperty.userProfile, userProfileLoader);
-  const patientsLoader = useCallback(async () => {
-      let patients;
-      if(userProfiles.data.currentProfile.profileType === 'patient') {
-        patients = userProfiles.data.profiles
-          .filter(curProfile => curProfile.profileType === 'patient')
-          .map(curPatient => request(`patients/${curPatient.profileId}/profile`, 'GET'));
-      }else if(userProfiles.data.currentProfile.profileType === 'prescriber') {
-        let patientProfiles = await request(`prescribers/${userProfiles.data.currentProfile.profileId}/patients`, 'GET')
-        patients = patientProfiles.patients.map(curPatient => request(`patients/${curPatient.patientId}/profile`, 'GET'))
-      }else if(userProfiles.data.currentProfile.profileType === 'internal') {//TODO: adjust for paginated endpoint
-        let patientProfiles = await request(`patients`, 'GET')
-        patients = patientProfiles.profile.map(curPatient => request(`patients/${curPatient.id}/profile`, 'GET'))
-      }
-
-      return Promise.all(patients)
-        .then(profiles => Promise.all(profiles.map(curProfile =>
-            request(`patients/${curProfile.profile.id}/rxs`, 'GET')
-              .then(results => {
-                curProfile.profile.prescriptions = results.prescriptions;
-                return curProfile.profile;
-              })
-          ))
-        )
-    },
-    [userProfiles.data.profiles, userProfiles.data.currentProfile]);
-  useAsyncState(StateProperty.patients, patientsLoader);
+  useAsyncState(StateProperty.userProfile, userProfileLoader);
 
   return (
     <Container fluid className='h-100 main-container'>
