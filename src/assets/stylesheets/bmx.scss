@@ -98,5 +98,16 @@ div.dropdown button.dropdown-toggle {
       }
     }
   }
+}
 
+.action-items {
+  a div {
+    align-items: center;
+    background: #DDE2FF;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+  }
 }
