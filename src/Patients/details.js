@@ -7,7 +7,8 @@ import {StateProperty} from "../redux/reducers";
 function Details() {
   let { id } = useParams();
   const patients = useAsyncState(StateProperty.patients);
-  const patientDetails = patients.data.patients[id];
+  const patientDetails = patients.data.patients.find(curPatient => curPatient.id === parseInt(id));
+
 
   function getPrescriptionRecords() {
     return patientDetails.prescriptions.map((curPrescription, index) => {
@@ -16,7 +17,7 @@ function Details() {
           <td>{curPrescription.patientInfo.lastName}</td>
           <td>{curPrescription.patientInfo.firstName}</td>
           <td>{formatDate(curPrescription.patientInfo.dob)}</td>
-          <td>{`${formatDate(curPrescription.dateWritten)} ${formateTime(curPrescription.dateWritten)}`}</td>
+          <td>{`${formatDate(curPrescription.dateWritten)} ${formatTime(curPrescription.dateWritten)}`}</td>
           <td>n/a</td>
           <td>n/a</td>
         </tr>
@@ -29,7 +30,7 @@ function Details() {
     return `${dateObject.getMonth()}/${dateObject.getDay()}/${dateObject.getFullYear()}`;
   }
 
-  function formateTime(date){
+  function formatTime(date){
     const dateObject = new Date(date);
     return dateObject.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
   }

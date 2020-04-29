@@ -55,7 +55,7 @@ function List() {
         <td>{(`${dob.getMonth()}/${dob.getDay()}/${dob.getFullYear()}`)}</td>
         <td>{getLatestPrescriptionDate(patient)}</td>
         <td className='action-items'>
-          <Link to={`patients/details/${index}`}>
+          <Link to={`patients/details/${patient.id}`}>
             <div>
               <svg className="bi bi-eye-fill" width="1em" height="1em"
                     viewBox="0 0 16 16" fill="currentColor"
