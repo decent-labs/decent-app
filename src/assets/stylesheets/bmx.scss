@@ -103,11 +103,32 @@ div.dropdown button.dropdown-toggle {
 .action-items {
   a div {
     align-items: center;
-    background: #DDE2FF;
+    background: $input-border-color;
     border-radius: 0.5rem;
     display: flex;
     justify-content: center;
     height: 1.5rem;
     width: 1.5rem;
   }
+}
+
+.details-block {
+  border: $input-border-color 0.1rem solid ;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.nameCard-header {
+  font-family: 'RobotoMono';
+  font-weight: 700;
+  color: $primary;
+  font-size: 12px;
+  border-top: none;
+  border-bottom: none;
+}
+
+.nameCard {
+  border: $input-border-color 0.1rem solid ;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 }
