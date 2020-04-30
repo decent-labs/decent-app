@@ -1,19 +1,18 @@
 import React from 'react';
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
-import { useHistory, useParams } from 'react-router-dom';
+import {Redirect, useParams} from 'react-router-dom';
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 
 function Details() {
   let { id } = useParams();
   const patients = useAsyncState(StateProperty.patients);
-  const history = useHistory();
-  let patientDetails;
+
   if(patients.data.patients.length === 0){
-    history.push('/patients');
-  }else{
-    patientDetails = patients.data.patients.find(curPatient => curPatient.id === parseInt(id));
+    return <Redirect to='/patients' />
   }
+
+  const patientDetails = patients.data.patients.find(curPatient => curPatient.id === parseInt(id));
 
   function getPrescriptionRecords() {
     return patientDetails.prescriptions.map((curPrescription, index) => {
@@ -41,7 +40,7 @@ function Details() {
   }
 
   return (
-    (patientDetails && (<>
+    <>
       <Row>
         <Col md={4} className='nameCard'>
           <h2>{`${patientDetails.firstName} ${patientDetails.lastName}`}</h2>
@@ -111,7 +110,7 @@ function Details() {
           <p className='details-block'>n/a</p>
         </Col>
       </Row>
-    </>)) || null
+    </>
   )
 }
 
