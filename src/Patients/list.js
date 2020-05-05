@@ -45,7 +45,7 @@ function List() {
     return (`${mostRecentDate.getMonth()}/${mostRecentDate.getDay()}/${mostRecentDate.getFullYear()}`);
   }
 
-  const patientRows = patients.data.patients.map((patient, index) =>{
+  const patientRows = patients.data.map((patient, index) =>{
     const dob = new Date(patient.dob)
 
     return (

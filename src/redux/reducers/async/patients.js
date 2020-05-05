@@ -1,12 +1,7 @@
-const initialState = {
-  patients: []
-};
+const initialState = [];
 
-function setData(state = initialState, action) {
-  return {
-    ...state,
-    patients: action.data
-  };
+function setData(_state = initialState, action) {
+  return action.data.patients;
 }
 
 export { initialState, setData };

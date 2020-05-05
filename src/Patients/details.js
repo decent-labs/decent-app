@@ -8,11 +8,11 @@ function Details() {
   let { id } = useParams();
   const patients = useAsyncState(StateProperty.patients);
 
-  if(patients.data.patients.length === 0){
+  if(patients.data.length === 0){
     return <Redirect to='/patients' />
   }
 
-  const patientDetails = patients.data.patients.find(curPatient => curPatient.id === parseInt(id));
+  const patientDetails = patients.data.find(curPatient => curPatient.id === parseInt(id));
 
   function getPrescriptionRecords() {
     return patientDetails.prescriptions.map((curPrescription, index) => {
