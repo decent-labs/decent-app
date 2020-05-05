@@ -40,7 +40,7 @@ function List() {
       return 'n/a';
     }
     var mostRecentDate = new Date(Math.max.apply(null, patient.prescriptions.map( e => {
-      return new Date(e.dateWritten);
+      return new Date(e.writtenDate);
     })));
     return (`${mostRecentDate.getMonth()}/${mostRecentDate.getDay()}/${mostRecentDate.getFullYear()}`);
   }

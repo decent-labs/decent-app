@@ -26,9 +26,9 @@ function New({ alert }) {
 
     return request('patients', 'POST', data)
       .then(response => {
-        alert({ message: 'New Patient added successfully', variant: 'primary' });
-        dispatch(dataUpdateAction(StateProperty.patients, [...patients.data.patients, response.profile]))
-        history.push('/patients');
+        alert({ message: 'New Patient added successfully', variant: 'success' });
+        dispatch(dataUpdateAction(StateProperty.patients, [...patients.data.patients, {...response.profile, prescriptions:[]}]))
+        history.push(`/patients/details/${response.profile.id}`);
       }).catch(error => {
         setError(error);
       })
