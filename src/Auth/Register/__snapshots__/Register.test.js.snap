@@ -614,7 +614,7 @@ exports[`renders correctly 1`] = `
               class="form-label"
               for="formzipCode"
             >
-              zip code
+              Zip code
             </label>
             <input
               class="form-control"
