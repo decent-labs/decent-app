@@ -17,14 +17,12 @@ function ResetPassword({ alert }) {
 
   const [newPassword, setNewPassword] = useState('');
   const [newPassConf, setNewPassConf] = useState('');
-  const [twoFAToken, setTwoFAToken] = useState('');
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setNewPassword('');
-    setTwoFAToken('');
     setNewPassConf('');
   }, [error]);
 
@@ -39,7 +37,7 @@ function ResetPassword({ alert }) {
       return;
     }
     setIsLoading(true);
-    request('password', 'PUT', { email, token, newPassword, twoFAToken })
+    request('password', 'PUT', { email, token, newPassword })
       .then(() => {
         setIsLoading(false);
         alert({ message: 'Password successfully reset!', variant: 'primary' });
@@ -74,15 +72,6 @@ function ResetPassword({ alert }) {
             autoComplete='new-password'
             value={newPassConf}
             onChange={event => setNewPassConf(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId='form2FA'>
-          <Form.Label>2 Factor Authentication Code</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='123456'
-            value={twoFAToken}
-            onChange={event => setTwoFAToken(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId='formError'>
