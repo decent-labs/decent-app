@@ -22,7 +22,6 @@ function UpdatePassword() {
   const [newPass, setNewPass] = useState('');
   const [newPassConf, setNewPassConf] = useState('');
   const [oldPass, setOldPass] = useState('');
-  const [token, setToken] = useState('');
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
 
@@ -32,7 +31,6 @@ function UpdatePassword() {
     setNewPass('');
     setNewPassConf('');
     setOldPass('');
-    setToken('');
   }, [success, error])
 
   return (
@@ -47,15 +45,6 @@ function UpdatePassword() {
             autoComplete='current-password'
             value={oldPass}
             onChange={event => setOldPass(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId='form2FAUpatePassword'>
-          <Form.Label>2 Factor Authentication Code (for verification)</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='123456'
-            value={token}
-            onChange={event => setToken(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId='formNewPassword'>
@@ -96,7 +85,7 @@ function UpdatePassword() {
                 return;
               }
               dispatch(dataLoadingAction(StateProperty.account));
-              request('auth/account', 'PUT', { newPass, oldPass, token })
+              request('auth/account', 'PUT', { newPass, oldPass })
                 .then(response => dispatch(dataUpdateAction(StateProperty.account, response)))
                 .then(() => setSuccess('Password succesfully updated!'))
                 .catch(error => {

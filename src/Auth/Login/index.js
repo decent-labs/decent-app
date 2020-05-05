@@ -16,18 +16,16 @@ function Login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useState('');
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setPassword('');
-    setToken('');
   }, [error]);
 
   function sendRequest() {
-    request('auth/login', 'POST', { email, password, token })
+    request('auth/login', 'POST', { email, password })
       .then(response => {
         setIsLoading(false);
         const expires = new Date();
@@ -63,15 +61,6 @@ function Login() {
             autoComplete='current-password'
             value={password}
             onChange={event => setPassword(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId='form2FA'>
-          <Form.Label>2 Factor Authentication Code</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='123456'
-            value={token}
-            onChange={event => setToken(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId='formError'>
