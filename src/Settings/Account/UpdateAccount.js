@@ -22,7 +22,6 @@ function UpdateAccount() {
   const [fullName, setFullName] = useState('');
   const [newEmail, setNewEmail] = useState('');
   const [oldPass, setOldPass] = useState('');
-  const [token, setToken] = useState('');
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
 
@@ -35,7 +34,6 @@ function UpdateAccount() {
 
   useEffect(() => {
     setOldPass('');
-    setToken('');
   }, [success, error])
 
   return (
@@ -50,15 +48,6 @@ function UpdateAccount() {
             autoComplete='current-password'
             value={oldPass}
             onChange={event => setOldPass(event.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId='form2FAUpdateAccount'>
-          <Form.Label>2 Factor Authentication Code (for verification)</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='123456'
-            value={token}
-            onChange={event => setToken(event.target.value)}
           />
         </Form.Group>
         <Form.Group controlId='formEmail'>
@@ -93,7 +82,7 @@ function UpdateAccount() {
             onClick={() => {
               setSuccess('');
               dispatch(dataLoadingAction(StateProperty.account));
-              request('auth/account', 'PUT', { fullName, newEmail, oldPass, token })
+              request('auth/account', 'PUT', { fullName, newEmail, oldPass })
                 .then(response => dispatch(dataUpdateAction(StateProperty.account, response)))
                 .then(() => setSuccess('Account succesfully updated!'))
                 .catch(error => {
