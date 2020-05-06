@@ -1,7 +1,7 @@
 const initialState = [];
 
 function setData(_state = initialState, action) {
-  return action.data.patients;
+  return action.data;
 }
 
 function addData(state = initialState, action) {
