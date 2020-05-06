@@ -60,7 +60,7 @@ function New({ alert }) {
               request(`hospitalOrgs/${profiles.data.currentProfile.entityId}/oauthApplications`, 'POST', { name, redirectURI })
                 .then(response => dispatch(dataAddAction(StateProperty.oauthApps, response)))
                 .then(() => alert({ message: 'OAuth application created succesfully!', variant: 'primary' }))
-                .then(() => history.push('...')) // this goes "up" one level
+                .then(() => history.push('..'))
                 .catch(error => {
                   dispatch(dataLoadingErrorAction(StateProperty.oauthApps, error));
                 });
