@@ -26,7 +26,6 @@ function New({alert}) {
         directions: directions,
         genericSubstitutionAllowed: true,
         notes: notes,
-        prescriptionSerialNumber: '1234', //TODO figure this out
         schedule: 'III',
         expirationDate: formatISO(expirationDate),
         writtenDate: formatISO(now),
