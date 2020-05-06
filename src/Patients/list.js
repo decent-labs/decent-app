@@ -47,7 +47,8 @@ function List() {
     return (format(mostRecentDate, 'MM/dd/yyyy'));
   }
 
-  const patientRows = patients.data.patients.map((patient, index) =>{
+  const patientRows = patients.data.map((patient, index) =>{
+
     return (
       <tr key={index}>
         <td>{patient.lastName}</td>

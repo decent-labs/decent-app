@@ -38,9 +38,6 @@ function Patients() {
         <Route path={`${match.path}/:id`}>
           <Details alert={setAlert} />
         </Route>
-        <Route path={`${match.path}/:unknown`}>
-          <Redirect to={`${match.path}`} />
-        </Route>
         <Route path={`${match.path}`}>
           <List/>
         </Route>
