@@ -308,7 +308,7 @@ function Register() {
                         </Form.Control>
                     </Form.Group></Col>
                     <Col><Form.Group controlId='formzipCode'>
-                        <Form.Label>zip code</Form.Label>
+                        <Form.Label>Zip code</Form.Label>
                         <Form.Control
                             type='text'
                             placeholder='00000'

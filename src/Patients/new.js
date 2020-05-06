@@ -6,7 +6,7 @@ import Form from './form';
 import Alert from "react-bootstrap/Alert";
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
-import {dataUpdateAction} from "../redux/reducers/async";
+import {dataAddAction} from "../redux/reducers/async";
 import {useDispatch} from "react-redux";
 
 function New({ alert }) {
@@ -14,7 +14,6 @@ function New({ alert }) {
   const dispatch = useDispatch();
   const [error, setError] = useState('');
   const profiles = useAsyncState(StateProperty.userProfile);
-  const patients = useAsyncState(StateProperty.patients);
   function handleSubmit(event, formData) {
     event.preventDefault();
     let data;
@@ -27,8 +26,8 @@ function New({ alert }) {
     return request('patients', 'POST', data)
       .then(response => {
         alert({ message: 'New Patient added successfully', variant: 'success' });
-        dispatch(dataUpdateAction(StateProperty.patients, [...patients.data.patients, {...response.profile, prescriptions:[]}]))
-        history.push(`/patients/details/${response.profile.id}`);
+        dispatch(dataAddAction(StateProperty.patients, { ...response.profile, prescriptions:[] }))
+        history.push(`/patients/${response.profile.id}`);
       }).catch(error => {
         setError(error);
       })

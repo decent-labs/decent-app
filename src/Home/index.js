@@ -13,10 +13,7 @@ import { useAsyncState } from "../redux/actions/useAsyncState";
 import { StateProperty } from "../redux/reducers";
 
 function Home() {
-  const accountLoader = useCallback(() => {
-    console.log("getting auth/me")
-    return request('auth/me', 'GET')
-  }, []);
+  const accountLoader = useCallback(() => request('auth/me', 'GET'), []);
   useAsyncState(StateProperty.account, accountLoader);
   const userProfileLoader = useCallback(() => {
     return request('auth/profiles', 'GET')

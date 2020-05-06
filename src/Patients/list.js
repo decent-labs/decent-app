@@ -45,7 +45,7 @@ function List() {
     return (`${mostRecentDate.getMonth()}/${mostRecentDate.getDay()}/${mostRecentDate.getFullYear()}`);
   }
 
-  const patientRows = patients.data.patients.map((patient, index) =>{
+  const patientRows = patients.data.map((patient, index) =>{
     const dob = new Date(patient.dob)
 
     return (
@@ -55,7 +55,7 @@ function List() {
         <td>{(`${dob.getMonth()}/${dob.getDay()}/${dob.getFullYear()}`)}</td>
         <td>{getLatestPrescriptionDate(patient)}</td>
         <td className='action-items'>
-          <Link to={`patients/details/${patient.id}`}>
+          <Link to={`patients/${patient.id}`}>
             <div>
               <svg className="bi bi-eye-fill" width="1em" height="1em"
                     viewBox="0 0 16 16" fill="currentColor"
