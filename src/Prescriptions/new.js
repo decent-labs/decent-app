@@ -6,14 +6,14 @@ import {useHistory, useParams} from "react-router-dom";
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 import {formatISO} from 'date-fns';
-import DatePicker from "react-datepicker/es";
+// import DatePicker from "react-datepicker/es";
 
 function New({alert}) {
   let { id } = useParams();
   const history = useHistory();
   const userProfiles = useAsyncState(StateProperty.userProfile);
   const [drugInfo, setDrugInfo] = useState('covid-19-test');
-  const [expirationDate, setExpirationDate] = useState('');
+  // const [expirationDate, setExpirationDate] = useState('');
   const [directions, setDirections] = useState('');
   const [notes, setNotes] = useState('');
   function sendRequest(event) {
@@ -27,7 +27,7 @@ function New({alert}) {
         genericSubstitutionAllowed: true,
         notes: notes,
         schedule: 'III',
-        expirationDate: formatISO(expirationDate),
+        // expirationDate: formatISO(expirationDate),
         writtenDate: formatISO(now),
         quantity: 1
       }})
@@ -58,16 +58,16 @@ function New({alert}) {
               </Form.Control>
             </Form.Group>
           </Form.Row>
-          <Form.Row className='justify-content-center'>
-            <Form.Group className='required' lg={6} md={8} as={Col}>
-              <Form.Label>Expiration Date</Form.Label>
-              <DatePicker
-                selected={expirationDate}
-                onChange={date => setExpirationDate(date)}
-                required
-              />
-            </Form.Group>
-          </Form.Row>
+          {/*<Form.Row className='justify-content-center'>*/}
+          {/*  <Form.Group className='required' lg={6} md={8} as={Col}>*/}
+          {/*    <Form.Label>Expiration Date</Form.Label>*/}
+          {/*    <DatePicker*/}
+          {/*      selected={expirationDate}*/}
+          {/*      onChange={date => setExpirationDate(date)}*/}
+          {/*      required*/}
+          {/*    />*/}
+          {/*  </Form.Group>*/}
+          {/*</Form.Row>*/}
           {/*<Form.Row className='justify-content-center'>*/}
           {/*  <Form.Group className='required' lg={3} md={4} as={Col}>*/}
           {/*    <Form.Label>Detail</Form.Label>*/}
