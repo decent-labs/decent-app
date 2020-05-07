@@ -1,9 +1,11 @@
 import React, {useCallback, useState} from "react";
-import {Col, Pagination, Row, Table} from "react-bootstrap";
+import {Col, Image, Pagination, Row, Table} from "react-bootstrap";
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 import {Link} from "react-router-dom";
 import {request} from "../requests";
+import { format } from 'date-fns';
+import PatientDetailsIcon from '../assets/images/bmx-patient-details-icon.svg';
 
 function List() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,29 +44,21 @@ function List() {
     var mostRecentDate = new Date(Math.max.apply(null, patient.prescriptions.map( e => {
       return new Date(e.writtenDate);
     })));
-    return (`${mostRecentDate.getMonth()}/${mostRecentDate.getDay()}/${mostRecentDate.getFullYear()}`);
+    return (format(mostRecentDate, 'MM/dd/yyyy'));
   }
 
   const patientRows = patients.data.map((patient, index) =>{
-    const dob = new Date(patient.dob)
 
     return (
       <tr key={index}>
         <td>{patient.lastName}</td>
         <td>{patient.firstName}</td>
-        <td>{(`${dob.getMonth()}/${dob.getDay()}/${dob.getFullYear()}`)}</td>
+        <td>{format(new Date(patient.dob), 'MM/dd/yyyy')}</td>
         <td>{getLatestPrescriptionDate(patient)}</td>
         <td className='action-items'>
           <Link to={`patients/${patient.id}`}>
             <div>
-              <svg className="bi bi-eye-fill" width="1em" height="1em"
-                    viewBox="0 0 16 16" fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 8a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
-                <path fillRule="evenodd"
-                  d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"
-                  clipRule="evenodd"/>
-              </svg>
+              <Image src={PatientDetailsIcon} />
             </div>
           </Link>
         </td>

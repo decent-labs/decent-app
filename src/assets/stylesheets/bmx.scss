@@ -19,6 +19,7 @@ $navbar-light-color: $body-color; // 745
 
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
+@import '~react-datepicker/dist/react-datepicker.css';
 
 .form-label {
   font-family: 'RobotoMono';

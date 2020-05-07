@@ -1,10 +1,6 @@
 import React, {useState} from "react";
 import {Link, Redirect, Route, Switch, useRouteMatch} from "react-router-dom";
 import New from "./new";
-import List from "./list";
-import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert";
-import Details from "./details";
 
 function Patients() {
   const match = useRouteMatch();
@@ -38,8 +34,11 @@ function Patients() {
         <Route path={`${match.path}/:id`}>
           <Details alert={setAlert} />
         </Route>
+        <Route path={`${match.path}/:unknown`}>
+          <Redirect to={`${match.path}`} />
+        </Route>
         <Route path={`${match.path}`}>
-          <List/>
+          <List />
         </Route>
       </Switch>
     </>

@@ -4,6 +4,7 @@ import { Col, Container, Dropdown, Image, Row } from 'react-bootstrap';
 import {Link, NavLink, useHistory} from 'react-router-dom';
 
 import BMxLogoColor from '../../assets/images/bmx-logo-color.svg';
+import BMxPatientIcon from '../../assets/images/bmx-patient-icon.svg';
 
 import {useAsyncState} from "../../redux/actions/useAsyncState";
 import {StateProperty} from "../../redux/reducers";
@@ -63,7 +64,10 @@ function LeftMenu() {
       <Container>
         <Row className='mx-auto left-menu'>
           <Col>
-            <NavLink to='/patients'>Patients</NavLink>
+            <NavLink to='/patients'>
+              <Image className='mr-2' src={BMxPatientIcon}/>
+              <span>Patients</span>
+            </NavLink>
           </Col>
         </Row>
       </Container>
