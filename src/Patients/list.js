@@ -1,11 +1,9 @@
 import React, {useCallback, useState} from "react";
-import {Col, Image, Pagination, Row, Table} from "react-bootstrap";
+import {Col, Pagination, Row} from "react-bootstrap";
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
-import {Link} from "react-router-dom";
 import {request} from "../requests";
-import { format } from 'date-fns';
-import PatientDetailsIcon from '../assets/images/bmx-patient-details-icon.svg';
+import ListTable from "./listTable";
 
 function List() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,37 +35,6 @@ function List() {
     [userProfiles.data.profiles, userProfiles.data.currentProfile, currentPage]);
   const patients = useAsyncState(StateProperty.patients, patientsLoader);
 
-  function getLatestPrescriptionDate(patient) {
-    if(!!patient.prescriptions === false || patient.prescriptions.length === 0){
-      return 'n/a';
-    }
-    var mostRecentDate = new Date(Math.max.apply(null, patient.prescriptions.map( e => {
-      return new Date(e.writtenDate);
-    })));
-    return (format(mostRecentDate, 'MM/dd/yyyy'));
-  }
-
-  const patientRows = patients.data.map((patient, index) =>{
-
-    return (
-      <tr key={index}>
-        <td>{patient.lastName}</td>
-        <td>{patient.firstName}</td>
-        <td>{format(new Date(patient.dob), 'MM/dd/yyyy')}</td>
-        <td>{getLatestPrescriptionDate(patient)}</td>
-        <td className='action-items'>
-          <Link to={`patients/${patient.id}`}>
-            <div>
-              <Image src={PatientDetailsIcon} />
-            </div>
-          </Link>
-        </td>
-      </tr>
-    )
-  }
-
-  )
-
   return(
     <>
       <Row>
@@ -75,20 +42,7 @@ function List() {
           <h1>Patients</h1>
         </Col>
       </Row>
-      <Table>
-        <thead>
-        <tr>
-          <th>Last Name</th>
-          <th>First Name</th>
-          <th>Date of Birth</th>
-          <th>Last Rx Date</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {patientRows}
-        </tbody>
-      </Table>
+      <ListTable patients={patients.data}></ListTable>
       {userProfiles.data.currentProfile.profileType === 'internal' && (
         <Pagination as={'Container'} className='justify-content-end'>
           <Pagination.First onClick={() => setCurrentPage(1)}/>

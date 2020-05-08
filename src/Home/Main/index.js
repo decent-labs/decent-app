@@ -13,7 +13,7 @@ function Main() {
         <Settings />
       </Route>
       <Route path='/patients'>
-          <Patients />
+        <Patients />
       </Route>
       <Route path='/:unknown'>
         <Redirect to='/' />
