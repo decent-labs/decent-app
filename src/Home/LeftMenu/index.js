@@ -68,6 +68,11 @@ function LeftMenu() {
               <Image className='mr-2' src={BMxPatientIcon}/>
               <span>Patients</span>
             </NavLink>
+            {userProfiles.data.currentProfile.profileType === 'internal' &&
+            <NavLink to='/physicians'>
+              <span>Physicians</span>
+            </NavLink>
+            }
           </Col>
         </Row>
       </Container>

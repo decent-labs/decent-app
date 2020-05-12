@@ -6,6 +6,7 @@ export const StateProperty = {
   oauthApps: 'oauthApps',
   userProfile: 'userProfile',
   patients: 'patients',
+  physicians: 'physicians',
   search: 'search'
 };
 

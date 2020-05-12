@@ -38,6 +38,7 @@ function NavMenu() {
   const [, , removeCookie] = useCookies(['token']);
 
   const account = useAsyncState(StateProperty.account);
+  const userProfiles = useAsyncState(StateProperty.userProfile);
 
   function searchPatient(event) {
     event.preventDefault();
@@ -58,12 +59,14 @@ function NavMenu() {
   }
 
   return (
-    <Navbar className='d-flex justify-content-between px-0 pt-0'>
-      <Form className='flex-grow-1 mr-4' onSubmit={searchPatient}>
+    <Navbar className='d-flex justify-content-end px-0 pt-0'>
+      {(userProfiles.data.currentProfile.profileType === 'prescriber') &&
+        <Form className='flex-grow-1 mr-4' onSubmit={searchPatient}>
         <InputGroup>
           <InputGroup.Prepend>
-            <InputGroup.Text className='form-control bg-transparent border-right-0'>
-              <Image src={BMxSearchIcon} />
+            <InputGroup.Text
+              className='form-control bg-transparent border-right-0'>
+              <Image src={BMxSearchIcon}/>
             </InputGroup.Text>
           </InputGroup.Prepend>
           <Form.Control type='text' placeholder='First name' value={firstName}
@@ -75,17 +78,17 @@ function NavMenu() {
                         className='media-body py-2 border'
                         required/>
           <div className="media-body">
-            <DatePicker   selected={dob}
-                          onChange={date => setDob(date)}
-                          placeholderText='Date of birth'
-                          
-                          customInput={<Form.Control type='text'
-                            className='py-2 border'
-                          />
-                          }
-                          required
-                          showMonthDropdown
-                          showYearDropdown/>
+            <DatePicker selected={dob}
+                        onChange={date => setDob(date)}
+                        placeholderText='Date of birth'
+
+                        customInput={<Form.Control type='text'
+                                                   className='py-2 border'
+                        />
+                        }
+                        required
+                        showMonthDropdown
+                        showYearDropdown/>
           </div>
           <Button
             variant='primary'
@@ -97,6 +100,7 @@ function NavMenu() {
           </Button>
         </InputGroup>
       </Form>
+      }
       <Nav activeKey="/">
         <Nav.Link href='#notifications'>
           <Image src={BMxNotificationIcon} />

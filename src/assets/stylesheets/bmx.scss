@@ -80,11 +80,12 @@ div.dropdown button.dropdown-toggle {
       align-items: center;
       background: $light;
       border-color: $light;
-      border-radius: 2em;
+      border-radius: 2rem;
       color: $black;
       display: flex;
       height: 100%;
       justify-content: center;
+      margin-bottom: 1rem;
       width: 100%;
       &:hover {
         background: #F5F4FF;
