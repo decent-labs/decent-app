@@ -22,6 +22,7 @@ import Login from './Login';
 import Forgot from './Forgot';
 import Reset from './Reset';
 import Register from './Register';
+import Invite from './Invite';
 
 const LeftHeroCol = styled(Col)`
   background: url(${BMxLoginSplash}) no-repeat center center;
@@ -75,7 +76,7 @@ function Auth() {
               <Route path={`${match.path}/forgot`}>
                 <Forgot alert={setAlert} />
               </Route>
-              
+
               <Route path={`${match.path}/reset/:unknown`}>
                 <Redirect to={`${match.path}/reset`} />
               </Route>
@@ -89,7 +90,14 @@ function Auth() {
               <Route path={`${match.path}/register`}>
                 <Register />
               </Route>
-              
+
+              <Route path={`${match.path}/invite/:inviteCode`}>
+                <Invite alert={setAlert}/>
+              </Route>
+              <Route path={`${match.path}/invite`}>
+                <Redirect to={`${match.path}`} />
+              </Route>
+
               <Route path={match.path}>
                 <Redirect to={`${match.path}/login`} />
               </Route>

@@ -103,9 +103,10 @@ div.dropdown button.dropdown-toggle {
 }
 
 .action-items {
-  a div {
+  div {
     align-items: center;
     background: $input-border-color;
+    cursor: pointer;
     border-radius: 0.5rem;
     display: flex;
     justify-content: center;
@@ -138,7 +139,7 @@ div.dropdown button.dropdown-toggle {
 .input-group {
   .react-datepicker-wrapper {
     display: unset;
-    
+
     input{
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
