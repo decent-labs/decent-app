@@ -60,7 +60,8 @@ function NavMenu() {
 
   return (
     <Navbar className='d-flex justify-content-end px-0 pt-0'>
-      {(userProfiles.data.currentProfile.profileType === 'prescriber') &&
+      {(userProfiles.data.currentProfile.profileType === 'prescriber' ||
+        userProfiles.data.currentProfile.profileType === 'internal') &&
         <Form className='flex-grow-1 mr-4' onSubmit={searchPatient}>
         <InputGroup>
           <InputGroup.Prepend>

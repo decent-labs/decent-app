@@ -50,7 +50,7 @@ function PatientDetails({patientDetails}) {
         </Container>
       </Row>
       <hr />
-      <List items={patientDetails.prescriptions} />
+      <List patient={patientDetails} items={patientDetails.prescriptions} />
       <Row>
         <Col>
           <h5>Directions</h5>
