@@ -5,6 +5,7 @@ import List from "./list";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Details from "./details";
+import Invite from "./invite";
 
 export default function Labs() {
   const match = useRouteMatch();
@@ -29,6 +30,9 @@ export default function Labs() {
         </Link>
       </Route>
       <Switch>
+        <Route path={`${match.path}/:labOrgId/invite`}>
+          <Invite alert={setAlert} />
+        </Route>
         <Route path={`${match.path}/newAgent/:unknown`}>
           <Redirect to={`${match.path}/newAgent`} />
         </Route>

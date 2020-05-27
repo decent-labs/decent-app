@@ -24,7 +24,7 @@ export default function LabDetails({labDetails}) {
               </p>
               <address>
              {(labDetails.streetAddress && labDetails.streetAdress2 &&`${labDetails.streetAddress} ${labDetails.streetAddress2}`) || 'n/a' }
-             { labDetails.city && labDetails.state && labDetails.zipCode && 
+             { labDetails.city && labDetails.state && labDetails.zipCode &&
                 `${labDetails.city} ${labDetails.state} ${labDetails.zipCode}`}
               </address>
             </Col>

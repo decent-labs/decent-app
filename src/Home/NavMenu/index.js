@@ -29,6 +29,7 @@ import {
 } from "../../redux/reducers/async";
 
 function NavMenu() {
+  const userTypesAllowedSearch = ['prescriber','internal','labOrg'];
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');
@@ -60,8 +61,7 @@ function NavMenu() {
 
   return (
     <Navbar className='d-flex justify-content-end px-0 pt-0'>
-      {(userProfiles.data.currentProfile.profileType === 'prescriber' ||
-        userProfiles.data.currentProfile.profileType === 'internal') &&
+      {(userTypesAllowedSearch.includes(userProfiles.data.currentProfile.profileType)) &&
         <Form className='flex-grow-1 mr-4' onSubmit={searchPatient}>
         <InputGroup>
           <InputGroup.Prepend>

@@ -17,7 +17,7 @@ function List() {
       }else if(userProfiles.data.currentProfile.profileType === 'prescriber') {
         let patientProfiles = await request(`prescribers/${userProfiles.data.currentProfile.profileId}/patients`, 'GET')
         patients = patientProfiles.patients.map(curPatient => request(`patients/${curPatient.patientId}/profile`, 'GET'))
-      }else if(userProfiles.data.currentProfile.profileType === 'internal') {
+      }else if(['internal','labOrg'].includes(userProfiles.data.currentProfile.profileType)) {
         let patientProfiles = await request(`patients/list?currentPage=${currentPage}`, 'GET')
         patients = patientProfiles.profile.data.map(curPatient => request(`patients/${curPatient.id}/profile`, 'GET'))
       }
@@ -27,6 +27,10 @@ function List() {
             request(`patients/${curProfile.profile.id}/rxs`, 'GET')
               .then(results => {
                 curProfile.profile.prescriptions = results.prescriptions;
+                return curProfile.profile;
+              })
+              .catch(err => {
+                curProfile.profile.prescriptions = [];
                 return curProfile.profile;
               })
           ))
