@@ -31,6 +31,11 @@ function LeftMenu() {
 
   function handleProfileSelect(profile) {
     dispatch(dataUpdateAction(StateProperty.userProfile, {currentProfile:profile, profiles:userProfiles.data.profiles}));
+
+    if (profile.profileType === 'labOrg') {
+      history.push(`/labs/${profile.entityId}`);
+      return
+    }
     history.push('/');
   }
 
@@ -71,6 +76,11 @@ function LeftMenu() {
             {userProfiles.data.currentProfile.profileType === 'internal' &&
             <NavLink to='/physicians'>
               <span>Physicians</span>
+            </NavLink>
+            }
+            {userProfiles.data.currentProfile.profileType === 'internal' &&
+            <NavLink to='/labs'>
+              <span>Laboratories</span>
             </NavLink>
             }
           </Col>

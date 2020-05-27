@@ -7,7 +7,8 @@ export const StateProperty = {
   userProfile: 'userProfile',
   patients: 'patients',
   physicians: 'physicians',
-  search: 'search'
+  search: 'search',
+  labs: 'labs',
 };
 
 const allAsyncReducers = Object.keys(StateProperty).reduce(
