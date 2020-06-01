@@ -19,7 +19,7 @@ function PhysicianInvite() {
   const [deaNumber, setDeaNumber] = useState('');
 
   function sendRequest() {
-    request(`invitation/claimInvitation/${inviteCode}`, 'POST', { fullName, email, password, dob: format(dob, 'MM/dd/yyyy'), ssn, deaNumber })
+    request(`invitation/claimInvitation/${inviteCode}`, 'POST', { fullName, email, password, dob: format(dob, 'MM/dd/yyyy'), ssn, deaNumber, permissionGrants:[] })
       .then(() => {
         alert({ message: 'Accepted Invite', variant: 'primary' })
         history.push('/auth/login')
