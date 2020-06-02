@@ -29,7 +29,7 @@ import {
 } from "../../redux/reducers/async";
 
 function NavMenu() {
-  const userTypesAllowedSearch = ['prescriber','internal','labOrg'];
+  const userTypesAllowedSearch = ['prescriber','internal','labOrg', 'labAgent'];
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');

@@ -4,15 +4,26 @@ import Button from "react-bootstrap/Button";
 import React, {useState} from "react";
 import {getStateOptions} from "../Common/form";
 
-function LabForm({submitHandler}) {
-  const [name, setName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [streetAddress, setStreetAddress] = useState('');
-  const [streetAddress2, setStreetAddress2] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zipCode, setZipCode] = useState('');
-  const [zipCodeIsValid, setZipCodeIsValid] = useState(false);
+function LabForm({
+    submitHandler,
+    name: oName,
+    phoneNumber: oPhoneNumber,
+    streetAddress: oStreetAddress,
+    streetAddress2: oStreetAddress2,
+    city: oCity,
+    state: oState,
+    zipCode: oZipCode,
+    zipCodeIsValid: oZipCodeIsValid,
+    id: labOrgId,
+}) {
+  const [name, setName] = useState(oName || '');
+  const [phoneNumber, setPhoneNumber] = useState(oPhoneNumber || '');
+  const [streetAddress, setStreetAddress] = useState(oStreetAddress || '');
+  const [streetAddress2, setStreetAddress2] = useState(oStreetAddress2 || '');
+  const [city, setCity] = useState(oCity || '');
+  const [state, setState] = useState(oState || '');
+  const [zipCode, setZipCode] = useState(oZipCode || '');
+  const [zipCodeIsValid, setZipCodeIsValid] = useState(oZipCodeIsValid || false);
   const country = "us";
 
   function validateZipCode(zip)
@@ -113,7 +124,7 @@ function LabForm({submitHandler}) {
       </Form.Row>
       <Form.Row className='justify-content-end align-middle'>
         <Form.Group className='d-flex flex-row align-items-center' controlId='formSubmit'>
-          <NavLink className='font-weight-bold m-2' to='/labs'>Cancel</NavLink>
+          <NavLink className='font-weight-bold m-2' to={`/labs/${labOrgId}`}>Cancel</NavLink>
           <Button
             variant='primary'
             type='submit'

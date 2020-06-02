@@ -30,7 +30,7 @@ function Details({alert}) {
 	state.data.labs.data.find &&
 	state.data.labs.data.find($lab => $lab.id === parseInt(id));
   useEffect(() => {
-    if (labDetails) return;
+    if (labDetails && labDetails.users) return;
     dispatch(dataLoadingAction(StateProperty.labs));
       request(`labOrgs/${id}/profile`, 'GET')
       .then(response => {

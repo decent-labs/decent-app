@@ -1,10 +1,9 @@
 import React, {useState} from "react";
-import { Alert, Button } from "react-bootstrap";
-import { Link, Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
-import New from "./new";
+import {Link, Redirect, Route, Switch, useRouteMatch} from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 import Details from "./details";
-
-function Prescriptions() {
+function Patients() {
   const match = useRouteMatch();
   const [alert, setAlert] = useState(null);
 
@@ -27,21 +26,15 @@ function Prescriptions() {
         </Link>
       </Route>
       <Switch>
-        <Route path={`${match.path}/new/:unknown`}>
-          <Redirect to={`${match.path}/new`} />
-        </Route>
-        <Route path={`${match.path}/new`}>
-          <New alert={setAlert} />
-        </Route>
         <Route path={`${match.path}/:id`}>
           <Details alert={setAlert} />
         </Route>
-        <Route path={`${match.path}/:unknown`}>
-          <Redirect to={`${match.path}`} />
+        <Route path={`${match.path}/:id/:unknown`}>
+          <Redirect to={'/'} />
         </Route>
       </Switch>
     </>
   );
 }
 
-export default Prescriptions;
+export default Patients;

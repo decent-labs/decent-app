@@ -9,6 +9,7 @@ export const StateProperty = {
   physicians: 'physicians',
   search: 'search',
   labs: 'labs',
+  prescription: 'prescription',
 };
 
 const allAsyncReducers = Object.keys(StateProperty).reduce(

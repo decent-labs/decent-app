@@ -1,7 +1,7 @@
 import React  from "react";
-import { Col, Row} from "react-bootstrap";
+import { Button, Col, Row} from "react-bootstrap";
 import List from "./Agent/listTable";
-
+import { Link } from "react-router-dom"
 
 export default function LabDetails({labDetails}) {
   return (
@@ -27,6 +27,7 @@ export default function LabDetails({labDetails}) {
              { labDetails.city && labDetails.state && labDetails.zipCode &&
                 `${labDetails.city} ${labDetails.state} ${labDetails.zipCode}`}
               </address>
+            <Link to={`/labs/${labDetails.id}/edit`}><Button>Edit</Button></Link>
             </Col>
           </Row>
         </Col>

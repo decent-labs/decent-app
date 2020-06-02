@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Details from "./details";
 import Invite from "./invite";
+import Edit from "./edit";
 
 export default function Labs() {
   const match = useRouteMatch();
@@ -44,6 +45,9 @@ export default function Labs() {
         </Route>
         <Route path={`${match.path}/new`}>
           <New alert={setAlert} />
+        </Route>
+        <Route path={`${match.path}/:id/edit`}>
+          <Edit alert={setAlert} />
         </Route>
         <Route path={`${match.path}/:id`}>
           <Details alert={setAlert} />

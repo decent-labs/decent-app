@@ -17,7 +17,7 @@ function List() {
       }else if(userProfiles.data.currentProfile.profileType === 'prescriber') {
         let patientProfiles = await request(`prescribers/${userProfiles.data.currentProfile.profileId}/patients`, 'GET')
         patients = patientProfiles.patients.map(curPatient => request(`patients/${curPatient.patientId}/profile`, 'GET'))
-      }else if(['internal','labOrg'].includes(userProfiles.data.currentProfile.profileType)) {
+      }else if(['internal','labOrg', 'labAgent'].includes(userProfiles.data.currentProfile.profileType)) {
         let patientProfiles = await request(`patients/list?currentPage=${currentPage}`, 'GET')
         patients = patientProfiles.profile.data.map(curPatient => request(`patients/${curPatient.id}/profile`, 'GET'))
       }

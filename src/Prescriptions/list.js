@@ -1,9 +1,11 @@
 import React, {useRef} from 'react';
+import { Link } from 'react-router-dom';
 import {format} from "date-fns";
 import {Image, Row, Table} from "react-bootstrap";
 import PrintIcon from '../assets/images/print-button-svgrepo-com.svg';
 import Print from './print';
 import {useReactToPrint} from "react-to-print";
+import PatientDetailsIcon from '../assets/images/bmx-patient-details-icon.svg';
 
 function List({ patient, items }) {
   const componentRef = useRef();
@@ -22,11 +24,16 @@ function List({ patient, items }) {
           <td>n/a</td>
           <td>n/a</td>
           <td>n/a</td>
-          <td className='action-items'>
+          <td className='action-items d-flex'>
             <div style={{ display: "none" }}><Print patient={patient} prescription={curPrescription} ref={componentRef} /></div>
             <div onClick={handlePrint}>
               <Image src={PrintIcon} />
             </div>
+            <Link to={`/prescriptions/${curPrescription.hash}`}>
+              <div>
+                <Image src={PatientDetailsIcon} />
+              </div>
+            </Link>
           </td>
         </tr>
       );
