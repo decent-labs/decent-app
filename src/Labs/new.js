@@ -18,7 +18,7 @@ export default function New({ alert }) {
     return request('labOrgs', 'POST', data)
       .then(response => {
         alert({ message: 'New Lab added successfully', variant: 'success' });
-        dispatch(dataAddAction(StateProperty.labs, { currentLab: response}))
+        dispatch(dataAddAction(StateProperty.labs,  response.labOrgInfo))
         history.push(`/labs/${response.labOrgInfo.id}`);
       }).catch(error => {
         setError(error);

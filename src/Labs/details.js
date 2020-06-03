@@ -11,8 +11,8 @@ import {
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {
   dataLoadingAction,
-  dataAddAction,
-  dataLoadingErrorAction
+  dataLoadingErrorAction,
+  dataUpdateAction
 } from '../redux/reducers/async';
 import {StateProperty} from "../redux/reducers";
 import LabDetails from '../Labs/labDetails';
@@ -41,7 +41,7 @@ function Details({alert}) {
 		      ...response.profile,
 		      users: [...usersResponse.users.admins, ...usersResponse.users.nonAdmins]
 		  };
-		  dispatch(dataAddAction(StateProperty.labs, {
+		  dispatch(dataUpdateAction(StateProperty.labs, {
 		      currentLab: response.profile,
 		      agents: [],
 		      labs: { ...state.data.labs, data: [ labProfile , ...state.data.labs.data || []] },
