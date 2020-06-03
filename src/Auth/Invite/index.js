@@ -6,6 +6,7 @@ import PhysicianInvite from './physicianInvite';
 import LabInvite from "./labInvite";
 
 import { request } from '../../requests';
+import PatientInvite from "./patientInvite";
 
 function Invite({ alert }) {
   const { inviteCode } = useParams();
@@ -26,11 +27,14 @@ function Invite({ alert }) {
   }, [alert, inviteCode])
 
   function validCode() {
-    return (
-      <>
-        {orgType === 'lab' ? <LabInvite alert={alert} /> : <PhysicianInvite alert={alert} />}
-      </>
-    );
+    switch(orgType){
+      case "lab":
+        return <LabInvite alert={alert} />;
+      case "hospital":
+        return <PhysicianInvite alert={alert} />;
+      default:
+        return <PatientInvite alert={alert} />;
+    }
   }
 
   return (
