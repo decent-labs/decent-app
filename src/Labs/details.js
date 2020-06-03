@@ -26,6 +26,7 @@ function Details({alert}) {
   const { id } = useParams();
   const match = useRouteMatch();
   const state = useAsyncState(StateProperty.labs);
+  const userProfiles = useAsyncState(StateProperty.userProfile);
   const labDetails = state.data.labs &&
 	state.data.labs.data.find &&
 	state.data.labs.data.find($lab => $lab.id === parseInt(id));
@@ -59,9 +60,11 @@ function Details({alert}) {
   return (
     <>
       <Route exact path={`${match.path}`}>
+        {userProfiles.data.currentProfile.admin &&
         <Link to={`${match.url}/invite`} className='float-right'>
           <Button>New Agent</Button>
         </Link>
+        }
       </Route>
       <Switch>
         <Route exact path={`${match.path}/newPrescription`}>

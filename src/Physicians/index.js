@@ -39,14 +39,18 @@ function Index() {
       }
 
       <Route exact path={`${match.path}`}>
-        <Link to={`${match.path}/invite`} className='float-right'>
-          <Button>Invite Physician</Button>
-        </Link>
+        {userProfiles.data.currentProfile.admin &&
+          <Link to={`${match.path}/invite`} className='float-right'>
+            <Button>Invite Physician</Button>
+          </Link>
+        }
       </Route>
       <Switch>
-        <Route path={`${match.path}/invite`}>
-          <Invite alert={setAlert} />
-        </Route>
+        {userProfiles.data.currentProfile.admin &&
+          <Route path={`${match.path}/invite`}>
+            <Invite alert={setAlert}/>
+          </Route>
+        }
         <Route path={`${match.path}`}>
           <List alert={setAlert} />
         </Route>

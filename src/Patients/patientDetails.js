@@ -3,8 +3,11 @@ import {Button, Col, Container, Row} from "react-bootstrap";
 import {format} from "date-fns";
 import List from "../Prescriptions/list";
 import {Link} from "react-router-dom";
+import {useAsyncState} from "../redux/actions/useAsyncState";
+import {StateProperty} from "../redux/reducers";
 
 function PatientDetails({patientDetails}) {
+  const profiles = useAsyncState(StateProperty.userProfile);
 
   return (
     <>
@@ -44,9 +47,11 @@ function PatientDetails({patientDetails}) {
           </Row>
         </Col>
         <Container>
+          {profiles.data.currentProfile.profileType === 'prescriber' &&
           <Row className='justify-content-end'>
-            <Link to={`/patients/${patientDetails.id}/newPrescription`}><Button>Record Results</Button></Link>
+            <Link to={`/patients/${patientDetails.id}/newPrescription`}><Button>New Prescription</Button></Link>
           </Row>
+          }
         </Container>
       </Row>
       <hr />

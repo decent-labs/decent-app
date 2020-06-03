@@ -7,9 +7,12 @@ import Alert from "react-bootstrap/Alert";
 import Details from "./details";
 import Invite from "./invite";
 import Edit from "./edit";
+import {useAsyncState} from "../redux/actions/useAsyncState";
+import {StateProperty} from "../redux/reducers";
 
 export default function Labs() {
   const match = useRouteMatch();
+  const userProfiles = useAsyncState(StateProperty.userProfile);
   const [alert, setAlert] = useState(null);
 
   return (
@@ -26,26 +29,34 @@ export default function Labs() {
       }
 
       <Route exact path={`${match.path}`}>
-        <Link to={`${match.path}/new`} className='float-right'>
-          <Button>New Lab</Button>
-        </Link>
+        {userProfiles.data.currentProfile.admin &&
+          <Link to={`${match.path}/new`} className='float-right'>
+            <Button>New Lab</Button>
+          </Link>
+        }
       </Route>
       <Switch>
-        <Route path={`${match.path}/:labOrgId/invite`}>
-          <Invite alert={setAlert} />
-        </Route>
+        {userProfiles.data.currentProfile.admin &&
+          <Route path={`${match.path}/:labOrgId/invite`}>
+            <Invite alert={setAlert}/>
+          </Route>
+        }
         <Route path={`${match.path}/newAgent/:unknown`}>
           <Redirect to={`${match.path}/newAgent`} />
         </Route>
         <Route path={`${match.path}/newAgent`}>
           <New alert={setAlert} />
         </Route>
-        <Route path={`${match.path}/new/:unknown`}>
-          <Redirect to={`${match.path}/new`} />
-        </Route>
-        <Route path={`${match.path}/new`}>
-          <New alert={setAlert} />
-        </Route>
+        {userProfiles.data.currentProfile.admin &&
+          <Route path={`${match.path}/new/:unknown`}>
+            <Redirect to={`${match.path}/new`}/>
+          </Route>
+        }
+        {userProfiles.data.currentProfile.admin &&
+          <Route path={`${match.path}/new`}>
+            <New alert={setAlert} />
+          </Route>
+        }
         <Route path={`${match.path}/:id/edit`}>
           <Edit alert={setAlert} />
         </Route>

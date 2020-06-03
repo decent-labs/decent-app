@@ -6,13 +6,16 @@ import PrintIcon from '../assets/images/print-button-svgrepo-com.svg';
 import Print from './print';
 import {useReactToPrint} from "react-to-print";
 import PatientDetailsIcon from '../assets/images/bmx-patient-details-icon.svg';
+import {useAsyncState} from "../redux/actions/useAsyncState";
+import {StateProperty} from "../redux/reducers";
 
 function List({ patient, items }) {
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     copyStyles: true
-  });
+  })
+  const userProfiles = useAsyncState(StateProperty.userProfile);
 
   function getPrescriptions() {
     return items.map((curPrescription, index) => {
@@ -29,11 +32,13 @@ function List({ patient, items }) {
             <div onClick={handlePrint}>
               <Image src={PrintIcon} />
             </div>
-            <Link to={`/prescriptions/${curPrescription.hash}`}>
-              <div>
-                <Image src={PatientDetailsIcon} />
-              </div>
-            </Link>
+            {['prescriber', 'labAgent'].includes(userProfiles.data.currentProfile.profileType) &&
+              <Link to={`/prescriptions/${curPrescription.hash}`}>
+                <div>
+                  <Image src={PatientDetailsIcon}/>
+                </div>
+              </Link>
+            }
           </td>
         </tr>
       );
