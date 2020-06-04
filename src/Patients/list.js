@@ -4,6 +4,7 @@ import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 import {request} from "../requests";
 import ListTable from "./listTable";
+import {getPrescriptionData} from "../Common/form";
 
 function List() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,19 +23,7 @@ function List() {
         patients = patientProfiles.profile.data.map(curPatient => request(`patients/${curPatient.id}/profile`, 'GET'))
       }
 
-      return Promise.all(patients)
-        .then(profiles => Promise.all(profiles.map(curProfile =>
-            request(`patients/${curProfile.profile.id}/rxs`, 'GET')
-              .then(results => {
-                curProfile.profile.prescriptions = results.prescriptions;
-                return curProfile.profile;
-              })
-              .catch(err => {
-                curProfile.profile.prescriptions = [];
-                return curProfile.profile;
-              })
-          ))
-        )
+      return getPrescriptionData(patients);
     },
     [userProfiles.data.profiles, userProfiles.data.currentProfile, currentPage]);
   const patients = useAsyncState(StateProperty.patients, patientsLoader);

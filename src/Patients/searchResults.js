@@ -16,7 +16,7 @@ function SearchResults({alert}) {
         </Col>
       </Row>
       {(results.data.length > 0) ?
-        <ListTable patients={results.data}></ListTable> :
+        <ListTable patients={results.data} /> :
         <Alert
           className='mt-3'
           variant='warning'

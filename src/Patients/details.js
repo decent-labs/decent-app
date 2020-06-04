@@ -17,6 +17,7 @@ import {StateProperty} from "../redux/reducers";
 import PatientDetails from './patientDetails';
 import NewPrescription from '../Prescriptions/new'
 import {request} from "../requests"
+import {getPrescriptionData} from "../Common/form";
 
 function Details({alert}) {
   const dispatch = useDispatch();
@@ -30,9 +31,9 @@ function Details({alert}) {
     if (patientDetails) return;
 
     dispatch(dataLoadingAction(StateProperty.patients));
-    request(`patients/${id}/profile`)
+    getPrescriptionData([request(`patients/${id}/profile`)])
       .then(response => {
-        dispatch(dataAddAction(StateProperty.patients, { ...response.profile, prescriptions: [] }))
+        dispatch(dataAddAction(StateProperty.patients, response[0]))
       })
       .catch(error => {
         dispatch(dataLoadingErrorAction(StateProperty.patients, error));

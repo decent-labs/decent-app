@@ -21,10 +21,10 @@ import { StateProperty } from '../../redux/reducers';
 import { request } from '../../requests';
 import {Button} from "react-bootstrap";
 import {
-  dataAddAction,
   dataLoadingErrorAction,
   dataUpdateAction
 } from "../../redux/reducers/async";
+import {getPrescriptionData} from "../../Common/form";
 import {formatHtmlDate} from "../../Common/form";
 
 function NavMenu() {
@@ -44,16 +44,19 @@ function NavMenu() {
     event.preventDefault();
     dispatch(dataUpdateAction(StateProperty.search, []));
     request(`patients?fname=${firstName}&lname=${lastName}&dob=${formatHtmlDate(dob)}`)
-      .then(results =>
-        results.profile.map(curProfile =>
+      .then(results =>{
+        const profiles = results.profile.map(curProfile =>
           request(`patients/${curProfile.id}/profile`)
-            .then(response => {
-              dispatch(dataAddAction(StateProperty.search, response.profile));
-            })
-            .catch(error => {
-              dispatch(dataLoadingErrorAction(StateProperty.search, error));
-            })
         )
+        getPrescriptionData(profiles)
+          .then(response => {
+            dispatch(dataUpdateAction(StateProperty.search, response));
+          })
+          .catch(error => {
+            dispatch(dataLoadingErrorAction(StateProperty.search, error));
+          })
+      }
+
       )
       .then(() => history.push('/patients/search'));
   }

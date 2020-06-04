@@ -17,16 +17,27 @@ function List({ patient, items }) {
   })
   const userProfiles = useAsyncState(StateProperty.userProfile);
 
+  function getLastTestedDate(prescription) {
+    if(prescription.data.length > 0)
+      return format(new Date(prescription.data[prescription.data.length-1].createdAt), 'MM/dd/yyyy');
+    return 'n/a';
+  }
+
+  function getTestResult(prescription) {
+    if(prescription.data.length > 0)
+      return JSON.parse(prescription.data[prescription.data.length-1].data).covidTestResult
+    return 'n/a';
+  }
+
   function getPrescriptions() {
     return items.map((curPrescription, index) => {
       return (
         <tr key={index}>
-          <td>{curPrescription.patientInfo.lastName}</td>
-          <td>{curPrescription.patientInfo.firstName}</td>
-          <td>{format(new Date(curPrescription.patientInfo.dob), 'MM/dd/yyyy')}</td>
-          <td>n/a</td>
-          <td>n/a</td>
-          <td>n/a</td>
+          <td>{patient.lastName}</td>
+          <td>{patient.firstName}</td>
+          <td>{format(new Date(patient.dob), 'MM/dd/yyyy')}</td>
+          <td>{getLastTestedDate(curPrescription)}</td>
+          <td>{getTestResult(curPrescription)}</td>
           <td className='action-items d-flex'>
             <div style={{ display: "none" }}><Print patient={patient} prescription={curPrescription} ref={componentRef} /></div>
             <div onClick={handlePrint}>
@@ -53,7 +64,6 @@ function List({ patient, items }) {
           <th>First Name</th>
           <th>Date of Birth</th>
           <th>Date Tested</th>
-          <th>Covid Test</th>
           <th>Date of Results</th>
           <th>Actions</th>
         </tr>
