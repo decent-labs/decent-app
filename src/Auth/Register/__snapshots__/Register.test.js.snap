@@ -197,7 +197,7 @@ exports[`renders correctly 1`] = `
             class="form-label"
             for="formSsn"
           >
-            Social Security
+            Social Security Number
           </label>
           <input
             class="form-control"

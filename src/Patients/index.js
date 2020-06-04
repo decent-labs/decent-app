@@ -6,10 +6,15 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Details from "./details";
 import SearchResults from "./searchResults";
+import PersonPlus from "../assets/images/person-plus.svg";
+import {Image} from "react-bootstrap";
+import {useAsyncState} from "../redux/actions/useAsyncState";
+import {StateProperty} from "../redux/reducers";
 
 function Patients() {
   const match = useRouteMatch();
   const [alert, setAlert] = useState(null);
+  const userProfiles = useAsyncState(StateProperty.userProfile);
 
   return (
     <>
@@ -24,11 +29,13 @@ function Patients() {
       </Alert>
       }
 
-      <Route exact path={`${match.path}`}>
-        <Link to={`${match.path}/new`} className='float-right'>
-          <Button>New Patient</Button>
-        </Link>
-      </Route>
+      {['prescriber', 'patient'].includes(userProfiles.data.currentProfile.profileType) &&
+        <Route exact path={`${match.path}`}>
+          <Link to={`${match.path}/new`} className='float-right'>
+            <Button><Image src={PersonPlus}/> New Patient</Button>
+          </Link>
+        </Route>
+      }
       <Switch>
         <Route path={`${match.path}/new/:unknown`}>
           <Redirect to={`${match.path}/new`} />

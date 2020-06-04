@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import Form from "react-bootstrap/Form";
-import DatePicker from "react-datepicker";
 import Button from "react-bootstrap/Button";
 import {request} from "../../requests";
-import {format} from "date-fns";
 import {useHistory, useParams} from "react-router-dom";
+import {formatHtmlDate} from "../../Common/form";
 
 function PhysicianInvite({alert}) {
   const { inviteCode } = useParams();
@@ -19,9 +18,9 @@ function PhysicianInvite({alert}) {
   const [deaNumber, setDeaNumber] = useState('');
 
   function sendRequest() {
-    request(`invitation/claimInvitation/${inviteCode}`, 'POST', { fullName, email, password, dob: format(dob, 'MM/dd/yyyy'), ssn, deaNumber, permissionGrants:[] })
+    request(`invitation/claimInvitation/${inviteCode}`, 'POST', { fullName, email, password, dob: formatHtmlDate(dob), ssn, deaNumber, permissionGrants:[] })
       .then(() => {
-        alert({ message: 'Accepted Invite', variant: 'primary' })
+        alert({ message: 'Invite Successfully Accepted', variant: 'primary' })
         history.push('/auth/login')
       })
       .catch(error => {
@@ -74,16 +73,16 @@ function PhysicianInvite({alert}) {
         <Form.Group className='required'>
           <Form.Label>Date of Birth</Form.Label>
           <Form.Control
-            as={DatePicker}
-            selected={dob}
-            onChange={date => setDob(date)}
-            showMonthDropdown
-            showYearDropdown
+            type='date'
+            placeholder='mm/dd/yy'
+            autoComplete='dob'
+            value={dob}
+            onChange={event => setDob(event.target.value)}
             required
           />
         </Form.Group>
         <Form.Group className='required'>
-          <Form.Label>SSN</Form.Label>
+          <Form.Label>Social Security Number</Form.Label>
           <Form.Control
             value={ssn}
             onChange={event => setSsn(event.target.value)}

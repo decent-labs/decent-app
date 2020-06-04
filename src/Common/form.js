@@ -70,3 +70,8 @@ export function getStateOptions() {
     })
   ];
 }
+
+export function formatHtmlDate(date) {
+  const datePieces = date.split('-');
+  return `${datePieces[1]}-${datePieces[2]}-${datePieces[0]}`;
+}

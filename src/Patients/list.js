@@ -39,6 +39,23 @@ function List() {
     [userProfiles.data.profiles, userProfiles.data.currentProfile, currentPage]);
   const patients = useAsyncState(StateProperty.patients, patientsLoader);
 
+  function showTable() {
+    if(patients.data.length > 0)
+      return <>
+        <ListTable patients={patients.data}></ListTable>
+        {userProfiles.data.currentProfile.profileType === 'internal' && (
+          <Pagination as={'Container'} className='justify-content-end'>
+            <Pagination.First onClick={() => setCurrentPage(1)}/>
+            <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)}/>
+            <Pagination.Item active>{currentPage}</Pagination.Item>
+            <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)}/>
+          </Pagination>
+        )}
+      </>
+    return <div><h4>You have no patients yet</h4></div>
+
+  }
+
   return(
     <>
       <Row>
@@ -46,15 +63,8 @@ function List() {
           <h1>Patients</h1>
         </Col>
       </Row>
-      <ListTable patients={patients.data}></ListTable>
-      {userProfiles.data.currentProfile.profileType === 'internal' && (
-        <Pagination as={'Container'} className='justify-content-end'>
-          <Pagination.First onClick={() => setCurrentPage(1)}/>
-          <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)}/>
-          <Pagination.Item active>{currentPage}</Pagination.Item>
-          <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)}/>
-        </Pagination>
-      )}
+      {showTable()}
+
     </>
   )
 }

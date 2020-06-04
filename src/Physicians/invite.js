@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import {Container, Form, Row} from "react-bootstrap";
+import {Col, Container, Form, Row} from "react-bootstrap";
 import {request} from "../requests";
 import Button from "react-bootstrap/Button";
-import DatePicker from "react-datepicker";
+import {formatHtmlDate} from "../Common/form";
 import {useHistory} from "react-router-dom";
-import {format} from 'date-fns';
 
 function Invite({alert}) {
   const history = useHistory();
@@ -22,7 +21,7 @@ function Invite({alert}) {
     request(`invitation/outBound/hospital`, 'POST', {
       fullName,
       email,
-      dob: format(dob, 'MM/dd/yyyy'),
+      dob: formatHtmlDate(dob),
       language,
       gender,
       ssn,
@@ -30,12 +29,12 @@ function Invite({alert}) {
       permissionGrants: []
     })
       .then(() => {
-        alert({ message:'successfully created invitation', variant:'success'})
+        alert({ message:'Successfully created an invitation', variant:'success'})
         history.replace('/physicians')
       })
       .catch(err => {
         console.log('error in creating invitation ', err);
-        alert({ message:'error in creating invitation, try again', variant: 'danger'})
+        alert({ message:'There was an error in creating invitation, try again', variant: 'danger'})
       })
   }
 
@@ -50,83 +49,85 @@ function Invite({alert}) {
   return (
     <>
       <Container>
-        <Row className='justify-content-center'>
-          <h2>Invite Physician</h2>
-        </Row>
-        <Form onSubmit={sendRequest}>
-          <Form.Group className='required'>
-            <Form.Label>Full Name</Form.Label>
-            <Form.Control
-              value={fullName}
-              onChange={event => setFullName(event.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className='required'>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type='email'
-              value={email}
-              onChange={event => setEmail(event.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className='required'>
-            <Form.Label>Date of Birth</Form.Label>
-            <Form.Control
-              as={DatePicker}
-              selected={dob}
-              onChange={date => setDob(date)}
-              showMonthDropdown
-              showYearDropdown
-              required
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Language</Form.Label>
-            <Form.Control
-              value={language}
-              onChange={event => setLanguage(event.target.value)}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Gender</Form.Label>
-            <Form.Control
-              value={gender}
-              onChange={event => setGender(event.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className='required'>
-            <Form.Label>SSN</Form.Label>
-            <Form.Control
-              value={ssn}
-              onChange={event => setSsn(event.target.value)}
-              onBlur={formatSsn}
-              isInvalid={!ssnIsValid}
-              required
-            />
-          </Form.Group>
-          <Form.Group className='required'>
-            <Form.Label>DEA Number</Form.Label>
-            <Form.Control
-              value={deaNumber}
-              onChange={event => setDeaNumber(event.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Row className='pt-2 justify-content-center'>
-            <Form.Group controlId='formSubmit'>
-              <Button
-                variant='primary'
-                type='submit'
-                block
-                className='font-weight-bold'
-              >
-                Invite
-              </Button>
+        <Col lg={6} md={8}>
+          <Row>
+            <h1>Invite Physician</h1>
+          </Row>
+          <Form onSubmit={sendRequest}>
+            <Form.Group className='required'>
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control
+                value={fullName}
+                onChange={event => setFullName(event.target.value)}
+                required
+              />
             </Form.Group>
-          </Form.Row>
-        </Form>
+            <Form.Group className='required'>
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type='email'
+                value={email}
+                onChange={event => setEmail(event.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className='required'>
+              <Form.Label>Date of Birth</Form.Label>
+              <Form.Control
+                type='date'
+                placeholder='mm/dd/yyyy'
+                autoComplete='dob'
+                value={dob}
+                onChange={event => setDob(event.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Language</Form.Label>
+              <Form.Control
+                value={language}
+                onChange={event => setLanguage(event.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Gender</Form.Label>
+              <Form.Control
+                value={gender}
+                onChange={event => setGender(event.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className='required'>
+              <Form.Label>Social Security Number</Form.Label>
+              <Form.Control
+                value={ssn}
+                onChange={event => setSsn(event.target.value)}
+                onBlur={formatSsn}
+                isInvalid={!ssnIsValid}
+                required
+              />
+            </Form.Group>
+            <Form.Group className='required'>
+              <Form.Label>DEA Number</Form.Label>
+              <Form.Control
+                value={deaNumber}
+                onChange={event => setDeaNumber(event.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Row className='pt-2 justify-content-end'>
+              <Form.Group controlId='formSubmit'>
+                <Button
+                  variant='primary'
+                  type='submit'
+                  block
+                  className='font-weight-bold'
+                >
+                  Invite
+                </Button>
+              </Form.Group>
+            </Form.Row>
+          </Form>
+        </Col>
       </Container>
     </>
   )

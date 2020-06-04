@@ -16,7 +16,7 @@ const Print = React.forwardRef((props, ref) => {
           Phone
         </p>
         <p>
-          SSN
+          Social Security Number
         </p>
         <p>
           Address

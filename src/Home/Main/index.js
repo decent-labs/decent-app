@@ -5,7 +5,6 @@ import { Redirect, Route, Switch } from "react-router-dom";
 // other imports
 import Settings from '../../Settings';
 import Patients from '../../Patients';
-import Welcome from '../../Welcome';
 import Physicians from '../../Physicians';
 import Labs from '../../Labs';
 import Prescriptions from '../../PrescriptionDetails';
@@ -16,7 +15,7 @@ function Main() {
       <Route path='/settings'>
         <Settings />
       </Route>
-      <Route path='/patients'>
+      <Route name='patients' path='/patients'>
         <Patients />
       </Route>
       <Route path='/physicians'>
@@ -31,9 +30,7 @@ function Main() {
       <Route path='/:unknown'>
         <Redirect to='/' />
       </Route>
-      <Route path='/'>
-        <Welcome />
-      </Route>
+      <Redirect exact from='/' to='patients' />
     </Switch>
   );
 }

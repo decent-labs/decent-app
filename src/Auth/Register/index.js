@@ -183,7 +183,7 @@ function Register() {
                 </Form.Row>
                 <Form.Row>
                     <Form.Group className='required' lg={4} md={8} as={Col} controlId='formSsn'>
-                        <Form.Label>Social Security</Form.Label>
+                        <Form.Label>Social Security Number</Form.Label>
                         <Form.Control
                             type='text'
                             maxLength={11}

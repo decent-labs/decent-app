@@ -2,10 +2,8 @@ import React, {useState} from 'react';
 import {Container, Form, Row} from "react-bootstrap";
 import {request} from "../requests";
 import Button from "react-bootstrap/Button";
-import DatePicker from "react-datepicker";
 import {useHistory, useParams} from "react-router-dom";
-import {format} from 'date-fns';
-import {getStateOptions} from "../Common/form";
+import {formatHtmlDate, getStateOptions} from "../Common/form";
 
 function Invite({alert}) {
   const history = useHistory();
@@ -24,18 +22,18 @@ function Invite({alert}) {
       email,
       firstName,
       lastName,
-      dob: format(dob, 'MM/dd/yyyy'),
+      dob: formatHtmlDate(dob),
       licenseNumber,
       stateOfLicense,
       organizationName
     })
       .then(() => {
-        alert({ message:'successfully created invitation', variant:'success'})
+        alert({ message:'Successfully created an invitation', variant:'success'})
         history.replace('/labs')
       })
       .catch(err => {
         console.log('error in creating invitation ', err);
-        alert({ message:'error in creating invitation, try again', variant: 'danger'})
+        alert({ message:'Error in creating invitation, try again', variant: 'danger'})
       })
   }
 
@@ -74,11 +72,11 @@ function Invite({alert}) {
           <Form.Group className='required'>
             <Form.Label>Date of Birth</Form.Label>
             <Form.Control
-              as={DatePicker}
-              selected={dob}
-              onChange={date => setDob(date)}
-              showMonthDropdown
-              showYearDropdown
+              type='date'
+              placeholder='mm/dd/yy'
+              autoComplete='dob'
+              value={dob}
+              onChange={event => setDob(event.target.value)}
               required
             />
           </Form.Group>

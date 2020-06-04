@@ -43,7 +43,7 @@ function ListTable({patients}) {
           <th>First Name</th>
           <th>Date of Birth</th>
           <th>Last Rx Date</th>
-          <th>Actions</th>
+          <th>Details</th>
         </tr>
         </thead>
         <tbody>

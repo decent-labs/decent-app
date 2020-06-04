@@ -10,7 +10,7 @@ import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 import {request} from "../requests";
 import {format} from "date-fns";
-import PatientDetailsIcon from "../assets/images/bmx-patient-details-icon.svg";
+import TrashIcon from "../assets/images/trash.svg";
 import ConfirmModal from "./confirmModal";
 
 function List({alert}) {
@@ -39,11 +39,14 @@ function List({alert}) {
   function deletePhysician() {
     request(`prescribers/${currentPhysician.id}/profile`, 'DELETE')
       .then(() => {
-        alert({ message:'successfully deleted', variant:'success'});
+        alert({ message:'Physician was successfully deleted', variant:'success'});
         setCurrentPhysician({});
         setUpdateList(true);
       })
-      .catch(() => alert({ message:'error deleting', variant:'danger'}))
+      .catch((e) => {
+        alert({ message:'Error deleting physician', variant:'danger'});
+        console.log('Error deleting physician', e);
+      })
   }
 
   function getPhysicianList() {
@@ -55,9 +58,9 @@ function List({alert}) {
         <td>{format(new Date(curPhysician.dob),'MM/dd/yyyy')}</td>
         <td>{curPhysician.deaNumber}</td>
         <td className='action-items'>
-            <div onClick={() => deletePhysicianModal(curPhysician)}>
-              <Image src={PatientDetailsIcon} />
-            </div>
+          <div onClick={() => deletePhysicianModal(curPhysician)}>
+            <Image src={TrashIcon} />
+          </div>
         </td>
       </tr>
     })

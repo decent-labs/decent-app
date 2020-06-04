@@ -18,15 +18,14 @@ import BMxNotificationIcon from '../../assets/images/bmx-notification-icon.svg';
 
 import { useAsyncState } from '../../redux/actions/useAsyncState';
 import { StateProperty } from '../../redux/reducers';
-import DatePicker from "react-datepicker";
 import { request } from '../../requests';
 import {Button} from "react-bootstrap";
-import { format } from 'date-fns';
 import {
   dataAddAction,
   dataLoadingErrorAction,
   dataUpdateAction
 } from "../../redux/reducers/async";
+import {formatHtmlDate} from "../../Common/form";
 
 function NavMenu() {
   const userTypesAllowedSearch = ['prescriber','internal','labOrg', 'labAgent'];
@@ -44,7 +43,7 @@ function NavMenu() {
   function searchPatient(event) {
     event.preventDefault();
     dispatch(dataUpdateAction(StateProperty.search, []));
-    request(`patients?fname=${firstName}&lname=${lastName}&dob=${format(dob,'MM-dd-yyyy')}`)
+    request(`patients?fname=${firstName}&lname=${lastName}&dob=${formatHtmlDate(dob)}`)
       .then(results =>
         results.profile.map(curProfile =>
           request(`patients/${curProfile.id}/profile`)
@@ -78,19 +77,14 @@ function NavMenu() {
                         onChange={event => setLastName(event.target.value)}
                         className='media-body py-2 border'
                         required/>
-          <div className="media-body">
-            <DatePicker selected={dob}
-                        onChange={date => setDob(date)}
-                        placeholderText='Date of birth'
-
-                        customInput={<Form.Control type='text'
-                                                   className='py-2 border'
-                        />
-                        }
-                        required
-                        showMonthDropdown
-                        showYearDropdown/>
-          </div>
+          <Form.Control
+            type='date'
+            placeholder='Date of birth'
+            autoComplete='dob'
+            value={dob}
+            onChange={event => setDob(event.target.value)}
+            required
+          />
           <Button
             variant='primary'
             type='submit'

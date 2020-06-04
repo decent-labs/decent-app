@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import { Alert, Button } from "react-bootstrap";
+import {Alert, Button, Image} from "react-bootstrap";
 import { Link, Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import New from "./new";
 import Details from "./details";
+import PersonPlus from "../assets/images/person-plus.svg";
 
 function Prescriptions() {
   const match = useRouteMatch();
@@ -23,7 +24,7 @@ function Prescriptions() {
 
       <Route exact path={`${match.path}`}>
         <Link to={`${match.path}/new`} className='float-right'>
-          <Button>New Patient</Button>
+          <Button><Image src={PersonPlus}/> New Patient</Button>
         </Link>
       </Route>
       <Switch>

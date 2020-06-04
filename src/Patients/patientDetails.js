@@ -9,6 +9,14 @@ import {StateProperty} from "../redux/reducers";
 function PatientDetails({patientDetails}) {
   const profiles = useAsyncState(StateProperty.userProfile);
 
+  function getPrescriptionsList() {
+    if(patientDetails.prescriptions.length > 0)
+      return <>
+        <h4>Prescriptions</h4>
+        <List patient={patientDetails} items={patientDetails.prescriptions} />
+    </>
+    return <div><h4>No prescriptions to display</h4></div>
+  }
   return (
     <>
       <Row>
@@ -23,7 +31,7 @@ function PatientDetails({patientDetails}) {
                 Phone
               </p>
               <p>
-                SSN
+                Social Security Number
               </p>
               <p>
                 Address
@@ -55,7 +63,7 @@ function PatientDetails({patientDetails}) {
         </Container>
       </Row>
       <hr />
-      <List patient={patientDetails} items={patientDetails.prescriptions} />
+      {getPrescriptionsList()}
       <Row>
         <Col>
           <h5>Directions</h5>
