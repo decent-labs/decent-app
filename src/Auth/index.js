@@ -40,7 +40,7 @@ function Auth() {
     <Container fluid className='h-100'>
       <Row className='h-100'>
         <LeftHeroCol className='d-none d-md-flex flex-md-column justify-content-end' md={4} lg={6}>
-          <Image src={BMxLogoTransparent} fluid className='mb-4' />
+          <Image style={{"maxWidth": "75%", "height":"auto"}} src={BMxLogoTransparent} className='mb-4' />
           <small className='text-muted'>v{packageJson.version + '+' + process.env.REACT_APP_GIT_HASH}</small>
         </LeftHeroCol>
         <Col className='d-flex flex-column my-3'>
