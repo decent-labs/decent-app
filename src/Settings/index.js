@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -11,12 +11,15 @@ import OauthManager from './OauthManager';
 import RouteRule from '../Routes/RouteRule';
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
+import {request} from "../requests";
+import Invites from "./Invites";
 
 function Settings() {
   const match = useRouteMatch();
   const profiles = useAsyncState(StateProperty.userProfile);
+  useAsyncState(StateProperty.invitations, useCallback( async () => await request('invitation/', 'GET'),[]))
 
-  const canManageOauth = 
+  const canManageOauth =
     profiles.data.currentProfile.profileType === 'hospitalOrg' &&
     profiles.data.currentProfile.admin;
 
@@ -28,6 +31,13 @@ function Settings() {
             <Nav.Link eventKey='account'>Account</Nav.Link>
           </LinkContainer>
         </Nav.Item>
+        {profiles.data.currentProfile.admin &&
+          <Nav.Item>
+            <LinkContainer to={`${match.path}/invites`}>
+              <Nav.Link eventKey='invites'>Outstanding Invites</Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
+        }
         {canManageOauth &&
           <Nav.Item>
             <LinkContainer to={`${match.path}/oauth`}>
@@ -45,6 +55,12 @@ function Settings() {
             </Route>
             <Route path={`${match.path}/account`}>
               <Account />
+            </Route>
+            <Route path={`${match.path}/invites/:unknown`}>
+              <Redirect to={`${match.path}/invites`} />
+            </Route>
+            <Route path={`${match.path}/invites`}>
+              <Invites />
             </Route>
 
             <RouteRule
