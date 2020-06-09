@@ -7,7 +7,6 @@ import Settings from '../../Settings';
 import Patients from '../../Patients';
 import Physicians from '../../Physicians';
 import Labs from '../../Labs';
-import Prescriptions from '../../PrescriptionDetails';
 
 function Main() {
   return (
@@ -23,9 +22,6 @@ function Main() {
       </Route>
       <Route path='/labs'>
         <Labs />
-      </Route>
-      <Route path='/prescriptions'>
-        <Prescriptions />
       </Route>
       <Route path='/:unknown'>
         <Redirect to='/' />

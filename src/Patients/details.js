@@ -5,7 +5,8 @@ import {
   Switch,
   useHistory,
   useParams,
-  useRouteMatch
+  useRouteMatch,
+  Redirect,
 } from 'react-router-dom';
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {
@@ -48,6 +49,12 @@ function Details({alert}) {
       <Switch>
         <Route exact path={`${match.path}/newPrescription`}>
           <NewPrescription alert={alert}/>
+        </Route>
+        <Route path={`${match.path}/rxs/:rxhash`}>
+          <PatientDetails patientDetails={patientDetails} />
+        </Route>
+        <Route path={`${match.path}/rxs/:rxhash/:unknown`}>
+          <Redirect to={`${match.path}`}/>
         </Route>
         <Route path={`${match.path}`}>
           <PatientDetails patientDetails={patientDetails} />

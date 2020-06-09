@@ -1,21 +1,28 @@
-import React, {useRef} from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState, useRef} from 'react';
 import {format} from "date-fns";
-import {Image, Row, Table} from "react-bootstrap";
+import {Image, Row, Table } from "react-bootstrap";
 import PrintIcon from '../assets/images/print-button-svgrepo-com.svg';
 import Print from './print';
 import {useReactToPrint} from "react-to-print";
 import PatientDetailsIcon from '../assets/images/bmx-patient-details-icon.svg';
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
-
+import TestResultModal from './TestResultModal';
+import { Link, useParams, useHistory } from "react-router-dom";
 function List({ patient, items }) {
+  const { id: patientId,
+	    rxhash: selectedHash
+	}  = useParams();
+  const history = useHistory();
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     copyStyles: true
   })
   const userProfiles = useAsyncState(StateProperty.userProfile);
+  const [showModal, setShowModal] = useState(selectedHash && selectedHash.length > 0);
+
+
 
   function getLastTestedDate(prescription) {
     if(prescription.data.length > 0)
@@ -38,23 +45,35 @@ function List({ patient, items }) {
           <td>{format(new Date(patient.dob), 'MM/dd/yyyy')}</td>
           <td>{getLastTestedDate(curPrescription)}</td>
           <td>{getTestResult(curPrescription)}</td>
-          <td className='action-items d-flex'>
+          <td className='action-items d-flex justify-content-around'>
             <div style={{ display: "none" }}><Print patient={patient} prescription={curPrescription} ref={componentRef} /></div>
             <div onClick={handlePrint}>
               <Image src={PrintIcon} />
             </div>
-            {['prescriber', 'labAgent'].includes(userProfiles.data.currentProfile.profileType) &&
-              <Link to={`/prescriptions/${curPrescription.hash}`}>
-                <div>
-                  <Image src={PatientDetailsIcon}/>
-                </div>
-              </Link>
+              {['internal', 'prescriber', 'labAgent', 'lab', 'labOrg'].includes(userProfiles.data.currentProfile.profileType) &&
+	       <Link to={`/patients/${patientId}/rxs/${curPrescription.hash}`}>
+	       <div>
+                 <Image src={PatientDetailsIcon}/>
+	       </div>
+	       </Link>
             }
           </td>
         </tr>
       );
     })
   }
+
+  const closeModal = () => {
+      setShowModal(false);
+      history.push('..');
+  }
+
+  useEffect( () => {
+      if (selectedHash && selectedHash.length > 0) {
+        setShowModal(true);
+      }
+  }, [ patientId, selectedHash ]);
+
   return (
     <Row>
       <Table>
@@ -72,6 +91,11 @@ function List({ patient, items }) {
         {getPrescriptions()}
         </tbody>
       </Table>
+	  <TestResultModal
+            show={showModal} 
+            closeHandler={() => closeModal() }
+            selectedHash={selectedHash}
+          />	  
     </Row>
   )
 }
