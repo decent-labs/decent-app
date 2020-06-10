@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -13,9 +13,13 @@ import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 import {request} from "../requests";
 import Invites from "./Invites";
+import Internal from "./Internal";
+import NewInternal from "./Internal/new.js";
+import Alert from "react-bootstrap/Alert";
 
 function Settings() {
   const match = useRouteMatch();
+  const [alert, setAlert] = useState(null);
   const profiles = useAsyncState(StateProperty.userProfile);
   useAsyncState(StateProperty.invitations, useCallback( async () => await request('invitation/', 'GET'),[]))
 
@@ -23,8 +27,23 @@ function Settings() {
     profiles.data.currentProfile.profileType === 'hospitalOrg' &&
     profiles.data.currentProfile.admin;
 
+  const isInternalUser =
+    profiles.data.currentProfile.profileType === 'internal' &&
+    profiles.data.currentProfile.admin;
+
   return (
     <>
+      {alert &&
+      <Alert
+        className='mt-3'
+        variant={alert.variant}
+        dismissible
+        onClose={() => setAlert(null)}
+      >
+        {alert.message}
+      </Alert>
+      }
+
       <Nav variant='tabs'>
         <Nav.Item>
           <LinkContainer to={`${match.path}/account`}>
@@ -35,6 +54,13 @@ function Settings() {
           <Nav.Item>
             <LinkContainer to={`${match.path}/invites`}>
               <Nav.Link eventKey='invites'>Outstanding Invites</Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
+        }
+        {isInternalUser &&
+          <Nav.Item>
+            <LinkContainer to={`${match.path}/internal`}>
+              <Nav.Link eventKey='internal'>Internal Users</Nav.Link>
             </LinkContainer>
           </Nav.Item>
         }
@@ -68,6 +94,22 @@ function Settings() {
               rule={canManageOauth}
             >
               <OauthManager />
+            </RouteRule>
+
+            <RouteRule
+              path={`${match.path}/internal/new`}
+              rule={isInternalUser}
+            >
+              <NewInternal alert={setAlert}/>
+            </RouteRule>
+            <Route path={`${match.path}/internal/:unknown`}>
+              <Redirect to={`${match.path}/`} />
+            </Route>
+            <RouteRule
+              path={`${match.path}/internal`}
+              rule={isInternalUser}
+            >
+              <Internal alert={setAlert} />
             </RouteRule>
 
             <Route path={match.path}>

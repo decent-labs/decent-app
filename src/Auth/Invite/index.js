@@ -7,6 +7,7 @@ import LabInvite from "./labInvite";
 
 import { request } from '../../requests';
 import PatientInvite from "./patientInvite";
+import InternalInvite from "./internalInvite";
 
 function Invite({ alert }) {
   const { inviteCode } = useParams();
@@ -32,6 +33,8 @@ function Invite({ alert }) {
         return <LabInvite alert={alert} />;
       case "hospital":
         return <PhysicianInvite alert={alert} />;
+      case "internal":
+        return <InternalInvite alert={alert} />;
       default:
         return <PatientInvite alert={alert} />;
     }
