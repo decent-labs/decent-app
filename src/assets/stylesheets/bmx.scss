@@ -207,3 +207,13 @@ div.dropdown button.dropdown-toggle {
     }
   }
 }
+
+.rounded-pill-left {
+  border-top-left-radius: 9999px;
+  border-bottom-left-radius: 9999px;
+}
+
+.rounded-pill-right {
+  border-top-right-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+}
