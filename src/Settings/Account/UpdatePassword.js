@@ -10,7 +10,7 @@ import { useAsyncState } from '../../redux/actions/useAsyncState';
 import { StateProperty } from '../../redux/reducers';
 import {
   dataLoadingAction,
-  dataUpdateAction,
+  dataSetAction,
   dataLoadingErrorAction
 } from '../../redux/reducers/async';
 
@@ -86,7 +86,7 @@ function UpdatePassword() {
               }
               dispatch(dataLoadingAction(StateProperty.account));
               request('auth/account', 'PUT', { newPass, oldPass })
-                .then(response => dispatch(dataUpdateAction(StateProperty.account, response)))
+                .then(response => dispatch(dataSetAction(StateProperty.account, response)))
                 .then(() => setSuccess('Password succesfully updated!'))
                 .catch(error => {
                   dispatch(dataLoadingErrorAction(StateProperty.account, error));

@@ -20,7 +20,7 @@ import { StateProperty } from '../../redux/reducers';
 import { request } from '../../requests';
 import {
   dataLoadingErrorAction,
-  dataUpdateAction
+  dataSetAction
 } from "../../redux/reducers/async";
 import { getPrescriptionData } from "../../Common/form";
 import { formatHtmlDate } from "../../Common/form";
@@ -40,17 +40,14 @@ function NavMenu() {
 
   function searchPatient(event) {
     event.preventDefault();
-    dispatch(dataUpdateAction(StateProperty.search, []));
+    dispatch(dataSetAction(StateProperty.search, []));
     const searchArray = [];
-    
-    console.log({firstName, lastName, dob})
     
     if (firstName) searchArray.push(`fname=${firstName}`)
     if (lastName) searchArray.push(`lname=${lastName}`)
     if (dob) searchArray.push(`dob=${formatHtmlDate(dob)}`)
 
     if (searchArray.length === 0) return;
-    console.log("FINNA SEARCH")
 
     const query = searchArray.join("&")
 
@@ -61,7 +58,7 @@ function NavMenu() {
         )
         getPrescriptionData(profiles)
           .then(response => {
-            dispatch(dataUpdateAction(StateProperty.search, response));
+            dispatch(dataSetAction(StateProperty.search, response));
           })
           .catch(error => {
             dispatch(dataLoadingErrorAction(StateProperty.search, error));

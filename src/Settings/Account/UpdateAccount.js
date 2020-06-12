@@ -10,7 +10,7 @@ import { useAsyncState } from '../../redux/actions/useAsyncState';
 import { StateProperty } from '../../redux/reducers';
 import {
   dataLoadingAction,
-  dataUpdateAction,
+  dataSetAction,
   dataLoadingErrorAction
 } from '../../redux/reducers/async';
 
@@ -83,7 +83,7 @@ function UpdateAccount() {
               setSuccess('');
               dispatch(dataLoadingAction(StateProperty.account));
               request('auth/account', 'PUT', { fullName, newEmail, oldPass })
-                .then(response => dispatch(dataUpdateAction(StateProperty.account, response)))
+                .then(response => dispatch(dataSetAction(StateProperty.account, response)))
                 .then(() => setSuccess('Account succesfully updated!'))
                 .catch(error => {
                   dispatch(dataLoadingErrorAction(StateProperty.account, error));

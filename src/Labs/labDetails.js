@@ -23,9 +23,9 @@ export default function LabDetails({labDetails}) {
                 {labDetails.phoneNumber || 'n/a'}
               </p>
               <address>
-             {(labDetails.streetAddress && labDetails.streetAdress2 &&`${labDetails.streetAddress} ${labDetails.streetAddress2}`) || 'n/a' }
-             { labDetails.city && labDetails.state && labDetails.zipCode &&
-                `${labDetails.city} ${labDetails.state} ${labDetails.zipCode}`}
+                {labDetails.streetAddress && <>{labDetails.streetAddress}<br /></> }
+                {labDetails.streetAddress2 && <>{labDetails.streetAddress2}<br /></> }
+                {labDetails.city && <>{labDetails.city},</>} {labDetails.state} {labDetails.zipCode}
               </address>
             <Link to={`/labs/${labDetails.id}/edit`}><Button className='styled-form-button px-5'>Edit</Button></Link>
             </Col>

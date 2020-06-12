@@ -8,7 +8,7 @@ import BMxPatientIcon from '../../assets/images/bmx-patient-icon.svg';
 
 import {useAsyncState} from "../../redux/actions/useAsyncState";
 import {StateProperty} from "../../redux/reducers";
-import {dataUpdateAction} from "../../redux/reducers/async";
+import {dataSetAction} from "../../redux/reducers/async";
 import {useDispatch} from "react-redux";
 
 function LeftMenu() {
@@ -30,7 +30,7 @@ function LeftMenu() {
   });
 
   function handleProfileSelect(profile) {
-    dispatch(dataUpdateAction(StateProperty.userProfile, {currentProfile:profile, profiles:userProfiles.data.profiles}));
+    dispatch(dataSetAction(StateProperty.userProfile, {currentProfile:profile, profiles:userProfiles.data.profiles}));
 
     if (profile.profileType === 'labOrg') {
       history.push(`/labs/${profile.entityId}`);

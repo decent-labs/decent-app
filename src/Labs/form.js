@@ -1,7 +1,7 @@
 import {Col, Form} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {getStateOptions} from "../Common/form";
 
 function LabForm({
@@ -13,25 +13,26 @@ function LabForm({
     city: oCity,
     state: oState,
     zipCode: oZipCode,
-    zipCodeIsValid: oZipCodeIsValid,
     id: labOrgId,
 }) {
-  const [name, setName] = useState(oName || '');
-  const [phoneNumber, setPhoneNumber] = useState(oPhoneNumber || '');
-  const [streetAddress, setStreetAddress] = useState(oStreetAddress || '');
-  const [streetAddress2, setStreetAddress2] = useState(oStreetAddress2 || '');
-  const [city, setCity] = useState(oCity || '');
-  const [state, setState] = useState(oState || '');
-  const [zipCode, setZipCode] = useState(oZipCode || '');
-  const [zipCodeIsValid, setZipCodeIsValid] = useState(oZipCodeIsValid || false);
+  const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [streetAddress, setStreetAddress] = useState('');
+  const [streetAddress2, setStreetAddress2] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('Select');
+  const [zipCode, setZipCode] = useState('');
   const country = "us";
-
-  function validateZipCode(zip)
-  {
-    const regexp = /^[0-9]{5}?$/;
-    if(zip !== '')
-      setZipCodeIsValid(regexp.test(zip));
-  }
+  
+  useEffect(() => {
+    setName(oName || '')
+    setPhoneNumber(oPhoneNumber || '')
+    setStreetAddress(oStreetAddress || '')
+    setStreetAddress2(oStreetAddress2 || '')
+    setCity(oCity || '')
+    setState(oState || '')
+    setZipCode(oZipCode || '')
+  }, [oName, oPhoneNumber, oStreetAddress, oStreetAddress2, oCity, oState, oZipCode])
 
   function handleSubmit(event){
     event.preventDefault();
@@ -101,7 +102,7 @@ function LabForm({
           <Col><Form.Group controlId='formState'>
             <Form.Label>State</Form.Label>
             <Form.Control as='select'
-                          defaultValue='Select'
+                          value={state}
                           onChange={event => setState(event.target.value)}
             >
               {getStateOptions()}
@@ -114,13 +115,7 @@ function LabForm({
               placeholder='00000'
               value={zipCode}
               onChange={event => setZipCode(event.target.value)}
-              onBlur={event => validateZipCode(event.target.value)}
-              isValid={zipCodeIsValid}
-              isInvalid={(zipCode !== '') && !zipCodeIsValid}
             />
-            <Form.Control.Feedback type="invalid">
-              The entered zip code is invalid
-            </Form.Control.Feedback>
           </Form.Group></Col>
         </Form.Row>
         <Form.Row className='justify-content-end align-middle'>

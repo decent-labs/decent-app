@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  dataUpdateAction,
+  dataSetAction,
   dataLoadingAction,
   dataLoadingErrorAction
 } from '../reducers/async';
@@ -12,7 +12,7 @@ const useAsyncStateHook = ({ stateProperty, loader, dispatch, stateValue }) => {
   useEffect(() => {
     const load = () => {
       loader()
-        .then(result => mounted.current && dispatch(dataUpdateAction(stateProperty, result)))
+        .then(result => mounted.current && dispatch(dataSetAction(stateProperty, result)))
         .catch(error => mounted.current && dispatch(dataLoadingErrorAction(stateProperty, error)));
     };
     if (!loader) return;

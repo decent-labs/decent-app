@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   Link,
   Route,
@@ -8,19 +8,19 @@ import {
   useParams,
   useRouteMatch
 } from 'react-router-dom';
-import {useAsyncState} from "../redux/actions/useAsyncState";
+import { useAsyncState } from "../redux/actions/useAsyncState";
 import {
   dataLoadingAction,
   dataLoadingErrorAction,
-  dataUpdateAction
+  dataSetAction
 } from '../redux/reducers/async';
-import {StateProperty} from "../redux/reducers";
+import { StateProperty } from "../redux/reducers";
 import LabDetails from '../Labs/labDetails';
 import NewPrescription from '../Prescriptions/new'
-import {request} from "../requests"
+import { request } from "../requests"
 import Button from "react-bootstrap/Button";
 
-function Details({alert}) {
+function Details({ alert }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
@@ -28,25 +28,23 @@ function Details({alert}) {
   const state = useAsyncState(StateProperty.labs);
   const userProfiles = useAsyncState(StateProperty.userProfile);
   const labDetails = state.data.labs &&
-	state.data.labs.data.find &&
-	state.data.labs.data.find($lab => $lab.id === parseInt(id));
+    state.data.labs.data.find &&
+    state.data.labs.data.find($lab => $lab.id === parseInt(id));
   useEffect(() => {
     if (labDetails && labDetails.users) return;
     dispatch(dataLoadingAction(StateProperty.labs));
-      request(`labOrgs/${id}/profile`, 'GET')
+    request(`labOrgs/${id}/profile`, 'GET')
       .then(response => {
-	  request(`labOrgs/${id}/users`, 'GET')
-	      .then(usersResponse => {
-		  const labProfile = {
-		      ...response.profile,
-		      users: [...usersResponse.users.admins, ...usersResponse.users.nonAdmins]
-		  };
-		  dispatch(dataUpdateAction(StateProperty.labs, {
-		      currentLab: response.profile,
-		      agents: [],
-		      labs: { ...state.data.labs, data: [ labProfile , ...state.data.labs.data || []] },
-		  }))
-	      })
+        request(`labOrgs/${id}/users`, 'GET')
+          .then(usersResponse => {
+            const labProfile = {
+              ...response.profile,
+              users: [...usersResponse.users.admins, ...usersResponse.users.nonAdmins]
+            };
+            dispatch(dataSetAction(StateProperty.labs, {
+              labs: { data: [labProfile, ...state.data.labs.data || []] },
+            }))
+          })
 
       })
       .catch(error => {
@@ -61,14 +59,14 @@ function Details({alert}) {
     <>
       <Route exact path={`${match.path}`}>
         {userProfiles.data.currentProfile.admin &&
-        <Link to={`${match.url}/invite`} className='float-right'>
-          <Button className='styled-form-button px-5'>New Agent</Button>
-        </Link>
+          <Link to={`${match.url}/invite`} className='float-right'>
+            <Button className='styled-form-button px-5'>New Agent</Button>
+          </Link>
         }
       </Route>
       <Switch>
         <Route exact path={`${match.path}/newPrescription`}>
-          <NewPrescription alert={alert}/>
+          <NewPrescription alert={alert} />
         </Route>
         <Route path={`${match.path}`}>
           <LabDetails labDetails={labDetails} />

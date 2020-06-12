@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import {Col, Pagination, Row} from "react-bootstrap";
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
-import {dataUpdateAction} from "../redux/reducers/async";
+import {dataSetAction} from "../redux/reducers/async";
 import {request} from "../requests";
 import ListTable from "./listTable";
 
@@ -13,7 +13,7 @@ export default function LabList() {
   const userProfiles = useAsyncState(StateProperty.userProfile);
   const labsLoader = useCallback(() => 
     request(`labOrgs?currentPage=${currentPage}`, 'GET').then(response => {
-	dispatch(dataUpdateAction(StateProperty.labs,response));
+	dispatch(dataSetAction(StateProperty.labs,response));
 	return response;
     })
    , [currentPage, 

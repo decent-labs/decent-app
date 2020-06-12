@@ -9,7 +9,7 @@ import PersonPlus from "../../assets/images/person-plus.svg";
 import {request} from "../../requests";
 import ConfirmModal from "./confirmModal";
 import {useDispatch} from "react-redux";
-import {dataUpdateAction} from "../../redux/reducers/async";
+import {dataSetAction} from "../../redux/reducers/async";
 
 function Internal({alert}) {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ function Internal({alert}) {
     request(`internal/admins/${currentUser.id}`, 'DELETE')
       .then(() => {
         alert({ message:'Internal user was successfully deleted', variant:'success'});
-        dispatch(dataUpdateAction(StateProperty.internalUsers, {admins: internalUsers.data.splice(internalUsers.data.find(user => user.id === currentUser.id), 1)}))
+        dispatch(dataSetAction(StateProperty.internalUsers, {admins: internalUsers.data.splice(internalUsers.data.find(user => user.id === currentUser.id), 1)}))
         setCurrentUser({});
       })
       .catch((e) => {
