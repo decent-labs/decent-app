@@ -76,7 +76,7 @@ function LeftMenu() {
           }
         </Col>
       </Row>
-        <Row className='mx-auto left-menu'>
+        <Row className='left-menu'>
           <Col>
             <NavLink to='/patients'>
               <Image className='mr-2' src={BMxPatientIcon}/>
