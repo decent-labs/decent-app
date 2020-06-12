@@ -43,7 +43,7 @@ function Auth() {
           <Image style={{alignSelf: 'center', "maxWidth": "65%", "height":"auto"}} src={BMxLogoTransparent} className='mb-4' />
           <small className='text-muted'>v{packageJson.version + '+' + process.env.REACT_APP_GIT_HASH}</small>
         </LeftHeroCol>
-        <Col className='d-flex flex-column my-3 align-content-center'>
+        <Col className='d-flex flex-column py-3 align-content-center scroll-col'>
           <Row className='mx-auto mt-3 mb-5'>
             <Col className='my-auto'>
               <Image src={BMxLogoColor} />

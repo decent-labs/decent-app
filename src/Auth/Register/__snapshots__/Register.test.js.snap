@@ -188,7 +188,7 @@ exports[`renders correctly 1`] = `
       class="form-row"
     >
       <div
-        class="required form-group col-lg-4 col-md-8"
+        class="required form-group col-md-6"
       >
         <label
           class="form-label"

@@ -85,7 +85,7 @@ function Login() {
         <Link to='/auth/forgot'>Forgot your password?</Link>
       </div>
       <div className='text-center'>
-        <Link to='/auth/register'>New Patient Registration</Link>
+        <Link to='/auth/register'>New patient registration</Link>
       </div>
     </>
   );
