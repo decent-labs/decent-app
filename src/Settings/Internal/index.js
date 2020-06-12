@@ -62,7 +62,7 @@ function Internal({alert}) {
   return (
     <>
       <Link to={`${match.path}/new`} className='float-right'>
-        <Button><Image src={PersonPlus}/> New Internal User</Button>
+        <Button className='styled-form-button'><Image src={PersonPlus}/> New Internal User</Button>
       </Link>
       <Row>
         <Col>

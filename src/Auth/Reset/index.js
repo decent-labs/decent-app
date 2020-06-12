@@ -10,7 +10,7 @@ import { request } from '../../requests';
 
 function ResetPassword({ alert }) {
   const history = useHistory();
-  
+
   const query = new URLSearchParams(useLocation().search);
   const [email] = useState(query.get('email') || '');
   const [token] = useState(query.get('token') || '');
@@ -50,7 +50,7 @@ function ResetPassword({ alert }) {
   }
 
   return (
-    <Col>
+    <>
       <h1>Password Reset</h1>
       <p>Please enter a new password for your account with email address <b>{email}</b>.</p>
       <Form onSubmit={event => event.preventDefault()}>
@@ -78,12 +78,12 @@ function ResetPassword({ alert }) {
           {error && <Alert variant='danger'>{error}</Alert>}
         </Form.Group>
         <Form.Row className='justify-content-center'>
-          <Form.Group lg={6} md={8} as={Col} controlId='formSubmit'>
+          <Form.Group as={Col} controlId='formSubmit'>
             <Button
               variant='primary'
               type='submit'
               block
-              className='font-weight-bold'
+              className='font-weight-bold styled-form-button'
               disabled={isLoading}
               onClick={() => sendRequest()}
             >
@@ -93,9 +93,9 @@ function ResetPassword({ alert }) {
         </Form.Row>
       </Form>
       <div className='text-center'>
-        <Link to='/auth/login'>Back to Login</Link>
+        <Link to='/auth/login'>Login</Link>
       </div>
-    </Col>
+    </>
   );
 }
 

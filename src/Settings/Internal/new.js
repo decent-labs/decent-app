@@ -9,7 +9,7 @@ function New({ alert }) {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
 
-  function handleSubmit(event, formData) {
+  function handleSubmit(event) {
     event.preventDefault();
 
     return request('invitation/outBound/internal/0', 'POST', {
@@ -29,10 +29,10 @@ function New({ alert }) {
   return (
     <Col>
       <h1>New Internal User</h1>
-      <Col lg={6} md={8}>
+      <Col lg={4} md={6}>
         <Form onSubmit={handleSubmit}>
           <Form.Row>
-            <Form.Group className='required' lg={6} md={8} as={Col} controlId='formEmail'>
+            <Form.Group className='required' as={Col} controlId='formEmail'>
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type='email'
@@ -46,10 +46,10 @@ function New({ alert }) {
           </Form.Row>
           <Form.Row>
               <Form.Group className='required' controlId='formFullName'>
-                <Form.Label>Full name</Form.Label>
+                <Form.Label>Full Name</Form.Label>
                 <Form.Control
                   type='text'
-                  placeholder='Full'
+                  placeholder='Full Name'
                   autoComplete='fullName'
                   value={fullName}
                   onChange={event => setFullName(event.target.value)}
@@ -58,12 +58,12 @@ function New({ alert }) {
               </Form.Group>
           </Form.Row>
           <Form.Row className='justify-content-end align-middle'>
-            <Form.Group className='d-flex flex-row align-items-center' controlId='formSubmit'>
+            <Form.Group style={{width: '50%'}}className='d-flex flex-row align-items-center' controlId='formSubmit'>
               <Button
                 variant='primary'
                 type='submit'
                 block
-                className='ml-5'
+                className='ml-5 styled-form-button'
               >
                 Save
               </Button>

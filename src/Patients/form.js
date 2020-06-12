@@ -178,13 +178,13 @@ function PatientForm({submitHandler}) {
           </Form.Group></Col>
         </Form.Row>
         <Form.Row className='justify-content-end align-middle'>
-          <Form.Group className='d-flex flex-row align-items-center' controlId='formSubmit'>
+          <Form.Group style={{width:'50%'}} className='pt-4 d-flex flex-row align-items-center' controlId='formSubmit'>
             <NavLink className='font-weight-bold m-2' to='/patients'>Cancel</NavLink>
             <Button
               variant='primary'
               type='submit'
               block
-              className='ml-5'
+              className='ml-5 styled-form-button'
             >
               Save
             </Button>

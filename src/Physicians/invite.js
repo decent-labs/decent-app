@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Col, Container, Form, Row} from "react-bootstrap";
+import {Col, Form, Row} from "react-bootstrap";
 import {request} from "../requests";
 import Button from "react-bootstrap/Button";
 import {formatHtmlDate} from "../Common/form";
@@ -48,87 +48,85 @@ function Invite({alert}) {
 
   return (
     <>
-      <Container>
-        <Col lg={6} md={8}>
-          <Row>
-            <h1>Invite Physician</h1>
-          </Row>
-          <Form onSubmit={sendRequest}>
-            <Form.Group className='required'>
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control
-                value={fullName}
-                onChange={event => setFullName(event.target.value)}
-                required
-              />
+      <Col lg={6} md={8}>
+        <Row>
+          <h1>Invite Physician</h1>
+        </Row>
+        <Form onSubmit={sendRequest}>
+          <Form.Group className='required'>
+            <Form.Label>Full Name</Form.Label>
+            <Form.Control
+              value={fullName}
+              onChange={event => setFullName(event.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Group className='required'>
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type='email'
+              value={email}
+              onChange={event => setEmail(event.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Group className='required'>
+            <Form.Label>Date of Birth</Form.Label>
+            <Form.Control
+              type='date'
+              placeholder='mm/dd/yyyy'
+              autoComplete='dob'
+              value={dob}
+              onChange={event => setDob(event.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Language</Form.Label>
+            <Form.Control
+              value={language}
+              onChange={event => setLanguage(event.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Gender</Form.Label>
+            <Form.Control
+              value={gender}
+              onChange={event => setGender(event.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className='required'>
+            <Form.Label>Social Security Number</Form.Label>
+            <Form.Control
+              value={ssn}
+              onChange={event => setSsn(event.target.value)}
+              onBlur={formatSsn}
+              isInvalid={!ssnIsValid}
+              required
+            />
+          </Form.Group>
+          <Form.Group className='required'>
+            <Form.Label>DEA Number</Form.Label>
+            <Form.Control
+              value={deaNumber}
+              onChange={event => setDeaNumber(event.target.value)}
+              required
+            />
+          </Form.Group>
+          <Form.Row className='pt-4 justify-content-end'>
+            <Form.Group style={{width:'33%'}} controlId='formSubmit'>
+              <Button
+                variant='primary'
+                type='submit'
+                block
+                className='font-weight-bold styled-form-button'
+              >
+                Invite
+              </Button>
             </Form.Group>
-            <Form.Group className='required'>
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type='email'
-                value={email}
-                onChange={event => setEmail(event.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group className='required'>
-              <Form.Label>Date of Birth</Form.Label>
-              <Form.Control
-                type='date'
-                placeholder='mm/dd/yyyy'
-                autoComplete='dob'
-                value={dob}
-                onChange={event => setDob(event.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Language</Form.Label>
-              <Form.Control
-                value={language}
-                onChange={event => setLanguage(event.target.value)}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Gender</Form.Label>
-              <Form.Control
-                value={gender}
-                onChange={event => setGender(event.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className='required'>
-              <Form.Label>Social Security Number</Form.Label>
-              <Form.Control
-                value={ssn}
-                onChange={event => setSsn(event.target.value)}
-                onBlur={formatSsn}
-                isInvalid={!ssnIsValid}
-                required
-              />
-            </Form.Group>
-            <Form.Group className='required'>
-              <Form.Label>DEA Number</Form.Label>
-              <Form.Control
-                value={deaNumber}
-                onChange={event => setDeaNumber(event.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Row className='pt-2 justify-content-end'>
-              <Form.Group controlId='formSubmit'>
-                <Button
-                  variant='primary'
-                  type='submit'
-                  block
-                  className='font-weight-bold'
-                >
-                  Invite
-                </Button>
-              </Form.Group>
-            </Form.Row>
-          </Form>
-        </Col>
-      </Container>
+          </Form.Row>
+        </Form>
+      </Col>
     </>
   )
 }

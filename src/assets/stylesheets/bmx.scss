@@ -65,16 +65,18 @@ div.dropdown button.dropdown-toggle {
   }
 }
 
+.form-control {
+  border-radius: 0.5rem;
+}
 .styled-form-button {
-  height: 4em;
-  width: 12em;
+  height: 3em;
   border-radius: 2em;
 }
 
 .left-menu {
   .col {
     color: $black;
-    height: 4em;
+    height: 3em;
     a {
       align-items: center;
       background: $light;
@@ -83,8 +85,10 @@ div.dropdown button.dropdown-toggle {
       color: $black;
       display: flex;
       height: 100%;
-      justify-content: center;
+      justify-content: left;
       margin-bottom: 1rem;
+      min-width: 200px;
+      padding-left: 1.5rem;
       width: 100%;
       &:hover {
         background: #F5F4FF;
@@ -95,7 +99,7 @@ div.dropdown button.dropdown-toggle {
       &.active {
         background: #F5F4FF;
         border-color: $light;
-        color: $black;
+        color: $primary;
       }
     }
   }
@@ -124,6 +128,18 @@ div.dropdown button.dropdown-toggle {
   padding: 0.5rem;
 }
 
+.disabled {
+  color: $input-placeholder-color
+}
+
+.positive {
+  color: $danger;
+}
+
+.negative {
+  color: $green;
+}
+
 .nameCard-header {
   font-family: 'RobotoMono';
   font-weight: 700;
@@ -137,6 +153,34 @@ div.dropdown button.dropdown-toggle {
   border: $input-border-color 0.1rem solid ;
   border-radius: 0.5rem;
   padding: 0.5rem;
+  .name {
+    margin-left: 1rem;
+  }
+}
+
+.first-row-element {
+  border-bottom-left-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+}
+
+.last-row-element {
+  border-bottom-right-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.details {
+  p {
+    color: $primary;
+    font-family: 'RobotoMono';
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .details-block {
+    border: $input-border-color 0.1rem solid ;
+    border-radius: 0.5rem;
+    color: $input-placeholder-color;
+    padding: 0.5rem;
+  }
 }
 
 @media print {

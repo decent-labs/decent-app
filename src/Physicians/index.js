@@ -41,7 +41,7 @@ function Index() {
       <Route exact path={`${match.path}`}>
         {userProfiles.data.currentProfile.admin &&
           <Link to={`${match.path}/invite`} className='float-right'>
-            <Button>Invite Physician</Button>
+            <Button className='styled-form-button'>Invite Physician</Button>
           </Link>
         }
       </Route>

@@ -47,7 +47,7 @@ function List() {
 
   return(
     <>
-      <Row>
+      <Row className='mx-0'>
         <Col>
           <h1>Patients</h1>
         </Col>

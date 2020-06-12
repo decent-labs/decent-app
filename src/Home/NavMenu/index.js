@@ -14,7 +14,6 @@ import { useDispatch } from 'react-redux';
 
 import BMxProfileIcon from '../../assets/images/bmx-profile-icon.svg';
 import BMxSearchIcon from '../../assets/images/bmx-search-icon.svg';
-import BMxNotificationIcon from '../../assets/images/bmx-notification-icon.svg';
 
 import { useAsyncState } from '../../redux/actions/useAsyncState';
 import { StateProperty } from '../../redux/reducers';
@@ -100,9 +99,6 @@ function NavMenu() {
       </Form>
       }
       <Nav activeKey="/">
-        <Nav.Link href='#notifications'>
-          <Image src={BMxNotificationIcon} />
-        </Nav.Link>
         <NavDropdown
           title={
             <>

@@ -40,7 +40,7 @@ function Login() {
   }
 
   return (
-    <Col>
+    <>
       <h1>Login</h1>
       <Form onSubmit={event => event.preventDefault()}>
         <Form.Group controlId='formEmail'>
@@ -66,13 +66,13 @@ function Login() {
         <Form.Group controlId='formError'>
           {error && <Alert variant='danger'>{error}</Alert>}
         </Form.Group>
-        <Form.Row className='justify-content-center'>
-          <Form.Group lg={6} md={8} as={Col} controlId='formSubmit'>
+        <Form.Row>
+          <Form.Group className='pt-4'as={Col} controlId='formSubmit'>
             <Button
               variant='primary'
               type='submit'
               block
-              className='font-weight-bold'
+              className='font-weight-bold styled-form-button'
               disabled={isLoading}
               onClick={() => sendRequest()}
             >
@@ -85,9 +85,9 @@ function Login() {
         <Link to='/auth/forgot'>Forgot your password?</Link>
       </div>
       <div className='text-center'>
-        <Link to='/auth/register'>Register a new Account</Link>
+        <Link to='/auth/register'>New Patient Registration</Link>
       </div>
-    </Col>
+    </>
   );
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Col, Container, Dropdown, Image, Row } from 'react-bootstrap';
+import { Col, Dropdown, Image, Row } from 'react-bootstrap';
 import {Link, NavLink, useHistory} from 'react-router-dom';
 
 import BMxLogoColor from '../../assets/images/bmx-logo-color.svg';
@@ -43,6 +43,23 @@ function LeftMenu() {
     return userProfiles.data.currentProfile.entityName.trim() || userProfiles.data.currentProfile.profileType.trim();
   }
 
+  function getProfileDropdown() {
+    if(userProfiles.data.profiles.length > 1){
+      return (<Dropdown className="shadow rounded">
+        <Dropdown.Toggle block variant="secondary" id="dropdown-basic">
+          {currentProfileDisplay()}
+        </Dropdown.Toggle>
+        <Dropdown.Menu style={{margin: 0 }}>
+          {profiles}
+        </Dropdown.Menu>
+      </Dropdown>)
+    }
+    return (<Dropdown className="shadow rounded">
+      <Dropdown.Toggle block className='disabled' variant="secondary" id="dropdown-basic">
+        {currentProfileDisplay()}
+      </Dropdown.Toggle>
+    </Dropdown>)
+  }
   return (
     <>
       <Row className='mx-auto pt-2'>
@@ -54,19 +71,11 @@ function LeftMenu() {
       </Row>
       <Row className='mt-5 mb-4 pb-5 border-bottom'>
         <Col className='px-4'>
-          {userProfiles.data.profiles.length > 1 &&
-            <Dropdown className="shadow rounded">
-              <Dropdown.Toggle block variant="secondary" id="dropdown-basic">
-                {currentProfileDisplay()}
-              </Dropdown.Toggle>
-              <Dropdown.Menu style={{margin: 0 }}>
-                {profiles}
-              </Dropdown.Menu>
-            </Dropdown>
+          {userProfiles.data.profiles.length > 0 &&
+            getProfileDropdown()
           }
         </Col>
       </Row>
-      <Container>
         <Row className='mx-auto left-menu'>
           <Col>
             <NavLink to='/patients'>
@@ -85,7 +94,6 @@ function LeftMenu() {
             }
           </Col>
         </Row>
-      </Container>
     </>
   )
 }

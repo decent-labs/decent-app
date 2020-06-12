@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 
-import Col from 'react-bootstrap/Col';
 import {Link, useParams} from 'react-router-dom';
 import PhysicianInvite from './physicianInvite';
 import LabInvite from "./labInvite";
@@ -20,12 +19,15 @@ function Invite({ alert }) {
       .then(response => {
         setValid(!response.inviteInfo.confirmed);
         setOrgType(response.inviteInfo.orgType);
+        if(!valid){
+          alert({ message: 'Invalid Invite', variant: 'warning'})
+        }
       })
       .catch(error => {
         setValid(false);
         alert({ message: 'Invalid Invite', variant: 'warning'})
       });
-  }, [alert, inviteCode])
+  }, [alert, inviteCode, valid])
 
   function validCode() {
     switch(orgType){
@@ -41,12 +43,12 @@ function Invite({ alert }) {
   }
 
   return (
-    <Col>
+    <>
       {valid && validCode()}
       <div className='text-center'>
-        <Link to='/auth/login'>Back to Login</Link>
+        <Link to='/auth/login'>Login</Link>
       </div>
-    </Col>
+    </>
   );
 }
 

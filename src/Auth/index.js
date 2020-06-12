@@ -39,11 +39,11 @@ function Auth() {
   return (
     <Container fluid className='h-100'>
       <Row className='h-100'>
-        <LeftHeroCol className='d-none d-md-flex flex-md-column justify-content-end' md={4} lg={6}>
-          <Image style={{"maxWidth": "75%", "height":"auto"}} src={BMxLogoTransparent} className='mb-4' />
+        <LeftHeroCol className='d-none d-md-flex flex-md-column align-content-center justify-content-end' md={4} lg={6}>
+          <Image style={{alignSelf: 'center', "maxWidth": "65%", "height":"auto"}} src={BMxLogoTransparent} className='mb-4' />
           <small className='text-muted'>v{packageJson.version + '+' + process.env.REACT_APP_GIT_HASH}</small>
         </LeftHeroCol>
-        <Col className='d-flex flex-column my-3'>
+        <Col className='d-flex flex-column my-3 align-content-center'>
           <Row className='mx-auto mt-3 mb-5'>
             <Col className='my-auto'>
               <Image src={BMxLogoColor} />
@@ -61,47 +61,49 @@ function Auth() {
             </Col>
             }
           </Row>
-          <Row className='mx-5'>
-            <Switch>
-              <Route path={`${match.path}/login/:unknown`}>
-                <Redirect to={`${match.path}/login`} />
-              </Route>
-              <Route path={`${match.path}/login`}>
-                <Login />
-              </Route>
+          <Row className='mx-5 flex-grow-1 align-content-center justify-content-center'>
+            <Col style={{maxWidth:'75%'}} className='justify-content-center'>
+              <Switch>
+                <Route path={`${match.path}/login/:unknown`}>
+                  <Redirect to={`${match.path}/login`} />
+                </Route>
+                <Route path={`${match.path}/login`}>
+                  <Login />
+                </Route>
 
-              <Route path={`${match.path}/forgot/:unknown`}>
-                <Redirect to={`${match.path}/forgot`} />
-              </Route>
-              <Route path={`${match.path}/forgot`}>
-                <Forgot alert={setAlert} />
-              </Route>
+                <Route path={`${match.path}/forgot/:unknown`}>
+                  <Redirect to={`${match.path}/forgot`} />
+                </Route>
+                <Route path={`${match.path}/forgot`}>
+                  <Forgot alert={setAlert} />
+                </Route>
 
-              <Route path={`${match.path}/reset/:unknown`}>
-                <Redirect to={`${match.path}/reset`} />
-              </Route>
-              <Route path={`${match.path}/reset`}>
-                <Reset alert={setAlert} />
-              </Route>
+                <Route path={`${match.path}/reset/:unknown`}>
+                  <Redirect to={`${match.path}/reset`} />
+                </Route>
+                <Route path={`${match.path}/reset`}>
+                  <Reset alert={setAlert} />
+                </Route>
 
-              <Route path={`${match.path}/register/:unknown`}>
-                <Redirect to={`${match.path}/register`} />
-              </Route>
-              <Route path={`${match.path}/register`}>
-                <Register />
-              </Route>
+                <Route path={`${match.path}/register/:unknown`}>
+                  <Redirect to={`${match.path}/register`} />
+                </Route>
+                <Route path={`${match.path}/register`}>
+                  <Register />
+                </Route>
 
-              <Route path={`${match.path}/invite/:inviteCode`}>
-                <Invite alert={setAlert}/>
-              </Route>
-              <Route path={`${match.path}/invite`}>
-                <Redirect to={`${match.path}`} />
-              </Route>
+                <Route path={`${match.path}/invite/:inviteCode`}>
+                  <Invite alert={setAlert}/>
+                </Route>
+                <Route path={`${match.path}/invite`}>
+                  <Redirect to={`${match.path}`} />
+                </Route>
 
-              <Route path={match.path}>
-                <Redirect to={`${match.path}/login`} />
-              </Route>
-            </Switch>
+                <Route path={match.path}>
+                  <Redirect to={`${match.path}/login`} />
+                </Route>
+              </Switch>
+            </Col>
           </Row>
         </Col>
       </Row>

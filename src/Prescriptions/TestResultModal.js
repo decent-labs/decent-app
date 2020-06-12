@@ -55,7 +55,7 @@ export default function TestResultModal({selectedHash, show, message, closeHandl
         <Button variant="secondary" onClick={closeHandler}>
           Cancel
         </Button>
-        <Button type='submit' variant="primary">
+        <Button className='styled-form-button' type='submit' variant="primary">
           Confirm
         </Button>
       </Modal.Footer>

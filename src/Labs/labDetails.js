@@ -27,7 +27,7 @@ export default function LabDetails({labDetails}) {
              { labDetails.city && labDetails.state && labDetails.zipCode &&
                 `${labDetails.city} ${labDetails.state} ${labDetails.zipCode}`}
               </address>
-            <Link to={`/labs/${labDetails.id}/edit`}><Button>Edit</Button></Link>
+            <Link to={`/labs/${labDetails.id}/edit`}><Button className='styled-form-button px-5'>Edit</Button></Link>
             </Col>
           </Row>
         </Col>

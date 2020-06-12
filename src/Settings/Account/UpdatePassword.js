@@ -75,7 +75,7 @@ function UpdatePassword() {
           <Button
             variant='primary'
             type='submit'
-            className='font-weight-bold'
+            className='font-weight-bold styled-form-button'
             disabled={account.isLoading}
             onClick={() => {
               setSuccess('');

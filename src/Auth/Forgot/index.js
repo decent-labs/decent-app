@@ -34,9 +34,9 @@ function ForgotPassword({ alert }) {
   }
 
   return (
-    <Col>
-      <h1>Password Recovery</h1>
-      <h4>Need help signing in?</h4>
+    <>
+      <h2>Password Recovery</h2>
+      <h6>Need help signing in?</h6>
       <p>We'll need you to provide your email address so we can send you a password reset link.</p>
       <Form onSubmit={event => event.preventDefault()}>
         <Form.Group controlId='formEmail'>
@@ -52,13 +52,13 @@ function ForgotPassword({ alert }) {
         <Form.Group controlId='formError'>
           {error && <Alert variant='danger'>{error}</Alert>}
         </Form.Group>
-        <Form.Row className='justify-content-center'>
-          <Form.Group lg={6} md={8} as={Col} controlId='formSubmit'>
+        <Form.Row className='pt-4 justify-content-center'>
+          <Form.Group as={Col} controlId='formSubmit'>
             <Button
               variant='primary'
               type='submit'
               block
-              className='font-weight-bold'
+              className='font-weight-bold styled-form-button'
               disabled={isLoading}
               onClick={() => sendRequest()}
             >
@@ -68,9 +68,9 @@ function ForgotPassword({ alert }) {
         </Form.Row>
       </Form>
       <div className='text-center'>
-        <Link to='/auth/login'>Back to Login</Link>
+        <Link to='/auth/login'>Login</Link>
       </div>
-    </Col>
+    </>
   );
 }
 

@@ -77,7 +77,7 @@ export default function Edit({ alert }) {
         id={id}
 	  />
       {error && <Alert variant='danger'>{error}</Alert>}
-	  <Button onClick={deleteLab}>Delete Lab</Button>
+	  <Button className='styled-form-button' variant='danger' onClick={deleteLab}>Delete Lab</Button>
     </Col>
   )
 }

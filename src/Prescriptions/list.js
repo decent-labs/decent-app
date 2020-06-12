@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {format} from "date-fns";
-import {Image, Row, Table } from "react-bootstrap";
+import {Image, Table } from "react-bootstrap";
 import PrintIcon from '../assets/images/print-button-svgrepo-com.svg';
 import Print from './print';
 import {useReactToPrint} from "react-to-print";
@@ -31,23 +31,29 @@ function List({ patient, items }) {
   }
 
   function getTestResult(prescription) {
-    if(prescription.data.length > 0)
-      return JSON.parse(prescription.data[prescription.data.length-1].data).covidTestResult
-    return 'n/a';
+    if(prescription.data.length > 0){
+      const results = JSON.parse(prescription.data[prescription.data.length-1].data).covidTestResult;
+
+      if(results === 'positive')
+        return <td className='positive'>{results}</td>
+      return <td className='negative'>{results}</td>
+    }
+    return <td>n/a</td>;
+
   }
 
   function getPrescriptions() {
     return items.map((curPrescription, index) => {
       return (
         <tr key={index}>
-          <td>{patient.lastName}</td>
+          <td className='first-row-element'>{patient.lastName}</td>
           <td>{patient.firstName}</td>
           <td>{format(new Date(patient.dob), 'MM/dd/yyyy')}</td>
           <td>{getLastTestedDate(curPrescription)}</td>
-          <td>{getTestResult(curPrescription)}</td>
-          <td className='action-items d-flex justify-content-around'>
+          {getTestResult(curPrescription)}
+          <td className='action-items d-flex last-row-element '>
             <div style={{ display: "none" }}><Print patient={patient} prescription={curPrescription} ref={componentRef} /></div>
-            <div onClick={handlePrint}>
+            <div className='mr-1' onClick={handlePrint}>
               <Image src={PrintIcon} />
             </div>
               {['internal', 'prescriber', 'labAgent', 'lab', 'labOrg'].includes(userProfiles.data.currentProfile.profileType) &&
@@ -75,7 +81,7 @@ function List({ patient, items }) {
   }, [ patientId, selectedHash ]);
 
   return (
-    <Row>
+    <>
       <Table>
         <thead>
         <tr>
@@ -83,7 +89,7 @@ function List({ patient, items }) {
           <th>First Name</th>
           <th>Date of Birth</th>
           <th>Date Tested</th>
-          <th>Date of Results</th>
+          <th>Covid Test</th>
           <th>Actions</th>
         </tr>
         </thead>
@@ -92,11 +98,11 @@ function List({ patient, items }) {
         </tbody>
       </Table>
 	  <TestResultModal
-            show={showModal} 
+            show={showModal}
             closeHandler={() => closeModal() }
             selectedHash={selectedHash}
-          />	  
-    </Row>
+          />
+    </>
   )
 }
 

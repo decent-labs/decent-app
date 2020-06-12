@@ -99,13 +99,13 @@ function PhysicianInvite({alert}) {
             required
           />
         </Form.Group>
-        <Form.Row className='pt-2 justify-content-center'>
+        <Form.Row className='pt-4 justify-content-center'>
           <Form.Group controlId='formSubmit'>
             <Button
               variant='primary'
               type='submit'
               block
-              className='font-weight-bold'
+              className='font-weight-bold styled-form-button'
             >
               Accept
             </Button>

@@ -35,7 +35,7 @@ function Home() {
         <Col xs={8} md={9} lg={10} className='py-5 pl-4'>
           <NavMenu />
           <Row className='mt-4 pr-2'>
-            <Col className='mt-1'>
+            <Col className='mt-1 px-4'>
               <Main />
             </Col>
           </Row>

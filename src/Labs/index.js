@@ -31,7 +31,7 @@ export default function Labs() {
       <Route exact path={`${match.path}`}>
         {userProfiles.data.currentProfile.admin &&
           <Link to={`${match.path}/new`} className='float-right'>
-            <Button>New Lab</Button>
+            <Button className='styled-form-button'>New Lab</Button>
           </Link>
         }
       </Route>

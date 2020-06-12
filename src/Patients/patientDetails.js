@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 import {format} from "date-fns";
 import List from "../Prescriptions/list";
 import {Link} from "react-router-dom";
@@ -12,16 +12,15 @@ function PatientDetails({patientDetails}) {
   function getPrescriptionsList() {
     if(patientDetails.prescriptions.length > 0)
       return <>
-        <h4>Prescriptions</h4>
         <List patient={patientDetails} items={patientDetails.prescriptions} />
     </>
     return <div><h4>No prescriptions to display</h4></div>
   }
   return (
     <>
-      <Row>
+      <Row className='mx-0'>
         <Col md={4} className='nameCard'>
-          <h2>{`${patientDetails.firstName} ${patientDetails.lastName}`}</h2>
+          <Row className='name'><h2>{`${patientDetails.firstName} ${patientDetails.lastName}`}</h2></Row>
           <Row>
             <Col className='nameCard-header'>
               <p>
@@ -31,7 +30,7 @@ function PatientDetails({patientDetails}) {
                 Phone
               </p>
               <p>
-                Social Security Number
+                SSN
               </p>
               <p>
                 Address
@@ -54,23 +53,23 @@ function PatientDetails({patientDetails}) {
             </Col>
           </Row>
         </Col>
-        <Container>
+        <Col className='mr-5'>
           {profiles.data.currentProfile.profileType === 'prescriber' &&
           <Row className='justify-content-end'>
-            <Link to={`/patients/${patientDetails.id}/newPrescription`}><Button>New Prescription</Button></Link>
+            <Link to={`/patients/${patientDetails.id}/newPrescription`}><Button className='styled-form-button'>New Prescription</Button></Link>
           </Row>
           }
-        </Container>
+        </Col>
       </Row>
       <hr />
       {getPrescriptionsList()}
-      <Row>
+      <Row className='details'>
         <Col>
-          <h5>Directions</h5>
+          <p className='ml-2'>Directions</p>
           <p className='details-block'>n/a</p>
         </Col>
         <Col>
-          <h5>Notes</h5>
+          <p className='ml-2'>Notes</p>
           <p className='details-block'>n/a</p>
         </Col>
       </Row>

@@ -12,7 +12,7 @@ function ConfirmModal({show, message, closeHandler, confirmHandler}) {
         <Button variant="secondary" onClick={closeHandler}>
           Cancel
         </Button>
-        <Button variant="danger" onClick={confirmHandler}>
+        <Button className='styled-form-button' variant="danger" onClick={confirmHandler}>
           Delete
         </Button>
       </Modal.Footer>

@@ -12,7 +12,7 @@ function New({alert}) {
   let { id } = useParams();
   const history = useHistory();
   const userProfiles = useAsyncState(StateProperty.userProfile);
-  const [drugInfo, setDrugInfo] = useState('covid-19-test');
+  const [drugInfo, ] = useState('covid-19-test');
   // const [expirationDate, setExpirationDate] = useState('');
   const [directions, setDirections] = useState('');
   const [notes, setNotes] = useState('');
@@ -46,19 +46,19 @@ function New({alert}) {
       <Container>
         <Col lg={6} md={8}>
           <Row>
-            <h2>New Prescription</h2>
+            <h2>New Test Kit</h2>
           </Row>
           <Form onSubmit={sendRequest}>
-            <Form.Row>
-              <Form.Group className='required' as={Col}>
-                <Form.Label>Select item</Form.Label>
-                <Form.Control as="select"
-                              onChange={event => setDrugInfo(event.target.value)}
-                              required>
-                  <option value='covid-19-test'>covid-19 test</option>
-                </Form.Control>
-              </Form.Group>
-            </Form.Row>
+            {/*<Form.Row>*/}
+            {/*  <Form.Group className='required' as={Col}>*/}
+            {/*    <Form.Label>Select item</Form.Label>*/}
+            {/*    <Form.Control as="select"*/}
+            {/*                  onChange={event => setDrugInfo(event.target.value)}*/}
+            {/*                  required>*/}
+            {/*      <option value='covid-19-test'>covid-19 test</option>*/}
+            {/*    </Form.Control>*/}
+            {/*  </Form.Group>*/}
+            {/*</Form.Row>*/}
             {/*<Form.Row className='justify-content-center'>*/}
             {/*  <Form.Group className='required' lg={6} md={8} as={Col}>*/}
             {/*    <Form.Label>Expiration Date</Form.Label>*/}
@@ -145,7 +145,7 @@ function New({alert}) {
                   variant='primary'
                   type='submit'
                   block
-                  className='font-weight-bold'
+                  className='font-weight-bold styled-form-button'
                 >
                   Save and notify patient
                 </Button>
