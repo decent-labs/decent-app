@@ -3,7 +3,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import {request} from "../../requests";
 import {useHistory, useParams} from "react-router-dom";
-import {formatHtmlDate} from "../../Common/form";
 
 function PhysicianInvite({alert}) {
   const { inviteCode } = useParams();
@@ -18,7 +17,7 @@ function PhysicianInvite({alert}) {
   const [deaNumber, setDeaNumber] = useState('');
 
   function sendRequest() {
-    request(`invitation/claimInvitation/${inviteCode}`, 'POST', { fullName, email, password, dob: formatHtmlDate(dob), ssn, deaNumber, permissionGrants:[] })
+    request(`invitation/claimInvitation/${inviteCode}`, 'POST', { fullName, email, password, dob: dob.replace(/[/]/g, '-'), ssn, deaNumber })
       .then(() => {
         alert({ message: 'Invite Successfully Accepted', variant: 'primary' })
         history.push('/auth/login')
