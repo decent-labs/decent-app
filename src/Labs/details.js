@@ -62,7 +62,7 @@ function Details({alert}) {
       <Route exact path={`${match.path}`}>
         {userProfiles.data.currentProfile.admin &&
         <Link to={`${match.url}/invite`} className='float-right'>
-          <Button className='styled-form-button'>New Agent</Button>
+          <Button className='styled-form-button px-5'>New Agent</Button>
         </Link>
         }
       </Route>

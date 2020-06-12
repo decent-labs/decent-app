@@ -44,11 +44,11 @@ function LabForm({
         <Form.Row>
           <Col>
             <Form.Group className='required' controlId='formLabOrgName'>
-              <Form.Label>Lab Organisation Name</Form.Label>
+              <Form.Label>Lab Organization Name</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Lab Name'
-                autoComplete='Lab Organisation Name'
+                autoComplete='Lab Organization Name'
                 value={name}
                 onChange={event => setName(event.target.value)}
                 required
