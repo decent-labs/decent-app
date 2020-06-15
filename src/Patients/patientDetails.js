@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Col, Row } from "react-bootstrap";
-import { format } from "date-fns";
 import List from "../Prescriptions/list";
 import { Link } from "react-router-dom";
 import { useAsyncState } from "../redux/actions/useAsyncState";
@@ -61,7 +60,7 @@ function PatientDetails({ patientDetails }) {
               <Col>
                 <Row className="d-table-row">
                   <Col className='nameCard-header d-table-cell pb-1 pl-0' sm="auto">DOB</Col>
-                  <Col className="d-table-cell">{format(new Date(patientDetails.dob), 'MM/dd/yyyy')}</Col>
+                  <Col className="d-table-cell">{new Date(patientDetails.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</Col>
                 </Row>
                 <Row className="d-table-row">
                   <Col className='nameCard-header d-table-cell pb-1 pl-0' sm="auto">Phone</Col>
@@ -93,17 +92,6 @@ function PatientDetails({ patientDetails }) {
       <Row>
         <Col>
           {getPrescriptionsList()}
-        </Col>
-      </Row>
-
-      <Row className='details'>
-        <Col>
-          <p className='ml-2'>Directions</p>
-          <p className='details-block'>n/a</p>
-        </Col>
-        <Col>
-          <p className='ml-2'>Notes</p>
-          <p className='details-block'>n/a</p>
         </Col>
       </Row>
     </>

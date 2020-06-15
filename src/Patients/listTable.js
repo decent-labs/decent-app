@@ -31,7 +31,7 @@ function ListTable({ patients }) {
         </td>
         <td className="pb-0">{patient.lastName}</td>
         <td>{patient.firstName}</td>
-        <td>{format(new Date(patient.dob), 'MM/dd/yyyy')}</td>
+        <td>{new Date(patient.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>
         <td>{getLatestPrescriptionDate(patient)}</td>
         <td className='action-items last-row-element'>
           <Link to={`/patients/${patient.id}`}>
