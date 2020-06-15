@@ -8,9 +8,12 @@ function setData(_state = initialState, action) {
 }
 
 function addData(state = initialState, action) {
-  const newState = state.slice();
-  newState.splice(state.length, 0, action.data);
-  return newState;
+  const newPatientState = state.patients.slice();
+  newPatientState.splice(state.patients.length, 0, action.data);
+  return {
+      patients: newPatientState,
+      pagination: {}
+  };
 }
 
 export { initialState, setData, addData };
