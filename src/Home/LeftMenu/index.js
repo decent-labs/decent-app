@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import { Col, Dropdown, Image, Row } from 'react-bootstrap';
 import {Link, NavLink, useHistory} from 'react-router-dom';
@@ -10,15 +10,23 @@ import {useAsyncState} from "../../redux/actions/useAsyncState";
 import {StateProperty} from "../../redux/reducers";
 import {dataSetAction} from "../../redux/reducers/async";
 import {useDispatch} from "react-redux";
+import {useCookies} from "react-cookie";
 
 function LeftMenu() {
   const userProfiles = useAsyncState(StateProperty.userProfile);
   const dispatch = useDispatch();
   const history = useHistory();
+  const [cookies, setCookies] = useCookies();
+
+  useEffect(()=>{
+    if(cookies.currentProfile && typeof cookies.currentProfile === 'object')
+      dispatch(dataSetAction(StateProperty.userProfile, {currentProfile:cookies.currentProfile, profiles:userProfiles.data.profiles}));
+  },[cookies.currentProfile, dispatch, userProfiles.data.profiles])
 
   const profiles = userProfiles.data.profiles.map((curProfile)=>{
     return <Dropdown.Item
       key={(curProfile.profileId || '0') + curProfile.entityId + curProfile.entityName}
+      active={cookies.currentProfile && curProfile.entityId === cookies.currentProfile.entityId}
       onSelect={() => {
         handleProfileSelect(curProfile);
       }}
@@ -30,7 +38,7 @@ function LeftMenu() {
   });
 
   function handleProfileSelect(profile) {
-    dispatch(dataSetAction(StateProperty.userProfile, {currentProfile:profile, profiles:userProfiles.data.profiles}));
+    setCookies('currentProfile',profile, {path: '/'});
     history.push('/');
   }
 

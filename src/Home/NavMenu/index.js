@@ -112,6 +112,7 @@ function NavMenu() {
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={() => {
             removeCookie('token', { path: '/' });
+            removeCookie('currentProfile', { path: '/' });
             dispatch({ type: 'RESET_APP' });
             history.push('/');
           }}>
