@@ -56,6 +56,14 @@ div.dropdown button.dropdown-toggle {
   border-bottom: none;
 }
 
+.small-y-padding {
+  td {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    vertical-align: middle;
+  }
+}
+
 .table tbody td {
   border-bottom: 1px solid #f2f2f2;
   border-left: 1px solid #f2f2f2;
@@ -103,6 +111,10 @@ div.dropdown button.dropdown-toggle {
       }
     }
   }
+}
+
+.w-1 {
+  width: 1%;
 }
 
 .action-items {

@@ -9,30 +9,44 @@ import pencil from "../assets/images/bmx-pencil.svg";
 export default function LabDetails({ labDetails, users }) {
   const userProfiles = useAsyncState(StateProperty.userProfile);
   const match = useRouteMatch();
+
+  const Address = () => {
+    if (
+      labDetails.streetAddress.trim().length === 0 &&
+      labDetails.streetAddress2.trim().length === 0 &&
+      labDetails.city.trim().length === 0 &&
+      labDetails.state.trim().length === 0 &&
+      labDetails.zipCode.trim().length === 0
+    ) return <address>n/a</address>
+
+    return (
+      <address>
+        {labDetails.streetAddress && <>{labDetails.streetAddress}<br /></>}
+        {labDetails.streetAddress2 && <>{labDetails.streetAddress2}<br /></>}
+        {labDetails.city && <>{labDetails.city},</>} {labDetails.state} {labDetails.zipCode}
+      </address>
+    )
+  }
+
   return (
     <>
       <Row>
-        <Col md={6}>
+        <Col md="auto">
           <div className='nameCard'>
             <Row>
-              <Col><Row>
-                <Col>
-                  <h2>{`${labDetails.name}`}</h2>
-                </Col>
-              </Row>
-                <Row className="mb-1">
-                  <Col className='nameCard-header'>Phone</Col>
-                  <Col>{labDetails.phoneNumber || 'n/a'}</Col>
-                </Row>
-                <Row className="mb-1">
-                  <Col className='nameCard-header'>Address</Col>
+              <Col>
+                <Row>
                   <Col>
-                    <address>
-                      {labDetails.streetAddress && <>{labDetails.streetAddress}<br /></>}
-                      {labDetails.streetAddress2 && <>{labDetails.streetAddress2}<br /></>}
-                      {labDetails.city && <>{labDetails.city},</>} {labDetails.state} {labDetails.zipCode}
-                    </address>
+                    <h2>{`${labDetails.name}`}</h2>
                   </Col>
+                </Row>
+                <Row className="d-table-row">
+                  <Col className='nameCard-header d-table-cell pb-1 pl-0' sm="auto">Phone</Col>
+                  <Col className="d-table-cell">{labDetails.phoneNumber || 'n/a'}</Col>
+                </Row>
+                <Row className="d-table-row">
+                  <Col className='nameCard-header d-table-cell pb-1 pl-0' sm="auto">Address</Col>
+                  <Col className="d-table-cell"><Address /></Col>
                 </Row>
               </Col>
               <Col md="auto">

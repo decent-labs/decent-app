@@ -5,6 +5,7 @@ import List from "../Prescriptions/list";
 import { Link } from "react-router-dom";
 import { useAsyncState } from "../redux/actions/useAsyncState";
 import { StateProperty } from "../redux/reducers";
+import ProfilePhoto from "./profilePhoto"
 
 function PatientDetails({ patientDetails }) {
   const profiles = useAsyncState(StateProperty.userProfile);
@@ -16,38 +17,66 @@ function PatientDetails({ patientDetails }) {
       </>
     return <div><h4>No prescriptions to display</h4></div>
   }
+
+  const Address = () => {
+    if (
+      patientDetails.streetAddress.trim().length === 0 &&
+      patientDetails.streetAddress2.trim().length === 0 &&
+      patientDetails.city.trim().length === 0 &&
+      patientDetails.state.trim().length === 0 &&
+      patientDetails.zipCode.trim().length === 0
+    ) return <address>n/a</address>
+
+    return (
+      <address>
+        {patientDetails.streetAddress && <>{patientDetails.streetAddress}<br /></>}
+        {patientDetails.streetAddress2 && <>{patientDetails.streetAddress2}<br /></>}
+        {patientDetails.city && <>{patientDetails.city},</>} {patientDetails.state} {patientDetails.zipCode}
+      </address>
+    )
+  }
+
   return (
     <>
       <Row>
-        <Col md={4}>
+        <Col md="auto">
           <div className='nameCard'>
-
-
             <Row>
               <Col>
                 <h2>{`${patientDetails.firstName} ${patientDetails.lastName}`}</h2>
               </Col>
             </Row>
-
-            <Row className="mb-1">
-              <Col className='nameCard-header'>DOB</Col>
-              <Col>{format(new Date(patientDetails.dob), 'MM/dd/yyyy')}</Col>
-            </Row>
-            <Row className="mb-1">
-              <Col className='nameCard-header'>Phone</Col>
-              <Col>{patientDetails.phoneNumber || 'n/a'}</Col>
-            </Row>
-            <Row className="mb-1">
-              <Col className='nameCard-header'>SSN</Col>
-              <Col>{`***-**-${patientDetails.ssn.slice(-4)}`}</Col>
-            </Row>
-            <Row className="mb-1">
-              <Col className='nameCard-header'>Address</Col>
+            <Row>
+              <Col sm="auto">
+                <div className="shadow">
+                  <ProfilePhoto
+                    firstName={patientDetails.firstName}
+                    lastName={patientDetails.lastName}
+                    userId={patientDetails.userId}
+                    entityId={patientDetails.id}
+                    size="150"
+                  />
+                </div>
+              </Col>
               <Col>
-                <address>
-                  {`${patientDetails.streetAddress} ${patientDetails.streetAddress2}
-                ${patientDetails.city} ${patientDetails.state} ${patientDetails.zipCode}`}
-                </address>
+                <Row className="d-table-row">
+                  <Col className='nameCard-header d-table-cell pb-1 pl-0' sm="auto">DOB</Col>
+                  <Col className="d-table-cell">{format(new Date(patientDetails.dob), 'MM/dd/yyyy')}</Col>
+                </Row>
+                <Row className="d-table-row">
+                  <Col className='nameCard-header d-table-cell pb-1 pl-0' sm="auto">Phone</Col>
+                  <Col className="d-table-cell">{patientDetails.phoneNumber || 'n/a'}</Col>
+                </Row>
+                <Row className="d-table-row">
+                  <Col className='nameCard-header d-table-cell pb-1 pl-0' sm="auto">SSN</Col>
+                  <Col className="d-table-cell">{`***-**-${patientDetails.ssn.slice(-4)}`}</Col>
+                </Row>
+                <Row className="d-table-row">
+                  <Col className='nameCard-header d-table-cell pb-1 pl-0' sm="auto">Address</Col>
+                  <Col className="d-table-cell">
+                    <Address />
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </div>
