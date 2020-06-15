@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useEffect, useState} from 'react';
 import {
   Link,
   Route,
@@ -9,11 +8,6 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 import { useAsyncState } from "../redux/actions/useAsyncState";
-import {
-  dataLoadingAction,
-  dataLoadingErrorAction,
-  dataSetAction
-} from '../redux/reducers/async';
 import { StateProperty } from "../redux/reducers";
 import LabDetails from '../Labs/labDetails';
 import NewPrescription from '../Prescriptions/new'
@@ -21,37 +15,33 @@ import { request } from "../requests"
 import Button from "react-bootstrap/Button";
 
 function Details({ alert }) {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const { id } = useParams();
-  const match = useRouteMatch();
   const state = useAsyncState(StateProperty.labs);
-  const userProfiles = useAsyncState(StateProperty.userProfile);
-  const labDetails = state.data.labs &&
+  const [users, setUsers] = useState([]);
+  const { id } = useParams();
+  const [labDetails, setLabDetails] = useState(state.data.labs &&
     state.data.labs.data.find &&
-    state.data.labs.data.find($lab => $lab.id === parseInt(id));
+    state.data.labs.data.find($lab => $lab.id === parseInt(id)));
+  const history = useHistory();
+  const match = useRouteMatch();
+  const userProfiles = useAsyncState(StateProperty.userProfile);
   useEffect(() => {
-    if (labDetails && labDetails.users) return;
-    dispatch(dataLoadingAction(StateProperty.labs));
     request(`labOrgs/${id}/profile`, 'GET')
       .then(response => {
-        request(`labOrgs/${id}/users`, 'GET')
-          .then(usersResponse => {
-            const labProfile = {
-              ...response.profile,
-              users: [...usersResponse.users.admins, ...usersResponse.users.nonAdmins]
-            };
-            dispatch(dataSetAction(StateProperty.labs, {
-              labs: { data: [labProfile, ...state.data.labs.data || []] },
-            }))
-          })
-
+        setLabDetails(response.profile)
       })
       .catch(error => {
-        dispatch(dataLoadingErrorAction(StateProperty.labs, error));
         history.replace('..')
       });
-  }, [dispatch, id, labDetails, history, state.data.labs])
+  }, [id, history])
+
+  useEffect(() => {
+    if (!labDetails) return;
+    request(`labOrgs/${id}/users`, 'GET')
+      .then(usersResponse => {
+        setUsers([...usersResponse.users.admins, ...usersResponse.users.nonAdmins]);
+      })
+  }, [labDetails,id])
+
 
   if (!labDetails) return <></>
 
@@ -69,7 +59,7 @@ function Details({ alert }) {
           <NewPrescription alert={alert} />
         </Route>
         <Route path={`${match.path}`}>
-          <LabDetails labDetails={labDetails} />
+          <LabDetails labDetails={labDetails} users={users} />
         </Route>
       </Switch>
     </>

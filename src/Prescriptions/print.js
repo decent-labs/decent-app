@@ -70,12 +70,12 @@ const Print = React.forwardRef((props, ref) => {
         </thead>
         <tbody>
         <tr>
-          <td>{patient.lastName}</td>
+          <td className='first-row-element'>{patient.lastName}</td>
           <td>{patient.firstName}</td>
           <td>{format(new Date(patient.dob), 'MM/dd/yyyy')}</td>
           <td>n/a</td>
           <td>n/a</td>
-          <td>n/a</td>
+          <td className='last-row-element'>n/a</td>
         </tr>
         </tbody>
       </Table>

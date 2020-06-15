@@ -20,8 +20,10 @@ function List() {
   const lastPage = parseInt(paginationData.lastPage);
   const pdCurrentPage = parseInt(paginationData.currentPage);
   const userProfiles = useAsyncState(StateProperty.userProfile);
+
   const patientsLoader = useCallback(async () => {
       let patients;
+      let pagination = {};
       if(userProfiles.data.currentProfile.profileType === 'patient') {
         patients = userProfiles.data.profiles
           .filter(curProfile => curProfile.profileType === 'patient')
@@ -36,15 +38,21 @@ function List() {
         setPaginationData(patientProfiles.profile.pagination);
       }
 
-      return getPrescriptionData(patients);
+      const results = await getPrescriptionData(patients)
+      return {patients: results, pagination};
     },
     [userProfiles.data.profiles, userProfiles.data.currentProfile, currentPage]);
   const patients = useAsyncState(StateProperty.patients, patientsLoader);
 
   function showTable() {
-    if(patients.data.length > 0)
+    let table;
+    if(patients.data.patients.length > 0)
+      table = <ListTable patients={patients.data.patients}></ListTable>
+    else
+      table = <div><h4>You have no patients yet</h4></div>
+
       return <>
-        <ListTable patients={patients.data}></ListTable>
+      {table}
         {
          ['internal','labOrg', 'labAgent', 'prescriber'].includes(userProfiles.data.currentProfile.profileType)
          && !paginationData.disabled
@@ -57,7 +65,6 @@ function List() {
           </Pagination>
         )}
       </>
-    return <div><h4>You have no patients yet</h4></div>
 
   }
 

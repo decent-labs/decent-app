@@ -18,14 +18,19 @@ function List({alert}) {
   const [showModal, setShowModal] = useState(false);
   const [currentPhysician, setCurrentPhysician] = useState({});
   const [updateList, setUpdateList] = useState(true);
+  const [showNextPage, setShowNextPage] = useState(false);
 
 
   const userProfiles = useAsyncState(StateProperty.userProfile);
   const physiciansLoader = useCallback(async () => {
       return request(`prescribers?currentPage=${currentPage}`, 'GET')
         .then(results => {
+          request(`prescribers?currentPage=${currentPage+1}`, 'GET')
+            .then((response) => {
+              setShowNextPage(response.prescribers.length > 0);
+            })
           if(updateList) setUpdateList(false)
-          return results.prescribers
+          return results
         });
     },
     [currentPage, updateList, setUpdateList]);
@@ -50,14 +55,14 @@ function List({alert}) {
   }
 
   function getPhysicianList() {
-    return physicians.data.map((curPhysician, index) => {
+    return physicians.data.prescribers.map((curPhysician, index) => {
       return <tr key={index}>
-        <td>{curPhysician.lastName}</td>
+        <td className='first-row-element'>{curPhysician.lastName}</td>
         <td>{curPhysician.firstName}</td>
         <td>{curPhysician.email}</td>
         <td>{format(new Date(curPhysician.dob),'MM/dd/yyyy')}</td>
         <td>{curPhysician.deaNumber}</td>
-        <td className='action-items'>
+        <td className='action-items last-row-element'>
           <div onClick={() => deletePhysicianModal(curPhysician)}>
             <Image src={TrashIcon} />
           </div>
@@ -89,10 +94,16 @@ function List({alert}) {
       </Table>
       {userProfiles.data.currentProfile.profileType === 'internal' && (
         <Pagination as={'Container'} className='justify-content-end'>
+          { physicians.data.pagination.from > 0 &&
           <Pagination.First onClick={() => setCurrentPage(1)}/>
-          <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)}/>
+          }
+          { physicians.data.pagination.from > 1 &&
+          <Pagination.Prev onClick={() => setCurrentPage(Math.max(currentPage - 1,1))}/>
+          }
           <Pagination.Item active>{currentPage}</Pagination.Item>
+          { showNextPage &&
           <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)}/>
+          }
         </Pagination>
       )}
       <ConfirmModal

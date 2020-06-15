@@ -18,11 +18,11 @@ function ListTable({patients}) {
   const patientRows = patients.map((patient, index) =>{
       return (
         <tr key={index}>
-          <td>{patient.lastName}</td>
+          <td className='first-row-element'>{patient.lastName}</td>
           <td>{patient.firstName}</td>
           <td>{format(new Date(patient.dob),'MM/dd/yyyy')}</td>
           <td>{getLatestPrescriptionDate(patient)}</td>
-          <td className='action-items'>
+          <td className='action-items last-row-element'>
             <Link to={`/patients/${patient.id}`}>
               <div>
                 <Image src={PatientDetailsIcon} />

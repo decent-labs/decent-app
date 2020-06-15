@@ -1,4 +1,7 @@
-const initialState = [];
+const initialState = {
+  prescribers:[],
+  pagination:{}
+};
 
 function setData(_state = initialState, action) {
   return action.data;

@@ -14,8 +14,8 @@ function ListTable(params) {
   const rows = users.map((agent, index) =>{
       return (
         <tr key={index}>
-          <td>{agent.fullName}</td>
-          <td className='action-items'>
+          <td className='first-row-element'>{agent.fullName}</td>
+          <td className='action-items last-row-element'>
             <Link to={`/labs/agents/${agent.id}`}>
               <div>
                 <Image src={PatientDetailsIcon} />

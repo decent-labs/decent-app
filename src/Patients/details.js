@@ -26,7 +26,7 @@ function Details({alert}) {
   let { id } = useParams();
   const match = useRouteMatch();
   const patients = useAsyncState(StateProperty.patients);
-  const patientDetails = patients.data.find(curPatient => curPatient.id === parseInt(id));
+  const patientDetails = patients.data.patients.find(curPatient => curPatient.id === parseInt(id));
 
   useEffect(() => {
     if (patientDetails) return;

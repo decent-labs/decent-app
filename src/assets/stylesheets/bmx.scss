@@ -105,6 +105,8 @@ div.dropdown button.dropdown-toggle {
 }
 
 .action-items {
+  white-space: nowrap;
+  width: 1%;
   div {
     align-items: center;
     background: $input-border-color;

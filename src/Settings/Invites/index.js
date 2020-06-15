@@ -22,7 +22,7 @@ function Invites() {
           {invitations.data.map(invite => {
             return (
               <tr key={invite.email}>
-                <td>
+                <td className='first-row-element last-row-element'>
                   {invite.email}
                 </td>
               </tr>

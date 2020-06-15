@@ -10,13 +10,18 @@ import ListTable from "./listTable";
 export default function LabList() {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
+  const [showNextPage, setShowNextPage] = useState(false);
   const userProfiles = useAsyncState(StateProperty.userProfile);
-  const labsLoader = useCallback(() => 
+  const labsLoader = useCallback(() =>
     request(`labOrgs?currentPage=${currentPage}`, 'GET').then(response => {
+      request(`labOrgs?currentPage=${currentPage+1}`, 'GET')
+        .then((response) => {
+          setShowNextPage(response.labs.data.length > 0);
+        })
 	dispatch(dataSetAction(StateProperty.labs,response));
 	return response;
     })
-   , [currentPage, 
+   , [currentPage,
       dispatch]);
 
   const state = useAsyncState(
@@ -43,7 +48,7 @@ export default function LabList() {
               <Pagination.Prev onClick={() => setCurrentPage(Math.max(currentPage - 1,1))}/>
 	     }
           <Pagination.Item active>{currentPage}</Pagination.Item>
-              { state.data.labs.pagination.from !== state.data.labs.pagination.to &&
+              { showNextPage &&
           <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)}/>
 	      }
         </Pagination>

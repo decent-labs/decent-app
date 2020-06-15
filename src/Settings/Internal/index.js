@@ -44,9 +44,9 @@ function Internal({alert}) {
   const internalRows = internalUsers.data.map((internalUser, index) =>{
     return (
       <tr key={index}>
-        <td>{internalUser.fullName}</td>
+        <td className='first-row-element'>{internalUser.fullName}</td>
         <td>{internalUser.email}</td>
-        <td className='action-items'>
+        <td className='action-items last-row-element'>
           {userProfiles.data.currentProfile.profileId !== internalUser.id &&
             <div onClick={() => deleteModal(internalUser)}>
               <div>

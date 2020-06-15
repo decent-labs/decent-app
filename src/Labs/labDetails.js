@@ -3,7 +3,7 @@ import { Button, Col, Row} from "react-bootstrap";
 import List from "./Agent/listTable";
 import { Link } from "react-router-dom"
 
-export default function LabDetails({labDetails}) {
+export default function LabDetails({labDetails, users}) {
   return (
     <>
       <Row>
@@ -33,7 +33,7 @@ export default function LabDetails({labDetails}) {
         </Col>
       </Row>
       <hr />
-	  <List {...labDetails } />
+	  <List {...labDetails } users={users} />
       <Row/>
     </>
   )

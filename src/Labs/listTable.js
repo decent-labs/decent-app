@@ -7,8 +7,8 @@ export default function ListTable({ labs }) {
   const rows = labs.map((lab, index) =>{
       return (
         <tr key={index}>
-          <td>{lab.name}</td>
-          <td className='action-items'>
+          <td className='first-row-element'>{lab.name}</td>
+          <td className='action-items last-row-element'>
             <Link to={`/labs/${lab.id}`}>
               <div>
                 <Image src={PatientDetailsIcon} />

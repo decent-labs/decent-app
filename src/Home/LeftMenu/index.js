@@ -31,11 +31,6 @@ function LeftMenu() {
 
   function handleProfileSelect(profile) {
     dispatch(dataSetAction(StateProperty.userProfile, {currentProfile:profile, profiles:userProfiles.data.profiles}));
-
-    if (profile.profileType === 'labOrg') {
-      history.push(`/labs/${profile.entityId}`);
-      return
-    }
     history.push('/');
   }
 

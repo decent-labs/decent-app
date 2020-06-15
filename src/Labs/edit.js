@@ -35,7 +35,9 @@ export default function Edit({ alert }) {
               users: [...usersResponse.users.admins, ...usersResponse.users.nonAdmins]
             };
             dispatch(dataSetAction(StateProperty.labs, {
-              labs: { data: [labProfile, ...state.data.labs.data || []] },
+              labs: {
+                data: [labProfile, ...state.data.labs.data || []],
+                pagination: state.data.labs.pagination}
             }))
           })
 
