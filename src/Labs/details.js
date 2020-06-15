@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Link,
   Route,
   Switch,
   useHistory,
@@ -12,7 +11,7 @@ import { StateProperty } from "../redux/reducers";
 import LabDetails from '../Labs/labDetails';
 import NewPrescription from '../Prescriptions/new'
 import { request } from "../requests"
-import Button from "react-bootstrap/Button";
+
 
 function Details({ alert }) {
   const state = useAsyncState(StateProperty.labs);
@@ -23,7 +22,7 @@ function Details({ alert }) {
     state.data.labs.data.find($lab => $lab.id === parseInt(id)));
   const history = useHistory();
   const match = useRouteMatch();
-  const userProfiles = useAsyncState(StateProperty.userProfile);
+  
   useEffect(() => {
     request(`labOrgs/${id}/profile`, 'GET')
       .then(response => {
@@ -47,13 +46,6 @@ function Details({ alert }) {
 
   return (
     <>
-      <Route exact path={`${match.path}`}>
-        {userProfiles.data.currentProfile.admin &&
-          <Link to={`${match.url}/invite`} className='float-right'>
-            <Button className='styled-form-button px-5'>New Agent</Button>
-          </Link>
-        }
-      </Route>
       <Switch>
         <Route exact path={`${match.path}/newPrescription`}>
           <NewPrescription alert={alert} />

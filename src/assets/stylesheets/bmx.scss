@@ -57,11 +57,12 @@ div.dropdown button.dropdown-toggle {
 }
 
 .table tbody td {
-  border-bottom: 1px solid $input-border-color;
-  border-left: 1px solid $input-border-color;
+  border-bottom: 1px solid #f2f2f2;
+  border-left: 1px solid #f2f2f2;
+  border-top: 1px solid #f2f2f2;
 
   &:last-child {
-    border-right: 1px solid $input-border-color;
+    border-right: 1px solid #f2f2f2;
   }
 }
 
@@ -146,17 +147,12 @@ div.dropdown button.dropdown-toggle {
   font-weight: 700;
   color: $primary;
   font-size: 12px;
-  border-top: none;
-  border-bottom: none;
 }
 
 .nameCard {
-  border: $input-border-color 0.1rem solid ;
+  border: #f2f2f2 1px solid ;
   border-radius: 0.5rem;
-  padding: 0.5rem;
-  .name {
-    margin-left: 1rem;
-  }
+  padding: 1.5rem;
 }
 
 .first-row-element {
@@ -177,7 +173,7 @@ div.dropdown button.dropdown-toggle {
     font-weight: 700;
   }
   .details-block {
-    border: $input-border-color 0.1rem solid ;
+    border: #f2f2f2 1px solid ;
     border-radius: 0.5rem;
     color: $input-placeholder-color;
     padding: 0.5rem;
@@ -224,4 +220,12 @@ div.dropdown button.dropdown-toggle {
   overflow: hidden;
   height: 100vh;
   overflow-y: scroll;
+}
+
+hr {
+  border-top: 1px solid #f2f2f2;
+}
+
+.edit-profile {
+  font-size: 12px;
 }
