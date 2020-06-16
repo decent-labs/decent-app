@@ -39,7 +39,6 @@ function List({ patient, items }) {
       return <td className='negative'>{results}</td>
     }
     return <td>n/a</td>;
-
   }
 
   function getPrescriptions() {

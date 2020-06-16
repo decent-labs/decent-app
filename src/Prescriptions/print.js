@@ -1,8 +1,28 @@
 import React from 'react';
 import {Col, Container, Row, Table} from "react-bootstrap";
+import {format} from "date-fns";
 
 const Print = React.forwardRef((props, ref) => {
   const {patient, prescription} = props;
+
+  function getLastTestedDate(prescription) {
+    if(prescription.data.length > 0)
+      return format(new Date(prescription.data[prescription.data.length-1].createdAt), 'MM/dd/yyyy');
+    return 'n/a';
+  }
+
+  function getTestResult(prescription) {
+    if(prescription.data.length > 0){
+      const results = JSON.parse(prescription.data[prescription.data.length-1].data).covidTestResult;
+
+      if(results === 'positive')
+        return <td className='positive last-row-element'>{results}</td>
+      return <td className='negative last-row-element'>{results}</td>
+    }
+    return <td>n/a</td>;
+
+  }
+
   return <Container className='print-view' ref={ref}>
     <Row className='rx-header'><h1>RX</h1></Row>
     <Row>
@@ -64,7 +84,6 @@ const Print = React.forwardRef((props, ref) => {
           <th>Date of Birth</th>
           <th>Date Tested</th>
           <th>Covid Test</th>
-          <th>Date of Results</th>
         </tr>
         </thead>
         <tbody>
@@ -72,9 +91,8 @@ const Print = React.forwardRef((props, ref) => {
           <td className='first-row-element'>{patient.lastName}</td>
           <td>{patient.firstName}</td>
           <td>{new Date(patient.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>
-          <td>n/a</td>
-          <td>n/a</td>
-          <td className='last-row-element'>n/a</td>
+          <td>{getLastTestedDate(prescription)}</td>
+          {getTestResult(prescription)}
         </tr>
         </tbody>
       </Table>
