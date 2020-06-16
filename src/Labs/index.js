@@ -15,6 +15,11 @@ export default function Labs() {
   const userProfiles = useAsyncState(StateProperty.userProfile);
   const [alert, setAlert] = useState(null);
 
+  const autodismissingAlert = info => {
+    setAlert(info)
+    setTimeout(() => setAlert(null), 5000)
+  }
+
   return (
     <>
       {alert &&
@@ -38,14 +43,14 @@ export default function Labs() {
       <Switch>
         {userProfiles.data.currentProfile.admin &&
           <Route path={`${match.path}/:labOrgId/invite`}>
-            <Invite alert={setAlert}/>
+            <Invite alert={autodismissingAlert}/>
           </Route>
         }
         <Route path={`${match.path}/newAgent/:unknown`}>
           <Redirect to={`${match.path}/newAgent`} />
         </Route>
         <Route path={`${match.path}/newAgent`}>
-          <New alert={setAlert} />
+          <New alert={autodismissingAlert} />
         </Route>
         {userProfiles.data.currentProfile.admin &&
           <Route path={`${match.path}/new/:unknown`}>
@@ -54,14 +59,14 @@ export default function Labs() {
         }
         {userProfiles.data.currentProfile.admin &&
           <Route path={`${match.path}/new`}>
-            <New alert={setAlert} />
+            <New alert={autodismissingAlert} />
           </Route>
         }
         <Route path={`${match.path}/:id/edit`}>
-          <Edit alert={setAlert} />
+          <Edit alert={autodismissingAlert} />
         </Route>
         <Route path={`${match.path}/:id`}>
-          <Details alert={setAlert} />
+          <Details alert={autodismissingAlert} />
         </Route>
         <Route path={`${match.path}`}>
           <List/>

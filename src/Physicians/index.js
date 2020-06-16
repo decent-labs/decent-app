@@ -21,6 +21,11 @@ function Index() {
   const userProfiles = useAsyncState(StateProperty.userProfile);
   const [alert, setAlert] = useState(null);
 
+  const autodismissingAlert = info => {
+    setAlert(info)
+    setTimeout(() => setAlert(null), 5000)
+  }
+
   if(userProfiles.data.currentProfile.profileType !== 'internal'){
     history.replace('/');
   }
@@ -48,11 +53,11 @@ function Index() {
       <Switch>
         {userProfiles.data.currentProfile.admin &&
           <Route path={`${match.path}/invite`}>
-            <Invite alert={setAlert}/>
+            <Invite alert={autodismissingAlert}/>
           </Route>
         }
         <Route path={`${match.path}`}>
-          <List alert={setAlert} />
+          <List alert={autodismissingAlert} />
         </Route>
         <Route path={`${match.path}/:unknown`}>
           <Redirect to='/' />

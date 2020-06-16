@@ -9,6 +9,11 @@ function Prescriptions() {
   const match = useRouteMatch();
   const [alert, setAlert] = useState(null);
 
+  const autodismissingAlert = info => {
+    setAlert(info)
+    setTimeout(() => setAlert(null), 5000)
+  }
+
   return (
     <>
       {alert &&
@@ -32,10 +37,10 @@ function Prescriptions() {
           <Redirect to={`${match.path}/new`} />
         </Route>
         <Route path={`${match.path}/new`}>
-          <New alert={setAlert} />
+          <New alert={autodismissingAlert} />
         </Route>
         <Route path={`${match.path}/:id`}>
-          <Details alert={setAlert} />
+          <Details alert={autodismissingAlert} />
         </Route>
         <Route path={`${match.path}/:unknown`}>
           <Redirect to={`${match.path}`} />

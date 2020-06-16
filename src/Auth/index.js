@@ -36,6 +36,11 @@ function Auth() {
   const match = useRouteMatch();
   const [alert, setAlert] = useState(null);
 
+  const autodismissingAlert = info => {
+    setAlert(info)
+    setTimeout(() => setAlert(null), 5000)
+  }
+
   return (
     <Container fluid className='h-100'>
       <Row className='h-100'>
@@ -75,14 +80,14 @@ function Auth() {
                   <Redirect to={`${match.path}/forgot`} />
                 </Route>
                 <Route path={`${match.path}/forgot`}>
-                  <Forgot alert={setAlert} />
+                  <Forgot alert={autodismissingAlert} />
                 </Route>
 
                 <Route path={`${match.path}/reset/:unknown`}>
                   <Redirect to={`${match.path}/reset`} />
                 </Route>
                 <Route path={`${match.path}/reset`}>
-                  <Reset alert={setAlert} />
+                  <Reset alert={autodismissingAlert} />
                 </Route>
 
                 <Route path={`${match.path}/register/:unknown`}>
@@ -93,7 +98,7 @@ function Auth() {
                 </Route>
 
                 <Route path={`${match.path}/invite/:inviteCode`}>
-                  <Invite alert={setAlert}/>
+                  <Invite alert={autodismissingAlert}/>
                 </Route>
                 <Route path={`${match.path}/invite`}>
                   <Redirect to={`${match.path}`} />

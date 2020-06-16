@@ -16,6 +16,11 @@ function Patients() {
   const [alert, setAlert] = useState(null);
   const userProfiles = useAsyncState(StateProperty.userProfile);
 
+  const autodismissingAlert = info => {
+    setAlert(info)
+    setTimeout(() => setAlert(null), 5000)
+  }
+
   return (
     <>
       {alert &&
@@ -41,16 +46,16 @@ function Patients() {
           <Redirect to={`${match.path}/new`} />
         </Route>
         <Route path={`${match.path}/new`}>
-          <New alert={setAlert} />
+          <New alert={autodismissingAlert} />
         </Route>
         <Route path={`${match.path}/search/:unknown`}>
           <Redirect to={`${match.path}`} />
         </Route>
         <Route path={`${match.path}/search`}>
-          <SearchResults alert={setAlert} />
+          <SearchResults alert={autodismissingAlert} />
         </Route>
         <Route path={`${match.path}/:id`}>
-          <Details alert={setAlert} />
+          <Details alert={autodismissingAlert} />
         </Route>
         <Route path={`${match.path}`}>
           <List/>

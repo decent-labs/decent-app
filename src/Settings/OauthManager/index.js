@@ -11,6 +11,11 @@ function OauthManager() {
   const match = useRouteMatch();
   const [alert, setAlert] = useState(null);
 
+  const autodismissingAlert = info => {
+    setAlert(info)
+    setTimeout(() => setAlert(null), 5000)
+  }
+
   return (
     <>
       {alert &&
@@ -35,7 +40,7 @@ function OauthManager() {
           <Redirect to={`${match.path}/new`} />
         </Route>
         <Route path={`${match.path}/new`}>
-          <New alert={setAlert} />
+          <New alert={autodismissingAlert} />
         </Route>
 
         <Route path={`${match.path}/:unknown`}>

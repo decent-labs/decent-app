@@ -21,6 +21,12 @@ function Settings() {
   const match = useRouteMatch();
   const [alert, setAlert] = useState(null);
   const profiles = useAsyncState(StateProperty.userProfile);
+
+  const autodismissingAlert = info => {
+    setAlert(info)
+    setTimeout(() => setAlert(null), 5000)
+  }
+
   useAsyncState(StateProperty.invitations, useCallback( async () => await request('invitation/', 'GET'),[]))
 
   const canManageOauth =
@@ -100,7 +106,7 @@ function Settings() {
               path={`${match.path}/internal/new`}
               rule={isInternalUser}
             >
-              <NewInternal alert={setAlert}/>
+              <NewInternal alert={autodismissingAlert}/>
             </RouteRule>
             <Route path={`${match.path}/internal/:unknown`}>
               <Redirect to={`${match.path}/`} />
@@ -109,7 +115,7 @@ function Settings() {
               path={`${match.path}/internal`}
               rule={isInternalUser}
             >
-              <Internal alert={setAlert} />
+              <Internal alert={autodismissingAlert} />
             </RouteRule>
 
             <Route path={match.path}>
