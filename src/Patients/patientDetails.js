@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useAsyncState } from "../redux/actions/useAsyncState";
 import { StateProperty } from "../redux/reducers";
 import ProfilePhoto from "./profilePhoto"
+import isEmpty from 'lodash.isempty';
 
 function PatientDetails({ patientDetails }) {
   const profiles = useAsyncState(StateProperty.userProfile);
@@ -19,19 +20,25 @@ function PatientDetails({ patientDetails }) {
 
   const Address = () => {
     if (
-      patientDetails.streetAddress.trim().length === 0 &&
-      patientDetails.streetAddress2.trim().length === 0 &&
-      patientDetails.city.trim().length === 0 &&
-      patientDetails.state.trim().length === 0 &&
-      patientDetails.zipCode.trim().length === 0
-    ) return <address>n/a</address>
+      isEmpty(patientDetails.streetAddress)  && 
+      isEmpty(patientDetails.streetAddress2) &&
+      isEmpty(patientDetails.city)           &&
+      isEmpty(patientDetails.state)          &&
+      isEmpty(patientDetails.zipCode)
+    ) return null;
 
     return (
-      <address>
-        {patientDetails.streetAddress && <>{patientDetails.streetAddress}<br /></>}
-        {patientDetails.streetAddress2 && <>{patientDetails.streetAddress2}<br /></>}
-        {patientDetails.city && <>{patientDetails.city},</>} {patientDetails.state} {patientDetails.zipCode}
-      </address>
+
+      <Row className="d-table-row">
+        <Col className='nameCard-header d-table-cell pb-1 pl-0' sm="auto">Address</Col>
+        <Col className="d-table-cell">
+          <address>
+            {patientDetails.streetAddress && <>{patientDetails.streetAddress}<br /></>}
+            {patientDetails.streetAddress2 && <>{patientDetails.streetAddress2}<br /></>}
+            {patientDetails.city && <>{patientDetails.city},</>} {patientDetails.state} {patientDetails.zipCode}
+          </address>
+        </Col>
+      </Row>
     )
   }
 
@@ -70,12 +77,7 @@ function PatientDetails({ patientDetails }) {
                   <Col className='nameCard-header d-table-cell pb-1 pl-0' sm="auto">SSN</Col>
                   <Col className="d-table-cell">{`***-**-${patientDetails.ssn.slice(-4)}`}</Col>
                 </Row>
-                <Row className="d-table-row">
-                  <Col className='nameCard-header d-table-cell pb-1 pl-0' sm="auto">Address</Col>
-                  <Col className="d-table-cell">
-                    <Address />
-                  </Col>
-                </Row>
+                <Address />
               </Col>
             </Row>
           </div>
