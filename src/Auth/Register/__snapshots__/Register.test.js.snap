@@ -620,11 +620,6 @@ exports[`renders correctly 1`] = `
             type="text"
             value=""
           />
-          <div
-            class="invalid-feedback"
-          >
-            The entered zip code is invalid
-          </div>
         </div>
       </div>
     </div>

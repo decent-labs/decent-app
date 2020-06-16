@@ -31,7 +31,6 @@ function Register() {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [zipCode, setZipCode] = useState('');
-    const [zipCodeIsValid, setZipCodeIsValid] = useState(false);
 
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -72,13 +71,6 @@ function Register() {
         setSsnIsValid(ssnCheck);
         if(ssnCheck)
             setSsn(ssn.replace(ssnRegex,"$1-$2-$3"));
-    }
-
-    function validateZipCode(zip)
-    {
-        const regexp = /^[0-9]{5}?$/;
-        if(zip !== '')
-            setZipCodeIsValid(regexp.test(zip));
     }
 
     function handleSubmit(event){
@@ -245,13 +237,7 @@ function Register() {
                             placeholder='00000'
                             value={zipCode}
                             onChange={event => setZipCode(event.target.value)}
-                            onBlur={event => validateZipCode(event.target.value)}
-                            isValid={zipCodeIsValid}
-                            isInvalid={(zipCode !== '') && !zipCodeIsValid}
                         />
-                        <Form.Control.Feedback type="invalid">
-                            The entered zip code is invalid
-                        </Form.Control.Feedback>
                     </Form.Group></Col>
                 </Form.Row>
 
