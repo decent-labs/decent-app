@@ -96,6 +96,13 @@ function PatientDetails({ patientDetails }) {
           {getPrescriptionsList()}
         </Col>
       </Row>
+      {profiles.data.currentProfile.profileType === 'prescriber' && patientDetails.prescriptions.length === 0 &&
+        <Row className='mt-4 justify-content-center'>
+          <p>
+            New patient has no history. <Link to={`/patients/${patientDetails.id}/newPrescription`}>Prescribe test kit</Link>
+          </p>
+        </Row>
+      }
     </>
   )
 }
