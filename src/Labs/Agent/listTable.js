@@ -1,7 +1,5 @@
 import React from "react";
-import {Image, Table} from "react-bootstrap";
-import {Link} from "react-router-dom";
-import PatientDetailsIcon from '../../assets/images/bmx-patient-details-icon.svg';
+import { Table } from "react-bootstrap";
 
 function ListTable(params) {
 
@@ -15,13 +13,6 @@ function ListTable(params) {
       return (
         <tr key={index}>
           <td className='first-row-element'>{agent.fullName}</td>
-          <td className='action-items last-row-element'>
-            <Link to={`/labs/agents/${agent.id}`}>
-              <div>
-                <Image src={PatientDetailsIcon} />
-              </div>
-            </Link>
-          </td>
         </tr>
       )
     }
@@ -33,7 +24,6 @@ function ListTable(params) {
         <thead>
         <tr>
           <th>Agent Name</th>
-          <th>Actions</th>
         </tr>
         </thead>
         <tbody>

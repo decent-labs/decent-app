@@ -5,6 +5,7 @@ import { Link, useRouteMatch } from "react-router-dom"
 import { useAsyncState } from "../redux/actions/useAsyncState";
 import { StateProperty } from "../redux/reducers";
 import pencil from "../assets/images/bmx-pencil.svg";
+import isEmpty from 'lodash.isempty';
 
 export default function LabDetails({ labDetails, users }) {
   const userProfiles = useAsyncState(StateProperty.userProfile);
@@ -12,11 +13,11 @@ export default function LabDetails({ labDetails, users }) {
 
   const Address = () => {
     if (
-      labDetails.streetAddress.trim().length === 0 &&
-      labDetails.streetAddress2.trim().length === 0 &&
-      labDetails.city.trim().length === 0 &&
-      labDetails.state.trim().length === 0 &&
-      labDetails.zipCode.trim().length === 0
+      isEmpty(labDetails.streetAddress) &&
+      isEmpty(labDetails.streetAddress2) &&
+      isEmpty(labDetails.city)  &&
+      isEmpty(labDetails.state) &&
+      isEmpty(labDetails.zipCode)
     ) return <address>n/a</address>
 
     return (
