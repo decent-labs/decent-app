@@ -1,10 +1,11 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {format} from "date-fns";
+import isEmpty from 'lodash.isempty';
 import {Image, Table } from "react-bootstrap";
 import PrintIcon from '../assets/images/print-button-svgrepo-com.svg';
+import EditIcon from '../assets/images/bmx-pencil.svg';
 import Print from './print';
 import {useReactToPrint} from "react-to-print";
-import PatientDetailsIcon from '../assets/images/bmx-patient-details-icon.svg';
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 import TestResultModal from './TestResultModal';
@@ -20,9 +21,7 @@ function List({ patient, items }) {
     copyStyles: true
   })
   const userProfiles = useAsyncState(StateProperty.userProfile);
-  const [showModal, setShowModal] = useState(selectedHash && selectedHash.length > 0);
-
-
+  const [showModal, setShowModal] = useState(false);
 
   function getLastTestedDate(prescription) {
     if(prescription.data.length > 0)
@@ -34,8 +33,12 @@ function List({ patient, items }) {
     if(prescription.data.length > 0){
       const results = JSON.parse(prescription.data[prescription.data.length-1].data).covidTestResult;
 
-      if(results === 'positive')
+      if(!results || isEmpty(results))
+        return <td>n/a</td>
+
+      if(results.toLowerCase() === 'positive')
         return <td className='positive'>{results}</td>
+
       return <td className='negative'>{results}</td>
     }
     return <td>n/a</td>;
@@ -56,9 +59,9 @@ function List({ patient, items }) {
               <Image src={PrintIcon} />
             </div>
               {['internal', 'prescriber', 'labAgent', 'lab', 'labOrg'].includes(userProfiles.data.currentProfile.profileType) &&
-	       <Link to={`/patients/${patientId}/rxs/${curPrescription.hash}`}>
+	       <Link to={`/patients/${patientId}/rxs/${curPrescription.hash}/edit`}>
 	       <div>
-                 <Image src={PatientDetailsIcon}/>
+                 <Image src={EditIcon}/>
 	       </div>
 	       </Link>
             }
@@ -74,9 +77,10 @@ function List({ patient, items }) {
   }
 
   useEffect( () => {
-      if (selectedHash && selectedHash.length > 0) {
-        setShowModal(true);
-      }
+      if (isEmpty(selectedHash))
+        return;
+
+      setShowModal(true);
   }, [ patientId, selectedHash ]);
 
   return (
@@ -99,7 +103,6 @@ function List({ patient, items }) {
 	  <TestResultModal
             show={showModal}
             closeHandler={() => closeModal() }
-            selectedHash={selectedHash}
           />
     </>
   )
