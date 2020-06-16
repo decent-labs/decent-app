@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import {
   Col,
   Image,
@@ -11,23 +11,47 @@ import {StateProperty} from "../redux/reducers";
 import {request} from "../requests";
 import TrashIcon from "../assets/images/trash.svg";
 import ConfirmModal from "./confirmModal";
-
+import { useLocation, useHistory } from 'react-router-dom';
+import queryString from 'qs';
+import isEmpty from 'lodash.isempty';
 function List({alert}) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const location = useLocation();
+  const history  = useHistory();
+  const { currentPage: qsCurrentPage } = queryString.parse(location.search.slice(1));
+  const [currentPage, setCurrentPageState] = useState(null);
+  const setCurrentPage = page => {
+      setCurrentPageState(page);
+      history.push(`/physicians?currentPage=${page}`);
+  };
+  const [paginationData, setPaginationData] = useState({
+      currentPage,
+      from: 0,
+      lastPage: 0,
+      perPage: 0,
+      to: 0,
+      total: 0,
+      disabled: true
+  });
+  const lastPage = parseInt(paginationData.lastPage);
+  const pdCurrentPage = parseInt(paginationData.currentPage);
   const [showModal, setShowModal] = useState(false);
   const [currentPhysician, setCurrentPhysician] = useState({});
   const [updateList, setUpdateList] = useState(true);
-  const [showNextPage, setShowNextPage] = useState(false);
 
+  useEffect(() => {
+      if (isEmpty(qsCurrentPage)) {
+        setCurrentPageState(1);
+        return;
+      }
+      setCurrentPageState(parseInt(qsCurrentPage));
+  }, [ qsCurrentPage ]);
 
   const userProfiles = useAsyncState(StateProperty.userProfile);
   const physiciansLoader = useCallback(async () => {
-      return request(`prescribers?currentPage=${currentPage}`, 'GET')
+      if (currentPage === null) return { prescribers: [] };
+      return request(`prescribers?currentPage=${currentPage}&perPage=10`, 'GET')
         .then(results => {
-          request(`prescribers?currentPage=${currentPage+1}`, 'GET')
-            .then((response) => {
-              setShowNextPage(response.prescribers.length > 0);
-            })
+          setPaginationData(results.pagination);
           if(updateList) setUpdateList(false)
           return results
         });
@@ -91,16 +115,17 @@ function List({alert}) {
         {getPhysicianList()}
         </tbody>
       </Table>
-      {userProfiles.data.currentProfile.profileType === 'internal' && (
+      { !paginationData.disabled && 
+        userProfiles.data.currentProfile.profileType === 'internal' && (
         <Pagination as={'Container'} className='justify-content-end'>
-          { physicians.data.pagination.from > 0 &&
+          { pdCurrentPage > 1 &&
           <Pagination.First onClick={() => setCurrentPage(1)}/>
           }
-          { physicians.data.pagination.from > 1 &&
-          <Pagination.Prev onClick={() => setCurrentPage(Math.max(currentPage - 1,1))}/>
+          { pdCurrentPage > 1 &&
+          <Pagination.Prev onClick={() => setCurrentPage(currentPage -1)}/>
           }
           <Pagination.Item active>{currentPage}</Pagination.Item>
-          { showNextPage &&
+          { pdCurrentPage < lastPage  &&
           <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)}/>
           }
         </Pagination>

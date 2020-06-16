@@ -17,7 +17,6 @@ function ListTable({ patients }) {
   }
 
   const patientRows = patients.map((patient, index) => {
-    console.log(patient)
     return (
       <tr key={index} className="small-y-padding">
         <td className='first-row-element w-1'>

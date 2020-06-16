@@ -1,15 +1,27 @@
-import React, {useCallback, useState} from "react";
+import React, {  useCallback, useState, useEffect } from "react";
 import {Col, Pagination, Row} from "react-bootstrap";
+import { useDispatch } from 'react-redux';
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
+import { dataLoadingAction,
+         dataSetAction,
+       } from "../redux/reducers/async";
 import {request} from "../requests";
 import ListTable from "./listTable";
 import {getPrescriptionData} from "../Common/form";
+import queryString from 'qs';
+import { useHistory, useLocation } from 'react-router-dom';
+import isEmpty from 'lodash.isempty';
 
 function List() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const history  = useHistory();
+  const queryState = location.search;
+  const { currentPage: qsCurrentPage }      = queryString.parse(queryState.slice(1));
+  const [currentPage, setCurrentPageState]  = useState(null);
   const [paginationData, setPaginationData] = useState({
-      currentPage: 0,
+      currentPage,
       from: 0,
       lastPage: 0,
       perPage: 0,
@@ -17,31 +29,46 @@ function List() {
       total: 0,
       disabled: true
   });
+  const updatePaging = (data) => setPaginationData(data);
   const lastPage = parseInt(paginationData.lastPage);
   const pdCurrentPage = parseInt(paginationData.currentPage);
   const userProfiles = useAsyncState(StateProperty.userProfile);
+  const setCurrentPage = page => {
+      setCurrentPageState(page);
+      history.push(`/patients?currentPage=${page}`);
+  };
+
+  useEffect( () => {
+      if (isEmpty(qsCurrentPage)) {
+	  setCurrentPageState(1);
+	  return;
+      }
+      setCurrentPageState(parseInt(qsCurrentPage));
+  }, [ qsCurrentPage ]);
 
   const patientsLoader = useCallback(async () => {
       let patients;
-      let pagination = {};
       if(userProfiles.data.currentProfile.profileType === 'patient') {
         patients = userProfiles.data.profiles
           .filter(curProfile => curProfile.profileType === 'patient')
           .map(curPatient => request(`patients/${curPatient.profileId}/profile`, 'GET'));
+        updatePaging({ disabled: true });
       }else if(userProfiles.data.currentProfile.profileType === 'prescriber') {
         let patientProfiles = await request(`prescribers/${userProfiles.data.currentProfile.profileId}/patients?currentPage=${currentPage}&perPage=10`, 'GET')
         patients = patientProfiles.patients.map(curPatient => request(`patients/${curPatient.patientId}/profile`, 'GET'))
-        setPaginationData(patientProfiles.pagination)
+        updatePaging(patientProfiles.pagination)
       }else if(['internal','labOrg', 'labAgent'].includes(userProfiles.data.currentProfile.profileType)) {
         let patientProfiles = await request(`patients/list?currentPage=${currentPage}`, 'GET')
         patients = patientProfiles.profile.data.map(curPatient => request(`patients/${curPatient.id}/profile`, 'GET'))
-        setPaginationData(patientProfiles.profile.pagination);
+        updatePaging(patientProfiles.profile.pagination);
       }
-
-      const results = await getPrescriptionData(patients)
-      return {patients: results, pagination};
+      dispatch(dataSetAction(StateProperty.patients, { patients: [] }));
+      dispatch(dataLoadingAction(StateProperty.patients));
+      const results = await getPrescriptionData(patients);
+      return { patients: results, pagination: {}};
     },
-    [userProfiles.data.profiles, userProfiles.data.currentProfile, currentPage]);
+    [userProfiles.data.profiles, userProfiles.data.currentProfile, currentPage, dispatch ]);
+
   const patients = useAsyncState(StateProperty.patients, patientsLoader);
 
   function showTable() {
@@ -49,12 +76,14 @@ function List() {
     if(patients.data.patients.length > 0)
       table = <ListTable patients={patients.data.patients}></ListTable>
     else
-      table = <div><h4>You have no patients yet</h4></div>
+      table = patients.isLoading 
+	  ? <div><h4>Loading patients list...</h4></div>
+	  : <div><h4>You have no patients yet</h4></div>
 
       return <>
       {table}
         {
-         ['internal','labOrg', 'labAgent', 'prescriber'].includes(userProfiles.data.currentProfile.profileType)
+         ['internal', 'labOrg', 'labAgent', 'prescriber'].includes(userProfiles.data.currentProfile.profileType)
          && !paginationData.disabled
          && (
           <Pagination as={'Container'} className='justify-content-end'>
