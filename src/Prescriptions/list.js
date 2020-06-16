@@ -48,7 +48,7 @@ function List({ patient, items }) {
         <tr key={index}>
           <td className='first-row-element'>{patient.lastName}</td>
           <td>{patient.firstName}</td>
-          <td>{format(new Date(patient.dob), 'MM/dd/yyyy')}</td>
+          <td>{new Date(patient.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>
           <td>{getLastTestedDate(curPrescription)}</td>
           {getTestResult(curPrescription)}
           <td className='action-items d-flex last-row-element '>

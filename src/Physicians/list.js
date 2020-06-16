@@ -9,7 +9,6 @@ import {
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 import {request} from "../requests";
-import {format} from "date-fns";
 import TrashIcon from "../assets/images/trash.svg";
 import ConfirmModal from "./confirmModal";
 
@@ -60,7 +59,7 @@ function List({alert}) {
         <td className='first-row-element'>{curPhysician.lastName}</td>
         <td>{curPhysician.firstName}</td>
         <td>{curPhysician.email}</td>
-        <td>{format(new Date(curPhysician.dob),'MM/dd/yyyy')}</td>
+        <td>{new Date(curPhysician.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>
         <td>{curPhysician.deaNumber}</td>
         <td className='action-items last-row-element'>
           <div onClick={() => deletePhysicianModal(curPhysician)}>

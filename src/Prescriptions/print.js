@@ -1,6 +1,5 @@
 import React from 'react';
 import {Col, Container, Row, Table} from "react-bootstrap";
-import {format} from "date-fns";
 
 const Print = React.forwardRef((props, ref) => {
   const {patient, prescription} = props;
@@ -25,7 +24,7 @@ const Print = React.forwardRef((props, ref) => {
       <Col className='col-print-2'>
         <p> {patient.firstName} {patient.lastName}</p>
         <p>
-          {format(new Date(patient.dob), 'MM/dd/yyyy')}
+          {new Date(patient.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}
         </p>
         <p>
           {patient.phoneNumber || 'n/a'}
@@ -72,7 +71,7 @@ const Print = React.forwardRef((props, ref) => {
         <tr>
           <td className='first-row-element'>{patient.lastName}</td>
           <td>{patient.firstName}</td>
-          <td>{format(new Date(patient.dob), 'MM/dd/yyyy')}</td>
+          <td>{new Date(patient.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>
           <td>n/a</td>
           <td>n/a</td>
           <td className='last-row-element'>n/a</td>
