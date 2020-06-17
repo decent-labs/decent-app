@@ -6,8 +6,9 @@ import Form from './form';
 import Alert from "react-bootstrap/Alert";
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
-import {dataAddAction} from "../redux/reducers/async";
+import {dataAddAction, dataUpdateAction} from "../redux/reducers/async";
 import {useDispatch} from "react-redux";
+import {fetchUserProfiles} from "../redux/reducers/async/userProfile";
 
 function New({ alert }) {
   const history = useHistory();
@@ -28,6 +29,15 @@ function New({ alert }) {
         alert({ message: 'Patient created successfully', variant: 'success' });
         dispatch(dataAddAction(StateProperty.patients, { ...response.profile, prescriptions:[] }))
         history.push(`/patients/${response.profile.id}`);
+        if(profiles.data.currentProfile.profileType === 'patient') {
+          return fetchUserProfiles()
+            .then((response) => {
+              dispatch(dataUpdateAction(StateProperty.userProfile, {
+                currentProfile: profiles.data.currentProfile,
+                profiles: response.profiles
+              }))
+            });
+        }
       }).catch(error => {
         setError(error);
       })

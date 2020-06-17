@@ -11,12 +11,13 @@ import Main from './Main';
 import { request } from "../requests";
 import { useAsyncState } from "../redux/actions/useAsyncState";
 import { StateProperty } from "../redux/reducers";
+import {fetchUserProfiles} from "../redux/reducers/async/userProfile";
 
 function Home() {
   const accountLoader = useCallback(() => request('auth/me', 'GET'), []);
   useAsyncState(StateProperty.account, accountLoader);
   const userProfileLoader = useCallback(() => {
-    return request('auth/profiles', 'GET')
+    return fetchUserProfiles()
       .then((response) => {
         return {
           currentProfile: response.profiles[0],

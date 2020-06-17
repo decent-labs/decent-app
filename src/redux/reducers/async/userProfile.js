@@ -1,3 +1,5 @@
+import {request} from "../../../requests";
+
 const initialState = {
   currentProfile: {},
   profiles: []
@@ -11,4 +13,12 @@ function setData(state = initialState, action) {
   };
 }
 
-export { initialState, setData };
+function fetchUserProfiles(){
+  return request('auth/profiles', 'GET')
+    .then((response) => {
+      return {
+        profiles: response.profiles
+      }
+    })
+}
+export { initialState, setData, fetchUserProfiles };
