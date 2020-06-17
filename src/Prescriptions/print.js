@@ -57,22 +57,6 @@ const Print = React.forwardRef((props, ref) => {
               ${patient.city} ${patient.state} ${patient.zipCode}`}
         </address>
       </Col>
-      <Col className='nameCard-header col-print-1'>
-        <p>
-          Allergies
-        </p>
-        <p>
-          Weight
-        </p>
-      </Col>
-      <Col className='col-print-2'>
-        <p>
-          {patient.allergies.length > 0 ? patient.allergies.map(curAllergy => `${curAllergy} `) : 'none'}
-        </p>
-        <p>
-          Weight
-        </p>
-      </Col>
     </Row>
     <hr/>
     <Row>
