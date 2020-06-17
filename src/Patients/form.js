@@ -49,7 +49,7 @@ function PatientForm({submitHandler}) {
             <Form.Label>Email</Form.Label>
             <Form.Control
               type='email'
-              placeholder='you@email.com'
+              placeholder='them@email.com'
               autoComplete='email'
               value={email}
               onChange={event => setEmail(event.target.value)}
