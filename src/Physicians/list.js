@@ -18,7 +18,7 @@ function List({alert}) {
   const location = useLocation();
   const history  = useHistory();
   const { currentPage: qsCurrentPage } = queryString.parse(location.search.slice(1));
-  const [currentPage, setCurrentPageState] = useState(null);
+  const [currentPage, setCurrentPageState] = useState(1);
   const setCurrentPage = page => {
       setCurrentPageState(page);
       history.push(`/physicians?currentPage=${page}`);
@@ -48,7 +48,6 @@ function List({alert}) {
 
   const userProfiles = useAsyncState(StateProperty.userProfile);
   const physiciansLoader = useCallback(async () => {
-      if (currentPage === null) return { prescribers: [] };
       return request(`prescribers?currentPage=${currentPage}&perPage=10`, 'GET')
         .then(results => {
           setPaginationData(results.pagination);
@@ -77,23 +76,49 @@ function List({alert}) {
       })
   }
 
-  function getPhysicianList() {
-    return physicians.data.prescribers.map((curPhysician, index) => {
-      return <tr key={index}>
-        <td className='first-row-element'>{curPhysician.lastName}</td>
-        <td>{curPhysician.firstName}</td>
-        <td>{curPhysician.email}</td>
-        <td>{new Date(curPhysician.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>
-        <td>{curPhysician.deaNumber}</td>
-        <td className='action-items last-row-element'>
-          <div>
-            <div className="icon" onClick={() => deletePhysicianModal(curPhysician)}>
-              <Image src={TrashIcon} />
-            </div>
-          </div>
-        </td>
-      </tr>
-    })
+  function PhysicianList() {
+    let table;
+    if(physicians.data.prescribers.length > 0){
+      return (
+        <Table>
+          <thead>
+            <tr>
+              <th>Last Name</th>
+              <th>First Name</th>
+              <th>Email</th>
+              <th>Date of Birth</th>
+              <th>DEA Number</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {physicians.data.prescribers.map((curPhysician, index) => {        
+              return (
+                <tr key={index}>
+                  <td className='first-row-element'>{curPhysician.lastName}</td>
+                  <td>{curPhysician.firstName}</td>
+                  <td>{curPhysician.email}</td>
+                  <td>{new Date(curPhysician.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>
+                  <td>{curPhysician.deaNumber}</td>
+                  <td className='action-items last-row-element'>
+                    <div>
+                      <div className="icon" onClick={() => deletePhysicianModal(curPhysician)}>
+                        <Image src={TrashIcon} />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </Table>
+      )
+    }else
+      table = physicians.isLoading
+    ? <div><h4>Loading Physicians list...</h4></div>
+    : <div><h4>You have no Physicians yet</h4></div>
+
+    return table;
   }
 
   return(
@@ -103,22 +128,8 @@ function List({alert}) {
           <h1>Physicians</h1>
         </Col>
       </Row>
-      <Table>
-        <thead>
-        <tr>
-          <th>Last Name</th>
-          <th>First Name</th>
-          <th>Email</th>
-          <th>Date of Birth</th>
-          <th>DEA Number</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {getPhysicianList()}
-        </tbody>
-      </Table>
-      { !paginationData.disabled && 
+      <PhysicianList />
+      { !paginationData.disabled &&
         userProfiles.data.currentProfile.profileType === 'internal' && (
         <Pagination as={'Container'} className='justify-content-end'>
           { pdCurrentPage > 1 &&

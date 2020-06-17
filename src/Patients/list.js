@@ -1,11 +1,7 @@
 import React, {  useCallback, useState, useEffect } from "react";
 import {Col, Pagination, Row} from "react-bootstrap";
-import { useDispatch } from 'react-redux';
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
-import { dataLoadingAction,
-         dataSetAction,
-       } from "../redux/reducers/async";
 import {request} from "../requests";
 import ListTable from "./listTable";
 import {getPrescriptionData} from "../Common/form";
@@ -14,7 +10,6 @@ import { useHistory, useLocation } from 'react-router-dom';
 import isEmpty from 'lodash.isempty';
 
 function List() {
-  const dispatch = useDispatch();
   const location = useLocation();
   const history  = useHistory();
   const queryState = location.search;
@@ -62,12 +57,10 @@ function List() {
         patients = patientProfiles.profile.data.map(curPatient => request(`patients/${curPatient.id}/profile`, 'GET'))
         updatePaging(patientProfiles.profile.pagination);
       }
-      dispatch(dataSetAction(StateProperty.patients, { patients: [] }));
-      dispatch(dataLoadingAction(StateProperty.patients));
       const results = await getPrescriptionData(patients);
       return { patients: results, pagination: {}};
     },
-    [userProfiles.data.profiles, userProfiles.data.currentProfile, currentPage, dispatch ]);
+    [userProfiles.data.profiles, userProfiles.data.currentProfile, currentPage ]);
 
   const patients = useAsyncState(StateProperty.patients, patientsLoader);
 
