@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {Col, Form, Row} from "react-bootstrap";
 import {request} from "../requests";
 import Button from "react-bootstrap/Button";
-import {formatHtmlDate} from "../Common/form";
 import {useHistory} from "react-router-dom";
 
 function Invite({alert}) {
@@ -21,7 +20,7 @@ function Invite({alert}) {
     request(`invitation/outBound/hospital`, 'POST', {
       fullName,
       email,
-      dob: formatHtmlDate(dob),
+      dob: dob,
       language,
       gender,
       ssn,

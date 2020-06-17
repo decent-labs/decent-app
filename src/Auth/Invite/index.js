@@ -11,7 +11,7 @@ import InternalInvite from "./internalInvite";
 function Invite({ alert }) {
   const { inviteCode } = useParams();
 
-  const [valid, setValid] = useState(false);
+  const [valid, setValid] = useState(true);
   const [orgType, setOrgType] = useState('');
 
   useEffect(() => {

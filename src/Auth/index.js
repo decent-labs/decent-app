@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useCallback, useState} from 'react';
 
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
@@ -36,10 +36,10 @@ function Auth() {
   const match = useRouteMatch();
   const [alert, setAlert] = useState(null);
 
-  const autodismissingAlert = info => {
+  const autodismissingAlert = useCallback(info => {
     setAlert(info)
     setTimeout(() => setAlert(null), 5000)
-  }
+  }, [setAlert])
 
   return (
     <Container fluid className='h-100'>

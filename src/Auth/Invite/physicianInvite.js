@@ -23,7 +23,7 @@ function PhysicianInvite({alert}) {
         history.push('/auth/login')
       })
       .catch(error => {
-        alert({ message: 'Error with accepting invite', variant: 'warning' })
+        alert({ message: 'Error with accepting invite', variant: 'danger' })
         console.log('error ', error);
       });
   }
