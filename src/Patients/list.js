@@ -4,7 +4,7 @@ import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 import {request} from "../requests";
 import ListTable from "./listTable";
-import {getPrescriptionData} from "../Common/form";
+import { getPrescriptionData } from "../redux/reducers/async/prescription";
 import queryString from 'qs';
 import { useHistory, useLocation } from 'react-router-dom';
 import isEmpty from 'lodash.isempty';
@@ -69,7 +69,7 @@ function List() {
     if(patients.data.patients.length > 0)
       table = <ListTable patients={patients.data.patients}></ListTable>
     else
-      table = patients.isLoading 
+      table = patients.isLoading
 	  ? <div><h4>Loading patients list...</h4></div>
 	  : <div><h4>You have no patients yet</h4></div>
 

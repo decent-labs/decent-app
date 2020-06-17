@@ -5,7 +5,7 @@ import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 import Alert from "react-bootstrap/Alert";
 import { useLocation } from 'react-router-dom';
-import { getPrescriptionData } from "../Common/form";
+import { getPrescriptionData } from "../redux/reducers/async/prescription";
 import { useDispatch } from 'react-redux';
 import { request } from '../requests';
 import isEmpty from 'lodash.isempty';
@@ -52,9 +52,9 @@ function SearchResults({alert}) {
           <h1>Search Results</h1>
         </Col>
       </Row>
-      {(results.data.length > 0) 
-       ? <ListTable patients={results.data} /> 
-       : results.isStale 
+      {(results.data.length > 0)
+       ? <ListTable patients={results.data} />
+       : results.isStale
          ? <></>
          : <Alert
             className='mt-3'

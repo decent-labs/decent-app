@@ -18,7 +18,7 @@ import {StateProperty} from "../redux/reducers";
 import PatientDetails from './patientDetails';
 import NewPrescription from '../Prescriptions/new'
 import {request} from "../requests"
-import {getPrescriptionData} from "../Common/form";
+import { getPrescriptionData } from "../redux/reducers/async/prescription";
 
 function Details({alert}) {
   const dispatch = useDispatch();

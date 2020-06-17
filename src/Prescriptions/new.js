@@ -6,12 +6,16 @@ import {useHistory, useParams} from "react-router-dom";
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 import {formatISO} from 'date-fns';
-// import DatePicker from "react-datepicker/es";
+import {getPrescriptionData} from "../redux/reducers/async/prescription";
+import {useDispatch} from "react-redux";
+import {dataUpdateAction} from "../redux/reducers/async";
 
 function New({alert}) {
   let { id } = useParams();
+  const dispatch = useDispatch();
   const history = useHistory();
   const userProfiles = useAsyncState(StateProperty.userProfile);
+  const patients = useAsyncState(StateProperty.patients);
   const [drugInfo, ] = useState('covid-19-test');
   // const [expirationDate, setExpirationDate] = useState('');
   const [directions, setDirections] = useState('');
@@ -33,7 +37,21 @@ function New({alert}) {
       }})
       .then(() => {
         alert({ message:'Prescription successfully added', variant:'success'})
-        history.replace('/patients')
+        let foundPatientIndex;
+        patients.data.patients.find((patient, index) => {
+          if(patient.id === Number(id)){
+            foundPatientIndex = index;
+            return true;
+          }
+          return false;
+        });
+        const updatedPatients = patients.data;
+        getPrescriptionData([request(`patients/${id}/profile`)])
+          .then(response => {
+            updatedPatients.patients[foundPatientIndex] = response[0];
+            dispatch(dataUpdateAction(StateProperty.patients, updatedPatients));
+            history.replace(`/patients/${id}`)
+          });
       })
       .catch(err => {
         console.log('Error in adding a new prescription ', err);

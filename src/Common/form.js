@@ -1,5 +1,4 @@
 import React from "react";
-import {request} from "../requests";
 
 export const states = {
   "AL": "Alabama",
@@ -70,27 +69,6 @@ export function getStateOptions() {
       return <option value={abbre} key={abbre}>{states[abbre]}</option>;
     })
   ];
-}
-
-export function getPrescriptionData(patients) {
-  return Promise.all(patients)
-    .then(profiles => Promise.all(profiles.map(curProfile =>
-        request(`patients/${curProfile.profile.id}/rxs`, 'GET')
-          .then(patientResults => {
-              return Promise.all(patientResults.prescriptions.map(
-                curPrescription => request(`rxs/${curPrescription.hash}`).then(curPrescriptionWithTests => curPrescriptionWithTests.prescriptionInfo)
-              )).then(prescriptions => {
-                curProfile.profile.prescriptions = prescriptions;
-                return curProfile.profile;
-              });
-            }
-          )
-          .catch(err => {
-            curProfile.profile.prescriptions = [];
-            return curProfile.profile;
-          })
-      ))
-    )
 }
 
 export function formatHtmlDate(date) {
