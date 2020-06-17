@@ -53,18 +53,20 @@ function List({ patient, items }) {
           <td>{new Date(patient.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>
           <td>{getLastTestedDate(curPrescription)}</td>
           {getTestResult(curPrescription)}
-          <td className='action-items d-flex last-row-element '>
-            <div style={{ display: "none" }}><Print patient={patient} prescription={curPrescription} ref={componentRef} /></div>
-            <div className='mr-1' onClick={handlePrint}>
-              <Image src={PrintIcon} />
-            </div>
+          <td className='action-items last-row-element'>
+            <div>
+              <div className='icon mr-1' onClick={handlePrint}>
+                <Image src={PrintIcon} />
+                <div style={{ display: "none" }}><Print patient={patient} prescription={curPrescription} ref={componentRef} /></div>
+              </div>
               {['internal', 'prescriber', 'labAgent', 'lab', 'labOrg'].includes(userProfiles.data.currentProfile.profileType) &&
-	       <Link to={`/patients/${patientId}/rxs/${curPrescription.hash}/edit`}>
-	       <div>
-                 <Image src={EditIcon}/>
-	       </div>
-	       </Link>
-            }
+              <Link to={`/patients/${patientId}/rxs/${curPrescription.hash}/edit`}>
+                <div className="icon">
+                  <Image src={EditIcon}/>
+                </div>
+              </Link>
+              }
+            </div>
           </td>
         </tr>
       );

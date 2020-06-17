@@ -9,11 +9,13 @@ export default function ListTable({ labs }) {
         <tr key={index}>
           <td className='first-row-element'>{lab.name}</td>
           <td className='action-items last-row-element'>
-            <Link to={`/labs/${lab.id}`}>
-              <div>
-                <Image src={PatientDetailsIcon} />
-              </div>
-            </Link>
+            <div>
+              <Link to={`/labs/${lab.id}`}>
+                <div className="icon">
+                  <Image src={PatientDetailsIcon} />
+                </div>
+              </Link>
+            </div>
           </td>
         </tr>
       )

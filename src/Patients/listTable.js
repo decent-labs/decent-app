@@ -18,7 +18,7 @@ function ListTable({ patients }) {
 
   const patientRows = patients.map((patient, index) => {
     return (
-      <tr key={index} className="small-y-padding">
+      <tr key={index}>
         <td className='first-row-element w-1'>
           <ProfilePhoto
             firstName={patient.firstName}
@@ -33,11 +33,13 @@ function ListTable({ patients }) {
         <td>{new Date(patient.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>
         <td>{getLatestPrescriptionDate(patient)}</td>
         <td className='action-items last-row-element'>
-          <Link to={`/patients/${patient.id}`}>
-            <div>
-              <Image src={PatientDetailsIcon} />
-            </div>
-          </Link>
+          <div>
+            <Link to={`/patients/${patient.id}`}>
+              <div className="icon">
+                <Image src={PatientDetailsIcon} />
+              </div>
+            </Link>
+          </div>
         </td>
       </tr>
     )

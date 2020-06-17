@@ -19,7 +19,7 @@ function List() {
   const history  = useHistory();
   const queryState = location.search;
   const { currentPage: qsCurrentPage }      = queryString.parse(queryState.slice(1));
-  const [currentPage, setCurrentPageState]  = useState(null);
+  const [currentPage, setCurrentPageState]  = useState(1);
   const [paginationData, setPaginationData] = useState({
       currentPage,
       from: 0,

@@ -56,12 +56,10 @@ div.dropdown button.dropdown-toggle {
   border-bottom: none;
 }
 
-.small-y-padding {
-  td {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    vertical-align: middle;
-  }
+.table td {
+  vertical-align: middle;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .table tbody td {
@@ -80,6 +78,8 @@ div.dropdown button.dropdown-toggle {
 .styled-form-button {
   height: 3em;
   border-radius: 2em;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .left-menu {
@@ -118,18 +118,22 @@ div.dropdown button.dropdown-toggle {
 }
 
 .action-items {
-  white-space: nowrap;
   width: 1%;
-  div {
-    align-items: center;
+  white-space: nowrap;
+
+  > div {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .icon {
     background: $input-border-color;
     cursor: pointer;
     border-radius: 0.5rem;
-    display: flex;
-    justify-content: center;
-    height: 1.5rem;
-    width: 1.5rem;
+    padding: 0.5rem;
+    line-height: 1;
   }
+
   img {
     height: 1rem;
     width: 1rem;

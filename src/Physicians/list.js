@@ -86,8 +86,10 @@ function List({alert}) {
         <td>{new Date(curPhysician.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>
         <td>{curPhysician.deaNumber}</td>
         <td className='action-items last-row-element'>
-          <div onClick={() => deletePhysicianModal(curPhysician)}>
-            <Image src={TrashIcon} />
+          <div>
+            <div className="icon" onClick={() => deletePhysicianModal(curPhysician)}>
+              <Image src={TrashIcon} />
+            </div>
           </div>
         </td>
       </tr>
@@ -109,6 +111,7 @@ function List({alert}) {
           <th>Email</th>
           <th>Date of Birth</th>
           <th>DEA Number</th>
+          <th>Actions</th>
         </tr>
         </thead>
         <tbody>

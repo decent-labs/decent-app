@@ -111,7 +111,7 @@ function Invite({alert}) {
                 variant='primary'
                 type='submit'
                 block
-                className='styled-form-button px-5'
+                className='styled-form-button'
               >
                 Invite
               </Button>

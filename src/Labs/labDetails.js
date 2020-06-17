@@ -62,7 +62,7 @@ export default function LabDetails({ labDetails, users }) {
         <Col>
           {userProfiles.data.currentProfile.admin &&
             <Link to={`${match.url}/invite`} className='float-right'>
-              <Button className='styled-form-button px-5'>New Agent</Button>
+              <Button className='styled-form-button'>New Agent</Button>
             </Link>
           }
         </Col>
