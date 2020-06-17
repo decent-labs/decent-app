@@ -58,8 +58,8 @@ div.dropdown button.dropdown-toggle {
 
 .table td {
   vertical-align: middle;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .table tbody td {
@@ -127,11 +127,15 @@ div.dropdown button.dropdown-toggle {
   }
   
   .icon {
-    background: $input-border-color;
+    background: #ECEFFF;
     cursor: pointer;
     border-radius: 0.5rem;
-    padding: 0.5rem;
+    padding: 0.25rem;
     line-height: 1;
+  }
+
+  .icon:not(:last-child) {
+    margin-right: 0.75rem;
   }
 
   img {

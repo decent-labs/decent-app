@@ -19,16 +19,16 @@ function ListTable({ patients }) {
   const patientRows = patients.map((patient, index) => {
     return (
       <tr key={index}>
-        <td className='first-row-element w-1'>
+        <td className='first-row-element w-1 py-0'>
           <ProfilePhoto
             firstName={patient.firstName}
             lastName={patient.lastName}
             userId={patient.userId}
             entityId={patient.id}
-            size="45"
+            size="36"
           />
         </td>
-        <td className="pb-0">{patient.lastName}</td>
+        <td>{patient.lastName}</td>
         <td>{patient.firstName}</td>
         <td>{new Date(patient.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>
         <td>{getLatestPrescriptionDate(patient)}</td>

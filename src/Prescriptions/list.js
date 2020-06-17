@@ -55,7 +55,7 @@ function List({ patient, items }) {
           {getTestResult(curPrescription)}
           <td className='action-items last-row-element'>
             <div>
-              <div className='icon mr-1' onClick={handlePrint}>
+              <div className='icon' onClick={handlePrint}>
                 <Image src={PrintIcon} />
                 <div style={{ display: "none" }}><Print patient={patient} prescription={curPrescription} ref={componentRef} /></div>
               </div>
