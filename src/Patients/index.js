@@ -37,7 +37,10 @@ function Patients() {
       {['internal', 'prescriber', 'patient'].includes(userProfiles.data.currentProfile.profileType) &&
         <Route exact path={`${match.path}`}>
           <Link to={`${match.path}/new`} className='float-right'>
-            <Button className='styled-form-button'><Image src={PersonPlus}/> New Patient</Button>
+            {userProfiles.data.currentProfile.profileType === 'patient' ?
+              <Button className='styled-form-button'><Image src={PersonPlus}/> Family Member</Button> :
+              <Button className='styled-form-button'><Image src={PersonPlus}/> New Patient</Button>
+            }
           </Link>
         </Route>
       }

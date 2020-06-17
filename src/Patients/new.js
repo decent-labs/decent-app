@@ -35,7 +35,9 @@ function New({ alert }) {
 
   return (
     <Col>
-      <h1>New Patient</h1>
+      {profiles.data.currentProfile.profileType === 'patient' ?
+      <h1>Add Family Member</h1>:
+      <h1>New Patient</h1>}
       <Form submitHandler={handleSubmit}/>
       {error && <Alert variant='danger'>{error}</Alert>}
     </Col>
