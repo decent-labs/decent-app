@@ -9,18 +9,22 @@ import {useReactToPrint} from "react-to-print";
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
 import TestResultModal from './TestResultModal';
-import { Link, useParams, useHistory } from "react-router-dom";
+import {Link, useParams, useHistory, useRouteMatch} from "react-router-dom";
+import DetailsIcon from "../assets/images/bmx-patient-details-icon.svg";
+import DetailsModal from "./detailsModal";
 function List({ patient, items }) {
   const { id: patientId,
 	    rxhash: selectedHash
 	}  = useParams();
   const history = useHistory();
+  const match = useRouteMatch();
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     copyStyles: true
   })
   const userProfiles = useAsyncState(StateProperty.userProfile);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   function getLastTestedDate(prescription) {
@@ -55,6 +59,11 @@ function List({ patient, items }) {
           {getTestResult(curPrescription)}
           <td className='action-items last-row-element'>
             <div>
+              <div className="icon">
+                <Link to={`/patients/${patientId}/rxs/${curPrescription.hash}/`}>
+                    <Image src={DetailsIcon} />
+                </Link>
+              </div>
               <div className='icon' onClick={handlePrint}>
                 <Image src={PrintIcon} />
                 <div style={{ display: "none" }}><Print patient={patient} prescription={curPrescription} ref={componentRef} /></div>
@@ -75,15 +84,18 @@ function List({ patient, items }) {
 
   const closeModal = () => {
       setShowModal(false);
+      setShowDetailsModal(false);
       history.push('..');
   }
 
   useEffect( () => {
       if (isEmpty(selectedHash))
         return;
-
-      setShowModal(true);
-  }, [ patientId, selectedHash ]);
+      if(match.path.includes('edit'))
+        setShowModal(true);
+      else
+        setShowDetailsModal(true);
+  }, [ patientId, selectedHash, match.path ]);
 
   return (
     <>
@@ -102,10 +114,15 @@ function List({ patient, items }) {
         {getPrescriptions()}
         </tbody>
       </Table>
-	  <TestResultModal
-            show={showModal}
-            closeHandler={() => closeModal() }
-          />
+      <TestResultModal
+        show={showModal}
+        closeHandler={() => closeModal() }
+      />
+      <DetailsModal
+        show={showDetailsModal}
+        closeHandler={() => closeModal() }
+      />
+
     </>
   )
 }
