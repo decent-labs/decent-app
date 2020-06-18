@@ -7,7 +7,6 @@ import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import Account from './Account';
-import OauthManager from './OauthManager';
 import RouteRule from '../Routes/RouteRule';
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
@@ -28,10 +27,6 @@ function Settings() {
   }
 
   useAsyncState(StateProperty.invitations, useCallback( async () => await fetchInvitations(),[]))
-
-  const canManageOauth =
-    profiles.data.currentProfile.profileType === 'hospitalOrg' &&
-    profiles.data.currentProfile.admin;
 
   const isInternalUser =
     profiles.data.currentProfile.profileType === 'internal' &&
@@ -70,13 +65,6 @@ function Settings() {
             </LinkContainer>
           </Nav.Item>
         }
-        {canManageOauth &&
-          <Nav.Item>
-            <LinkContainer to={`${match.path}/oauth`}>
-              <Nav.Link eventKey='oauth-apps'>OAuth Applications</Nav.Link>
-            </LinkContainer>
-          </Nav.Item>
-        }
       </Nav>
 
       <Row className='mt-4'>
@@ -94,13 +82,6 @@ function Settings() {
             <Route path={`${match.path}/invites`}>
               <Invites />
             </Route>
-
-            <RouteRule
-              path={`${match.path}/oauth`}
-              rule={canManageOauth}
-            >
-              <OauthManager />
-            </RouteRule>
 
             <RouteRule
               path={`${match.path}/internal/new`}
