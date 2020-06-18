@@ -52,6 +52,7 @@ function Settings() {
           </LinkContainer>
         </Nav.Item>
         {profiles.data.currentProfile.admin &&
+        ['internal','prescriber'].includes(profiles.data.currentProfile.profileType) &&
           <Nav.Item>
             <LinkContainer to={`${match.path}/invites`}>
               <Nav.Link eventKey='invites'>Outstanding Invites</Nav.Link>
