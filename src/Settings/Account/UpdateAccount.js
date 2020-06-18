@@ -81,6 +81,7 @@ function UpdateAccount() {
             disabled={account.isLoading}
             onClick={() => {
               setSuccess('');
+              setError('');
               dispatch(dataLoadingAction(StateProperty.account));
               request('auth/account', 'PUT', { fullName, newEmail, oldPass })
                 .then(response => dispatch(dataSetAction(StateProperty.account, response)))
