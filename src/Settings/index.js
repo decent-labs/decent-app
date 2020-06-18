@@ -11,7 +11,7 @@ import OauthManager from './OauthManager';
 import RouteRule from '../Routes/RouteRule';
 import {useAsyncState} from "../redux/actions/useAsyncState";
 import {StateProperty} from "../redux/reducers";
-import {request} from "../requests";
+import {fetchInvitations} from "../redux/reducers/async/invitations";
 import Invites from "./Invites";
 import Internal from "./Internal";
 import NewInternal from "./Internal/new.js";
@@ -27,7 +27,7 @@ function Settings() {
     setTimeout(() => setAlert(null), 5000)
   }
 
-  useAsyncState(StateProperty.invitations, useCallback( async () => await request('invitation/', 'GET'),[]))
+  useAsyncState(StateProperty.invitations, useCallback( async () => await fetchInvitations(),[]))
 
   const canManageOauth =
     profiles.data.currentProfile.profileType === 'hospitalOrg' &&

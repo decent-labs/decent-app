@@ -3,11 +3,16 @@ import {Col, Form} from 'react-bootstrap';
 import {useHistory} from "react-router-dom";
 import {request} from "../../requests";
 import Button from "react-bootstrap/Button";
+import {useDispatch} from "react-redux";
+import {dataUpdateAction} from "../../redux/reducers/async";
+import {StateProperty} from "../../redux/reducers";
+import {fetchInvitations} from "../../redux/reducers/async/invitations";
 
 function New({ alert }) {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
+  const dispatch = useDispatch();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -19,6 +24,8 @@ function New({ alert }) {
     })
       .then(response => {
         alert({ message: 'New internal user added successfully', variant: 'success' });
+        fetchInvitations()
+          .then(response => dispatch(dataUpdateAction(StateProperty.invitations, response.invitations)))
         history.push(`/settings/internal`);
       }).catch(error => {
         alert({ message: 'Error with internal user invite', variant: 'danger' });
@@ -32,11 +39,11 @@ function New({ alert }) {
       <Col lg={4} md={6}>
         <Form onSubmit={handleSubmit}>
           <Form.Row>
-            <Form.Group className='required' as={Col} controlId='formEmail'>
+            <Form.Group as={Col} className='required' controlId='formEmail'>
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type='email'
-                placeholder='you@email.com'
+                placeholder='them@email.com'
                 autoComplete='email'
                 value={email}
                 onChange={event => setEmail(event.target.value)}
@@ -45,7 +52,7 @@ function New({ alert }) {
             </Form.Group>
           </Form.Row>
           <Form.Row>
-              <Form.Group className='required' controlId='formFullName'>
+              <Form.Group as={Col} className='required' controlId='formFullName'>
                 <Form.Label>Full Name</Form.Label>
                 <Form.Control
                   type='text'

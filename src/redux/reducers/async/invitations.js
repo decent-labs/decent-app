@@ -1,3 +1,5 @@
+import {request} from "../../../requests";
+
 const initialState = [];
 
 function setData(_state = initialState, action) {
@@ -10,4 +12,8 @@ function addData(state = initialState, action) {
   return newState;
 }
 
-export { initialState, setData, addData };
+function fetchInvitations() {
+  return request('invitation/', 'GET')
+}
+
+export { initialState, setData, addData, fetchInvitations };
