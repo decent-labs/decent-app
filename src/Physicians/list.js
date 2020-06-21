@@ -59,6 +59,7 @@ function List({alert}) {
   const physicians = useAsyncState(StateProperty.physicians, physiciansLoader);
 
   function deletePhysicianModal(physician) {
+
     setCurrentPhysician(physician);
     setShowModal(true);
   }
@@ -92,7 +93,7 @@ function List({alert}) {
             </tr>
           </thead>
           <tbody>
-            {physicians.data.prescribers.map((curPhysician, index) => {        
+            {physicians.data.prescribers.map((curPhysician, index) => {
               return (
                 <tr key={index}>
                   <td className='first-row-element'>{curPhysician.lastName}</td>
