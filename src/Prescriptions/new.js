@@ -36,7 +36,7 @@ function New({alert}) {
         quantity: 1
       }})
       .then(() => {
-        alert({ message:'Prescription successfully added', variant:'success'})
+        alert({ message:'Test kit successfully added', variant:'success'})
         let foundPatientIndex;
         patients.data.patients.find((patient, index) => {
           if(patient.id === Number(id)){
@@ -54,8 +54,8 @@ function New({alert}) {
           });
       })
       .catch(err => {
-        console.log('Error in adding a new prescription ', err);
-        alert({ message:'Error in adding a new prescription, try again', variant: 'danger'})
+        console.log('Error in adding a new test kit ', err);
+        alert({ message:'Error in adding a new test kit, try again', variant: 'danger'})
       })
   }
 

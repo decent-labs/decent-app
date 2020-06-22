@@ -47,7 +47,7 @@ function Details({alert}) {
   return (
     <>
       <Switch>
-        <Route exact path={`${match.path}/newPrescription`}>
+        <Route exact path={`${match.path}/newTestKit`}>
           <NewPrescription alert={alert}/>
         </Route>
         <Route exact path={`${match.path}/rxs/:rxhash/edit`}>

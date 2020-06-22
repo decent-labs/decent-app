@@ -85,7 +85,7 @@ function PatientDetails({ patientDetails }) {
         <Col className='mr-5'>
           {profiles.data.currentProfile.profileType === 'prescriber' &&
             <Row className='justify-content-end'>
-              <Link to={`/patients/${patientDetails.id}/newPrescription`}><Button className='styled-form-button'>New Prescription</Button></Link>
+              <Link to={`/patients/${patientDetails.id}/newTestKit`}><Button className='styled-form-button'>New Test Kit</Button></Link>
             </Row>
           }
         </Col>
@@ -99,7 +99,7 @@ function PatientDetails({ patientDetails }) {
       {profiles.data.currentProfile.profileType === 'prescriber' && patientDetails.prescriptions.length === 0 &&
         <Row className='mt-4 justify-content-center'>
           <p>
-            New patient has no history. <Link to={`/patients/${patientDetails.id}/newPrescription`}>Prescribe test kit</Link>
+            New patient has no history. <Link to={`/patients/${patientDetails.id}/newTestKit`}>Prescribe test kit</Link>
           </p>
         </Row>
       }
