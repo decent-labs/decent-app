@@ -11,6 +11,7 @@ import {StateProperty} from "../../redux/reducers";
 import {dataSetAction} from "../../redux/reducers/async";
 import {useDispatch} from "react-redux";
 import {useCookies} from "react-cookie";
+import isEqual from "lodash.isequal";
 
 function LeftMenu() {
   const userProfiles = useAsyncState(StateProperty.userProfile);
@@ -26,7 +27,7 @@ function LeftMenu() {
   const profiles = userProfiles.data.profiles.map((curProfile)=>{
     return <Dropdown.Item
       key={(curProfile.profileId || '0') + curProfile.entityId + curProfile.entityName}
-      active={cookies.currentProfile && curProfile.profileId === cookies.currentProfile.profileId}
+      active={!!cookies.currentProfile ? isEqual(cookies.currentProfile, curProfile) : isEqual(userProfiles.data.currentProfile, curProfile)}
       onSelect={() => {
         handleProfileSelect(curProfile);
       }}
