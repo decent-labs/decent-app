@@ -9,7 +9,8 @@ function Invites() {
   return (
     <>
       <div className='mb-4'>
-        <h3>Outstanding Invites</h3>
+        <h3>Invitations</h3>
+        <p>Pending invitations that have not yet been accepted.</p>
         <Table>
           <thead>
             <tr>

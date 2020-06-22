@@ -55,14 +55,14 @@ function Settings() {
         ['internal','prescriber'].includes(profiles.data.currentProfile.profileType) &&
           <Nav.Item>
             <LinkContainer to={`${match.path}/invites`}>
-              <Nav.Link eventKey='invites'>Outstanding Invites</Nav.Link>
+              <Nav.Link eventKey='invites'>Invitations</Nav.Link>
             </LinkContainer>
           </Nav.Item>
         }
         {isInternalUser &&
           <Nav.Item>
             <LinkContainer to={`${match.path}/internal`}>
-              <Nav.Link eventKey='internal'>Internal Users</Nav.Link>
+              <Nav.Link eventKey='internal'>Users</Nav.Link>
             </LinkContainer>
           </Nav.Item>
         }

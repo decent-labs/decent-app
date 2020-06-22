@@ -48,7 +48,7 @@ function Internal({alert}) {
         <td>{internalUser.email}</td>
         <td className='action-items last-row-element'>
           <div>
-            {userProfiles.data.currentProfile.profileId !== internalUser.id &&
+            {userProfiles.data.currentProfile.userId !== internalUser.id &&
               <div className="icon" onClick={() => deleteModal(internalUser)}>
                 <Image src={Trash} />
               </div>
