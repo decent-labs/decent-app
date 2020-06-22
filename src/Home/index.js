@@ -17,11 +17,14 @@ function Home() {
   const accountLoader = useCallback(() => request('auth/me', 'GET'), []);
   useAsyncState(StateProperty.account, accountLoader);
   const userProfileLoader = useCallback(() => {
+    const removeEntity = (list) => {
+      return list.filter( profile => profile.profileId !== null)
+    };
     return fetchUserProfiles()
       .then((response) => {
         return {
           currentProfile: response.profiles[0],
-          profiles: response.profiles
+          profiles: removeEntity(response.profiles)
         }
       })
   }, []);
