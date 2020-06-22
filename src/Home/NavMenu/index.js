@@ -124,7 +124,7 @@ function NavMenu() {
         <NavDropdown
           title={
             <>
-              <Image src={BMxProfileIcon} />
+              <Image src={BMxProfileIcon} className="pb-1" />
               <span className='ml-3'>{account.data.name}</span>
             </>
           }
