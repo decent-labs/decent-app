@@ -19,6 +19,7 @@ import {
 function SearchResults({alert}) {
   const dispatch = useDispatch();
   const results = useAsyncState(StateProperty.search);
+  const userProfiles = useAsyncState(StateProperty.userProfile);
   const { search } = useLocation();
 
   useEffect( () => {
@@ -52,11 +53,23 @@ function SearchResults({alert}) {
   const DoneLoading = () => (results.data.length > 0) ? <ListTable patients={results.data} /> : <NoResults />
   const NoResults = () => <Alert className='mt-3' variant='warning'>No results found</Alert>
 
+  const ResultsTitle = () => {
+    switch (userProfiles.data.currentProfile.profileType) {
+      case "patient":
+      case "prescriber": {
+        return "All Patients"
+      }
+      default: {
+        return "Patients"
+      }
+    }
+  }
+
   return (
     <>
-      <Row>
+      <Row className='mx-0'>
         <Col>
-          <h1>Search Results</h1>
+          <h1><ResultsTitle /></h1>
         </Col>
       </Row>
       <Data />

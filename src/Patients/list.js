@@ -90,11 +90,23 @@ function List() {
 
   }
 
+  const PatientTitle = () => {
+    switch (userProfiles.data.currentProfile.profileType) {
+      case "patient":
+      case "prescriber": {
+        return "My Patients"
+      }
+      default: {
+        return "Patients"
+      }
+    }
+  }
+
   return(
     <>
       <Row className='mx-0'>
         <Col>
-          <h1>Patients</h1>
+          <h1><PatientTitle /></h1>
         </Col>
       </Row>
       {showTable()}
