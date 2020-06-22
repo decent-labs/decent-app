@@ -35,7 +35,7 @@ function ForgotPassword({ alert }) {
 
   return (
     <>
-      <h2>Password Recovery</h2>
+      <h1>Password Recovery</h1>
       <h6>Need help signing in?</h6>
       <p>We'll need you to provide your email address so we can send you a password reset link.</p>
       <Form onSubmit={event => event.preventDefault()}>
