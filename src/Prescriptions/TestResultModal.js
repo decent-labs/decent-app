@@ -95,9 +95,15 @@ export default function TestResultModal({show, message, closeHandler, confirmHan
         closeHandler();
      })
   }
-    
+
+  function handleClose() {
+    setCvdResult('pending');
+    setDescription('');
+    closeHandler();
+  }
+
   return (
-    <Modal show={show} onHide={closeHandler} animation={false}>
+    <Modal show={show} onHide={handleClose} animation={false}>
       <Form onSubmit={e => handleSubmit(e)}>
       <Modal.Header closeButton>
         <Modal.Title>Record Covid Test Result</Modal.Title>
@@ -138,7 +144,7 @@ export default function TestResultModal({show, message, closeHandler, confirmHan
         </Form.Row>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={closeHandler}>
+        <Button variant="secondary" onClick={handleClose}>
           Cancel
         </Button>
           <Button className='styled-form-button' type='submit' variant="primary" disabled={cvdResult === 'pending'}>

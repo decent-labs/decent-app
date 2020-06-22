@@ -15,17 +15,20 @@ export default function DetailsModal({show, message, closeHandler, confirmHandle
   const [description, setDescription] = useState('');
   useEffect(() => {
     if(!!selectedHash){
-      setRxDetails(patientDetails.prescriptions.find(rx => rx.hash === selectedHash || {}));
+      setRxDetails(patientDetails.prescriptions.find(rx => rx.hash === selectedHash));
     }
   }, [selectedHash, patientDetails.prescriptions])
 
   useEffect(() => {
-    if(!!rxDetails && !isEmpty(rxDetails)){
+    if(!!rxDetails && !isEmpty(rxDetails.data)){
       const results = JSON.parse(rxDetails.data.slice(-1).pop().data);
       setDiagnosis(results.covidTestResult);
       setDescription(results.description);
+    }else{
+      setDiagnosis('');
+      setDescription('');
     }
-  }, [rxDetails])
+  }, [rxDetails, rxDetails.data])
 
   return (
     <Modal show={show} onHide={closeHandler} animation={false}>
