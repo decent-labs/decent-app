@@ -26,7 +26,7 @@ function LeftMenu() {
   const profiles = userProfiles.data.profiles.map((curProfile)=>{
     return <Dropdown.Item
       key={(curProfile.profileId || '0') + curProfile.entityId + curProfile.entityName}
-      active={cookies.currentProfile && curProfile.entityId === cookies.currentProfile.entityId}
+      active={cookies.currentProfile && curProfile.profileId === cookies.currentProfile.profileId}
       onSelect={() => {
         handleProfileSelect(curProfile);
       }}
