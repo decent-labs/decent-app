@@ -30,6 +30,9 @@ function NavMenu() {
   const [, , removeCookie] = useCookies(['token']);
   const { search } = useLocation();
 
+  const account = useAsyncState(StateProperty.account);
+  const userProfiles = useAsyncState(StateProperty.userProfile);
+
   useEffect( () => {
       const { fname, lname, dob: searchDob } = qs.parse(search.slice(1));
 
@@ -42,20 +45,34 @@ function NavMenu() {
         setDob(searchDate);
       }
   }, [ dispatch, search ]);
-    
-  const account = useAsyncState(StateProperty.account);
-  const userProfiles = useAsyncState(StateProperty.userProfile);
 
-  function searchPatient(event) {
-    event.preventDefault();
+  const buildQuery = (firstName, lastName, dob, history, search) => {
     const searchArray = [];
     
-    if (firstName) searchArray.push(`fname=${firstName}`)
-    if (lastName) searchArray.push(`lname=${lastName}`)
-    if (dob) searchArray.push(`dob=${formatHtmlDate(dob)}`)
-    if (searchArray.length === 0) return;
+    if (!isEmpty(firstName)) searchArray.push(`fname=${firstName}`)
+    if (!isEmpty(lastName)) searchArray.push(`lname=${lastName}`)
+    if (!isEmpty(dob)) searchArray.push(`dob=${formatHtmlDate(dob)}`)
+
+    if (searchArray.length === 0) {
+      // to deal with a first-page-load race when state parameters are still being updated
+      const { fname, lname, dob: searchDob } = qs.parse(search.slice(1));
+      if (isEmpty(fname) && isEmpty(lname) && isEmpty(searchDob)) {
+        history.push("/patients")
+        return
+      }
+    }
+
     const query = searchArray.join("&")
     history.push(`/patients/search?${query}`);
+  }
+
+  useEffect(() => {
+    buildQuery(firstName, lastName, dob, history, search)
+  }, [history, firstName, lastName, dob, search])
+  
+  function searchPatient(event) {
+    if (event) event.preventDefault();
+    buildQuery(firstName, lastName, dob, history, search)
   }
 
   return (
@@ -71,16 +88,16 @@ function NavMenu() {
             </InputGroup.Prepend>
             <Form.Control
               type='text'
-              placeholder='First name'
-              value={firstName}
-              onChange={event => setFirstName(event.target.value)}
+              placeholder='Last name'
+              value={lastName}
+              onChange={event => setLastName(event.target.value)}
               className='media-body py-2 border-left-0 border'
             />
             <Form.Control
               type='text'
-              placeholder='Last name'
-              value={lastName}
-              onChange={event => setLastName(event.target.value)}
+              placeholder='First name'
+              value={firstName}
+              onChange={event => setFirstName(event.target.value)}
               className='media-body py-2 border'
             />
             <Form.Control

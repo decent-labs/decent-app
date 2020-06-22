@@ -43,26 +43,23 @@ function SearchResults({alert}) {
           })
         });
       }
+
+      return () => dispatch(dataSetAction(StateProperty.search, []));
   }, [ dispatch, search ]);
 
-  return(
+  const Data = () => results.isLoading ? <Loading /> : <DoneLoading />
+  const Loading = () => <div><h4>Loading search results</h4></div>
+  const DoneLoading = () => (results.data.length > 0) ? <ListTable patients={results.data} /> : <NoResults />
+  const NoResults = () => <Alert className='mt-3' variant='warning'>No results found</Alert>
+
+  return (
     <>
       <Row>
         <Col>
           <h1>Search Results</h1>
         </Col>
       </Row>
-      {(results.data.length > 0)
-       ? <ListTable patients={results.data} />
-       : results.isStale
-         ? <></>
-         : <Alert
-            className='mt-3'
-            variant='warning'
-           >
-             No results found
-           </Alert>
-      }
+      <Data />
     </>
   )
 }
