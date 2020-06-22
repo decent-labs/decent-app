@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import qs from 'qs';
 import isEmpty from 'lodash.isempty';
+import { useDebounce } from 'use-debounce';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -24,7 +25,6 @@ function NavMenu() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');
-
   const history = useHistory();
   const dispatch = useDispatch();
   const [, , removeCookie] = useCookies(['token']);
@@ -66,9 +66,17 @@ function NavMenu() {
     history.push(`/patients/search?${query}`);
   }
 
+  const debounceLag = 250;
+
+  const [debouncedSearch] = useDebounce(search, debounceLag);
+  const [debouncedFirstName] = useDebounce(firstName, debounceLag);
+  const [debouncedLastName] = useDebounce(lastName, debounceLag);
+  const [debouncedDob]      = useDebounce(dob, debounceLag);
+  const [debouncedHistory]   = useDebounce(history, debounceLag);
+
   useEffect(() => {
-    buildQuery(firstName, lastName, dob, history, search)
-  }, [history, firstName, lastName, dob, search])
+      buildQuery(debouncedFirstName, debouncedLastName, debouncedDob, debouncedHistory, debouncedSearch)
+  }, [debouncedHistory, debouncedFirstName, debouncedLastName, debouncedDob, debouncedSearch])
   
   function searchPatient(event) {
     if (event) event.preventDefault();
