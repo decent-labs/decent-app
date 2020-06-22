@@ -1,11 +1,20 @@
 import React from 'react';
 
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { useDispatch } from 'react-redux';
 
 function UnauthedRoute({ children, ...rest }) {
-  const [cookies] = useCookies(['token']);
-
+  const [cookies, , removeCookie] = useCookies(['token']);
+  const { pathname } = useLocation();
+  const dispatch = useDispatch();
+  
+  if (pathname.startsWith("/auth/invite/")) {  
+    removeCookie('token', { path: '/' })
+    removeCookie('currentProfile', { path: '/' });
+    dispatch({ type: 'RESET_APP' });
+  }
+  
   return (
     <Route
       {...rest}
