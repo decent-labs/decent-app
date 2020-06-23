@@ -12,16 +12,35 @@ import { request } from "../requests";
 import { useAsyncState } from "../redux/actions/useAsyncState";
 import { StateProperty } from "../redux/reducers";
 import {fetchUserProfiles} from "../redux/reducers/async/userProfile";
-
+import { AccountPrefixes } from "./text";
+import isEmpty from 'lodash.isempty';
 function Home() {
-  const accountLoader = useCallback(() => request('auth/me', 'GET'), []);
-  useAsyncState(StateProperty.account, accountLoader);
+	  const accountLoader = useCallback(() => request('auth/me', 'GET'), []);
+	  useAsyncState(StateProperty.account, accountLoader);
   const userProfileLoader = useCallback(() => {
+    const addPrefixLabels = (list) => {
+	    return list.map( profile => {
+	      let label;
+        let entityName = !isEmpty(profile.entityName) 
+		       ? profile.entityName
+		       : profile.profileType
+		
+	      label = AccountPrefixes[profile.profileType];
+	      if (label) {
+		      entityName = `${label} ${entityName}`;
+	      }
+	      return {
+		      ...profile,
+		      entityName
+	      }
+	    })
+    }
     return fetchUserProfiles()
       .then((response) => {
+        const profiles = addPrefixLabels(response.profiles)
         return {
-          currentProfile: response.profiles[0],
-          profiles: response.profiles
+          currentProfile: profiles[0],
+          profiles
         }
       })
   }, []);

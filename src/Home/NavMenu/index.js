@@ -32,8 +32,8 @@ function NavMenu() {
 
   const account = useAsyncState(StateProperty.account);
   const userProfiles = useAsyncState(StateProperty.userProfile);
-
-  useEffect( () => {
+  const withSearch = fn => () => fn.call(null,search);
+    useEffect(withSearch(search => {
       const { fname, lname, dob: searchDob } = qs.parse(search.slice(1));
 
       if (! isEmpty(fname))
@@ -44,43 +44,42 @@ function NavMenu() {
         const [ searchDate, ] = moment.utc(searchDob).toISOString().split('T');
         setDob(searchDate);
       }
-  }, [ dispatch, search ]);
+    }), [ history ]);
 
-  const buildQuery = (firstName, lastName, dob, history, search) => {
+  const buildQuery = (firstName, lastName, dob, history, search) =>
+	(onEmpty = () => undefined) =>
+	(onSaturate = query => history.push(`/patients/search?${query}`)) => {
+
     const searchArray = [];
-    
     if (!isEmpty(firstName)) searchArray.push(`fname=${firstName}`)
     if (!isEmpty(lastName)) searchArray.push(`lname=${lastName}`)
     if (!isEmpty(dob)) searchArray.push(`dob=${formatHtmlDate(dob)}`)
 
-    if (searchArray.length === 0) {
-      // to deal with a first-page-load race when state parameters are still being updated
-      const { fname, lname, dob: searchDob } = qs.parse(search.slice(1));
-      if (isEmpty(fname) && isEmpty(lname) && isEmpty(searchDob)) {
-        history.push("/patients")
-        return
-      }
-    }
+    if (searchArray.length === 0 )
+      return onEmpty();
 
-    const query = searchArray.join("&")
-    history.push(`/patients/search?${query}`);
+    const query = searchArray.join("&");
+
+    return onSaturate(query);
   }
 
+  const goBack = () => history.replace("/patients");
   const debounceLag = 250;
 
-  const [debouncedSearch] = useDebounce(search, debounceLag);
   const [debouncedFirstName] = useDebounce(firstName, debounceLag);
   const [debouncedLastName] = useDebounce(lastName, debounceLag);
   const [debouncedDob]      = useDebounce(dob, debounceLag);
-  const [debouncedHistory]   = useDebounce(history, debounceLag);
 
-  useEffect(() => {
-      buildQuery(debouncedFirstName, debouncedLastName, debouncedDob, debouncedHistory, debouncedSearch)
-  }, [debouncedHistory, debouncedFirstName, debouncedLastName, debouncedDob, debouncedSearch])
+  useEffect(withSearch(search => {
+      buildQuery(debouncedFirstName, debouncedLastName, debouncedDob, history, search)
+      (goBack)
+      ()
+  }), [ debouncedFirstName, debouncedLastName, debouncedDob ])
+
   
   function searchPatient(event) {
     if (event) event.preventDefault();
-    buildQuery(firstName, lastName, dob, history, search)
+      buildQuery(firstName, lastName, dob, history, search)()()
   }
 
   return (
