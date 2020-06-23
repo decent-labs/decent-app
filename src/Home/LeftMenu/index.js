@@ -24,7 +24,7 @@ function LeftMenu() {
       dispatch(dataSetAction(StateProperty.userProfile, {currentProfile:cookies.currentProfile, profiles:userProfiles.data.profiles}));
   },[cookies.currentProfile, dispatch, userProfiles.data.profiles])
 
-  const profiles = userProfiles.data.profiles.map((curProfile)=>{
+  const Profiles = () => userProfiles.data.profiles.map((curProfile)=>{
     return <Dropdown.Item
       key={(curProfile.profileId || '0') + curProfile.entityId + curProfile.entityName}
       active={!!cookies.currentProfile ? isEqual(cookies.currentProfile, curProfile) : isEqual(userProfiles.data.currentProfile, curProfile)}
@@ -43,26 +43,23 @@ function LeftMenu() {
     history.push('/');
   }
 
-  function currentProfileDisplay() {
+  function CurrentProfileDisplay() {
     return userProfiles.data.currentProfile.entityName.trim() || userProfiles.data.currentProfile.profileType.trim();
   }
 
-  function getProfileDropdown() {
-    if(userProfiles.data.profiles.length > 1){
-      return (<Dropdown className="shadow rounded">
-        <Dropdown.Toggle block variant="secondary" id="dropdown-basic">
-          {currentProfileDisplay()}
+  function ProfileDropdown() {
+    const many = userProfiles.data.profiles.length > 1
+
+    return (
+      <Dropdown className="shadow rounded">
+        <Dropdown.Toggle block variant="secondary" className={`${many ? '' : 'disabled'} profile-dropdown`}>
+          <CurrentProfileDisplay />
         </Dropdown.Toggle>
-        <Dropdown.Menu style={{margin: 0 }}>
-          {profiles}
-        </Dropdown.Menu>
-      </Dropdown>)
-    }
-    return (<Dropdown className="shadow rounded">
-      <Dropdown.Toggle block className='disabled' variant="secondary" id="dropdown-basic">
-        {currentProfileDisplay()}
-      </Dropdown.Toggle>
-    </Dropdown>)
+        {many && <Dropdown.Menu style={{margin: 0 }}>
+          <Profiles />
+        </Dropdown.Menu>}
+      </Dropdown>
+    )
   }
   return (
     <>
@@ -75,9 +72,7 @@ function LeftMenu() {
       </Row>
       <Row className='mt-5 mb-4 pb-5 border-bottom'>
         <Col className='px-4'>
-          {userProfiles.data.profiles.length > 0 &&
-            getProfileDropdown()
-          }
+          {userProfiles.data.profiles.length > 0 && <ProfileDropdown />}
         </Col>
       </Row>
         <Row className='left-menu'>
