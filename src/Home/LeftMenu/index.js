@@ -5,6 +5,8 @@ import {Link, NavLink, useHistory} from 'react-router-dom';
 
 import BMxLogoColor from '../../assets/images/bmx-logo-color.svg';
 import BMxPatientIcon from '../../assets/images/bmx-patient-icon.svg';
+import BMxPhysicianIcon from '../../assets/images/bmx-physician-icon.svg';
+import BMxLabIcon from '../../assets/images/bmx-lab-icon.svg';
 
 import {useAsyncState} from "../../redux/actions/useAsyncState";
 import {StateProperty} from "../../redux/reducers";
@@ -83,11 +85,13 @@ function LeftMenu() {
             </NavLink>
             {userProfiles.data.currentProfile.profileType === 'internal' &&
             <NavLink to='/physicians'>
+              <Image className='mr-2' src={BMxPhysicianIcon}/>
               <span>Physicians</span>
             </NavLink>
             }
             {userProfiles.data.currentProfile.profileType === 'internal' &&
             <NavLink to='/labs'>
+              <Image className='mr-2' src={BMxLabIcon}/>
               <span>Laboratories</span>
             </NavLink>
             }
