@@ -15,7 +15,7 @@ function PatientDetails({ patientDetails }) {
       return <>
         <List patient={patientDetails} items={patientDetails.prescriptions} />
       </>
-    return <div><h4>No prescriptions to display</h4></div>
+    return <div><h4>No test history to display</h4></div>
   }
 
   const Address = () => {
