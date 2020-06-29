@@ -7,9 +7,13 @@ import LabInvite from "./labInvite";
 import { request } from '../../requests';
 import PatientInvite from "./patientInvite";
 import InternalInvite from "./internalInvite";
+import {dataSetAction} from "../../redux/reducers/async";
+import {StateProperty} from "../../redux/reducers";
+import {useDispatch} from "react-redux";
 
 function Invite({ alert }) {
   const { inviteCode } = useParams();
+  const dispatch = useDispatch();
 
   const [valid, setValid] = useState(true);
   const [orgType, setOrgType] = useState('');
@@ -25,9 +29,10 @@ function Invite({ alert }) {
       })
       .catch(error => {
         setValid(false);
-        alert({ message: 'Invalid Invite', variant: 'warning'})
+        dispatch(dataSetAction(StateProperty.requestError, {message: 'Error messaging server, please refresh and try again'}))
+        setTimeout(() => dispatch(dataSetAction(StateProperty.requestError, {message: ''})), 5000)
       });
-  }, [alert, inviteCode, valid])
+  }, [alert, inviteCode, valid, dispatch])
 
   function validCode() {
     switch(orgType){

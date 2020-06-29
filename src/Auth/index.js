@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
@@ -23,6 +23,8 @@ import Forgot from './Forgot';
 import Reset from './Reset';
 import Register from './Register';
 import Invite from './Invite';
+import {useAsyncState} from "../redux/actions/useAsyncState";
+import {StateProperty} from "../redux/reducers";
 
 const LeftHeroCol = styled(Col)`
   background: url(${BMxLoginSplash}) no-repeat center center;
@@ -34,12 +36,20 @@ const LeftHeroCol = styled(Col)`
 
 function Auth() {
   const match = useRouteMatch();
+  const requestError = useAsyncState(StateProperty.requestError);
   const [alert, setAlert] = useState(null);
 
   const autodismissingAlert = useCallback(info => {
     setAlert(info)
     setTimeout(() => setAlert(null), 5000)
   }, [setAlert])
+
+  useEffect(()=>{
+    if(requestError.data.message !== '')
+      setAlert({message:requestError.data.message, variant: 'danger'});
+    else
+      setAlert(null);
+  },[requestError.data.message])
 
   return (
     <Container fluid className='h-100'>

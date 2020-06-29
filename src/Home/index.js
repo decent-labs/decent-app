@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -13,23 +13,36 @@ import { StateProperty } from "../redux/reducers";
 import {fetchUserProfiles} from "../redux/reducers/async/userProfile";
 import { AccountPrefixes } from "./text";
 import isEmpty from 'lodash.isempty';
-import { useHistory } from 'react-router-dom';
+
+import {dataSetAction} from "../redux/reducers/async";
+import {useDispatch} from "react-redux";
+import Alert from "react-bootstrap/Alert";
 function Home() {
-  const history = useHistory();
-  const accountLoader = 
-    useCallback(() => 
-      request('auth/me', 'GET')
-      .catch(e => history.replace("/auth/login"))
-    , [ history ]);
+  const requestError = useAsyncState(StateProperty.requestError);
+  const [alert, setAlert] = useState(null);
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    if(requestError.data.message !== '')
+      setAlert({message:requestError.data.message, variant: 'danger'});
+    else
+      setAlert(null);
+  },[requestError.data.message])
+
+  const accountLoader = useCallback(() => request('auth/me', 'GET')
+    .catch(error => {
+    dispatch(dataSetAction(StateProperty.requestError, {message: 'Error messaging server, please refresh and try again'}))
+    setTimeout(() => dispatch(dataSetAction(StateProperty.requestError, {message: ''})), 5000)
+  }), [dispatch]);
+
   useAsyncState(StateProperty.account, accountLoader);
   const userProfileLoader = useCallback(() => {
     const addPrefixLabels = (list) => {
 	    return list.map( profile => {
 	      let label;
-        let entityName = !isEmpty(profile.entityName) 
+        let entityName = !isEmpty(profile.entityName)
 		       ? profile.entityName
 		       : profile.profileType
-		
+
 	      label = AccountPrefixes[profile.profileType];
 	      if (label) {
 		      entityName = `${label} ${entityName}`;
@@ -58,6 +71,18 @@ function Home() {
           <LeftMenu />
         </Col>
         <Col xs={8} md={9} lg={10} className='py-5 pl-4'>
+          <Row className='mx-5 mt-3'>
+            {alert && <Col>
+              <Alert
+                variant={alert.variant}
+                dismissible
+                onClose={() => setAlert(null)}
+              >
+                {alert.message}
+              </Alert>
+            </Col>
+            }
+          </Row>
           <NavMenu />
           <Row className='mt-4 pr-2'>
             <Col className='mt-1 px-4'>

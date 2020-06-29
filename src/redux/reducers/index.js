@@ -11,6 +11,7 @@ export const StateProperty = {
   search: 'search',
   labs: 'labs',
   prescription: 'prescription',
+  requestError: 'requestError'
 };
 
 const allAsyncReducers = Object.keys(StateProperty).reduce(

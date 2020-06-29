@@ -10,11 +10,15 @@ import {Link, useHistory, useLocation} from 'react-router-dom';
 
 import { request } from '../../requests';
 import {getStateOptions} from "../../Common/form";
+import {dataSetAction} from "../../redux/reducers/async";
+import {StateProperty} from "../../redux/reducers";
+import {useDispatch} from "react-redux";
 
 function Register() {
     const [, setCookie] = useCookies(['token']);
     const history = useHistory();
     const location = useLocation();
+    const dispatch = useDispatch();
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -52,6 +56,8 @@ function Register() {
             .catch(error => {
                 setIsLoading(false);
                 setError(error);
+                dispatch(dataSetAction(StateProperty.requestError, {message: 'Error messaging server, please refresh and try again'}))
+                setTimeout(() => dispatch(dataSetAction(StateProperty.requestError, {message: ''})), 5000)
             });
     }
 

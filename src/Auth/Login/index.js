@@ -8,11 +8,15 @@ import Alert from 'react-bootstrap/Alert';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import { request } from '../../requests';
+import {dataSetAction} from "../../redux/reducers/async";
+import {StateProperty} from "../../redux/reducers";
+import {useDispatch} from "react-redux";
 
 function Login() {
   const [, setCookie] = useCookies(['token']);
   const history = useHistory();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,6 +40,8 @@ function Login() {
       .catch(error => {
         setIsLoading(false);
         setError(error);
+        dispatch(dataSetAction(StateProperty.requestError, {message: 'Error messaging server, please refresh and try again'}))
+        setTimeout(() => dispatch(dataSetAction(StateProperty.requestError, {message: ''})), 5000)
       });
   }
 
