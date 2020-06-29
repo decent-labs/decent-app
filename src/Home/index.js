@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -14,9 +13,15 @@ import { StateProperty } from "../redux/reducers";
 import {fetchUserProfiles} from "../redux/reducers/async/userProfile";
 import { AccountPrefixes } from "./text";
 import isEmpty from 'lodash.isempty';
+import { useHistory } from 'react-router-dom';
 function Home() {
-	  const accountLoader = useCallback(() => request('auth/me', 'GET'), []);
-	  useAsyncState(StateProperty.account, accountLoader);
+  const history = useHistory();
+  const accountLoader = 
+    useCallback(() => 
+      request('auth/me', 'GET')
+      .catch(e => history.replace("/auth/login"))
+    , [ history ]);
+  useAsyncState(StateProperty.account, accountLoader);
   const userProfileLoader = useCallback(() => {
     const addPrefixLabels = (list) => {
 	    return list.map( profile => {

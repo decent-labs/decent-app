@@ -18,6 +18,13 @@ const request = (path, method, body) => {
       .then(response => {
         if (!response.ok) {
           response.json()
+            .then(errorResponse => {
+              if (token && errorResponse.error.indexOf('not logged in') > -1){
+                cookie.remove("token");
+                window.location="/";
+              }
+              return errorResponse;
+            })
             .then(error => reject(error.error))
             .catch(error => reject(error.message));
         } else {
