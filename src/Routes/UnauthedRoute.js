@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 
 function UnauthedRoute({ children, ...rest }) {
-  const [cookies, , removeCookie] = useCookies(['token']);
+  const [, , removeCookie] = useCookies(['token']);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   
@@ -14,6 +14,8 @@ function UnauthedRoute({ children, ...rest }) {
     removeCookie('currentProfile', { path: '/' });
     dispatch({ type: 'RESET_APP' });
   }
+
+  const [cookies] = useCookies(['token'])
   
   return (
     <Route
