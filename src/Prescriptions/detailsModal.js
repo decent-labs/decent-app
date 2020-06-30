@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {Button, Modal, Form, Col} from "react-bootstrap";
+import {Button, Modal, Form, Card} from "react-bootstrap";
 import { useAsyncState } from "../redux/actions/useAsyncState";
 import {
   useParams,
 } from 'react-router-dom';
 import {StateProperty} from "../redux/reducers";
 import isEmpty from 'lodash.isempty';
-export default function DetailsModal({show, message, closeHandler, confirmHandler}) {
+export default function DetailsModal({show, closeHandler}) {
   const { id, rxhash: selectedHash } = useParams();
   const patients = useAsyncState(StateProperty.patients);
   const patientDetails = patients.data.patients.find(curPatient => curPatient.id === parseInt(id));
@@ -30,25 +30,39 @@ export default function DetailsModal({show, message, closeHandler, confirmHandle
     }
   }, [rxDetails, rxDetails.data])
 
+  const close = () => {
+    setRxDetails({})
+    setDiagnosis("")
+    setDescription("")
+    closeHandler()
+  }
+
   return (
-    <Modal show={show} onHide={closeHandler} animation={false}>
+    <Modal show={show} onHide={close} animation={false}>
       <Form className='details-modal'>
         <Modal.Header closeButton>
-          <Modal.Title>Covid Test Result</Modal.Title>
+          <Modal.Title>Test Kit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-         <Form.Row>
-            <Form.Group className='required' lg={6} md={8} as={Col} controlId='formCvdResult'>
-              <Form.Label>Covid Diagnosis</Form.Label>
-              <Form.Text className={diagnosis === 'Positive' ? 'positive' : 'negative'}>{diagnosis}</Form.Text>
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group controlId='description' lg={6} md={8} as={Col}>
-              <Form.Label>Description</Form.Label>
-              <Form.Text>{description}</Form.Text>
-            </Form.Group>
-          </Form.Row>
+          <Card className="mb-4">
+            <Card.Title className="mb-3">Instructions</Card.Title>
+            <Card.Subtitle className="form-label">Directions</Card.Subtitle>
+            <Card.Text className="form-text small">{rxDetails.directions}</Card.Text>
+            {!isEmpty(rxDetails.notes) && <>
+              <Card.Subtitle className="form-label">Notes</Card.Subtitle>
+              <Card.Text className="form-text small">{rxDetails.notes}</Card.Text>
+            </>}
+          </Card>
+
+          {!isEmpty(diagnosis) &&
+            <Card className="mb-4">
+              <Card.Title className="mb-3">Results</Card.Title>
+              <Card.Subtitle className="form-label">Diagnosis</Card.Subtitle>
+              <Card.Text className={`${diagnosis === 'Positive' ? 'positive' : 'negative'} form-text small`}>{diagnosis}</Card.Text>
+              <Card.Subtitle className="form-label">Description</Card.Subtitle>
+              <Card.Text className="form-text small">{description}</Card.Text>
+            </Card>
+          }
         </Modal.Body>
         <Modal.Footer>
           <Button className='styled-form-button' variant="primary" onClick={closeHandler}>
