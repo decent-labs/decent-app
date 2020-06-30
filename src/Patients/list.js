@@ -57,6 +57,8 @@ function List() {
         patients = patientProfiles.profile.data.map(curPatient => request(`patients/${curPatient.id}/profile`, 'GET'))
         updatePaging(patientProfiles.profile.pagination);
       }
+
+      if (!patients) return { patients: [], pagination: {} }
       const results = await getPrescriptionData(patients);
       return { patients: results, pagination: {}};
     },

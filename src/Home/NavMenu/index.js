@@ -22,6 +22,7 @@ import { formatHtmlDate } from "../../Common/form";
 
 function NavMenu() {
   const userTypesAllowedSearch = ['prescriber', 'internal', 'labOrg', 'labAgent'];
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dob, setDob] = useState('');
@@ -54,16 +55,21 @@ function NavMenu() {
     if (!isEmpty(firstName)) searchArray.push(`fname=${firstName}`)
     if (!isEmpty(lastName)) searchArray.push(`lname=${lastName}`)
     if (!isEmpty(dob)) searchArray.push(`dob=${formatHtmlDate(dob)}`)
-
+    
     if (searchArray.length === 0 )
       return onEmpty();
 
     const query = searchArray.join("&");
 
+    setIsFirstLoad(false);
     return onSaturate(query);
   }
 
-  const goBack = () => history.replace("/patients");
+  const goBack = () => {
+    if (!isFirstLoad) {
+      history.replace("/patients");
+    }
+  }
   const debounceLag = 250;
 
   const [debouncedFirstName] = useDebounce(firstName, debounceLag);

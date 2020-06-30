@@ -14,7 +14,7 @@ function Main() {
       <Route path='/settings'>
         <Settings />
       </Route>
-      <Route name='patients' path='/patients'>
+      <Route path='/patients'>
         <Patients />
       </Route>
       <Route path='/physicians'>
@@ -26,7 +26,7 @@ function Main() {
       <Route path='/:unknown'>
         <Redirect to='/' />
       </Route>
-      <Redirect exact from='/' to='patients' />
+      <Redirect from='/' to='patients' />
     </Switch>
   );
 }
