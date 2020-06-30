@@ -7,9 +7,13 @@ import Alert from 'react-bootstrap/Alert';
 import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import { request } from '../../requests';
+import {dataSetAction} from "../../redux/reducers/async";
+import {StateProperty} from "../../redux/reducers";
+import {useDispatch} from "react-redux";
 
 function ResetPassword({ alert }) {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const query = new URLSearchParams(useLocation().search);
   const [email] = useState(query.get('email') || '');
@@ -44,6 +48,10 @@ function ResetPassword({ alert }) {
         history.push('/auth/login');
       })
       .catch(error => {
+        if(error.startsWith('Failed to fetch')){
+          dispatch(dataSetAction(StateProperty.requestError, {message: 'Error messaging server, please refresh and try again'}))
+          setTimeout(() => dispatch(dataSetAction(StateProperty.requestError, {message: ''})), 5000)
+        }
         setIsLoading(false);
         setError(error);
       });

@@ -29,8 +29,10 @@ function Invite({ alert }) {
       })
       .catch(error => {
         setValid(false);
-        dispatch(dataSetAction(StateProperty.requestError, {message: 'Error messaging server, please refresh and try again'}))
-        setTimeout(() => dispatch(dataSetAction(StateProperty.requestError, {message: ''})), 5000)
+        if(error.startsWith('Failed to fetch')){
+          dispatch(dataSetAction(StateProperty.requestError, {message: 'Error messaging server, please refresh and try again'}))
+          setTimeout(() => dispatch(dataSetAction(StateProperty.requestError, {message: ''})), 5000)
+        }
       });
   }, [alert, inviteCode, valid, dispatch])
 

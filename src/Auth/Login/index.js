@@ -40,8 +40,10 @@ function Login() {
       .catch(error => {
         setIsLoading(false);
         setError(error);
-        dispatch(dataSetAction(StateProperty.requestError, {message: 'Error messaging server, please refresh and try again'}))
-        setTimeout(() => dispatch(dataSetAction(StateProperty.requestError, {message: ''})), 5000)
+        if(error.startsWith('Failed to fetch')){
+          dispatch(dataSetAction(StateProperty.requestError, {message: 'Error messaging server, please refresh and try again'}))
+          setTimeout(() => dispatch(dataSetAction(StateProperty.requestError, {message: ''})), 5000)
+        }
       });
   }
 

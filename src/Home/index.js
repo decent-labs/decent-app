@@ -30,8 +30,10 @@ function Home() {
 
   const accountLoader = useCallback(() => request('auth/me', 'GET')
     .catch(error => {
-    dispatch(dataSetAction(StateProperty.requestError, {message: 'Error messaging server, please refresh and try again'}))
-    setTimeout(() => dispatch(dataSetAction(StateProperty.requestError, {message: ''})), 5000)
+      if(error.startsWith('Failed to fetch')){
+        dispatch(dataSetAction(StateProperty.requestError, {message: 'Error messaging server, please refresh and try again'}))
+        setTimeout(() => dispatch(dataSetAction(StateProperty.requestError, {message: ''})), 5000)
+      }
   }), [dispatch]);
 
   useAsyncState(StateProperty.account, accountLoader);
