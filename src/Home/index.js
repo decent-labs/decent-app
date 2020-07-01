@@ -57,7 +57,11 @@ function Home() {
     }
     return fetchUserProfiles()
       .then((response) => {
-        const profiles = addPrefixLabels(response.profiles)
+        console.log(response)
+        const filtered = response.profiles.filter(profile => {
+          return !(profile.profileType === "labOrg" && profile.admin === false)
+        })
+        const profiles = addPrefixLabels(filtered)
         return {
           currentProfile: profiles[0],
           profiles

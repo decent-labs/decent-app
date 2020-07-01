@@ -89,7 +89,10 @@ function LeftMenu() {
               <span>Physicians</span>
             </NavLink>
             }
-            {userProfiles.data.currentProfile.profileType === 'internal' &&
+            {
+              (userProfiles.data.currentProfile.profileType === 'internal' || 
+                (userProfiles.data.currentProfile.profileType === 'labOrg' && userProfiles.data.currentProfile.admin === true)
+              ) &&
             <NavLink to='/labs'>
               <Image className='mr-2' src={BMxLabIcon}/>
               <span>Laboratories</span>
