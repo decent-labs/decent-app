@@ -1,11 +1,12 @@
 import React from "react";
 import { Image, Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { format } from 'date-fns';
 import PatientDetailsIcon from '../assets/images/bmx-patient-details-icon.svg';
 import ProfilePhoto from "./profilePhoto"
 
 function ListTable({ patients }) {
+  const history = useHistory();
   function getLatestPrescriptionDate(patient) {
     if (!!patient.prescriptions === false || patient.prescriptions.length === 0) {
       return 'n/a';
@@ -18,7 +19,7 @@ function ListTable({ patients }) {
 
   const patientRows = patients.map((patient, index) => {
     return (
-      <tr key={index}>
+      <tr className='clickable' key={index} onClick={() => history.push(`/patients/${patient.id}`)}>
         <td className='first-row-element w-1 py-0'>
           <ProfilePhoto
             firstName={patient.firstName}

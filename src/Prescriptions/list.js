@@ -51,7 +51,7 @@ function List({ patient, items }) {
       content: () => componentRef.current,
       copyStyles: true
     })
-  
+
     return (
       <div className='icon' onClick={handlePrint}>
         <Image src={PrintIcon} />
@@ -63,7 +63,7 @@ function List({ patient, items }) {
   function getPrescriptions() {
     return items.map((curPrescription, index) => {
       return (
-        <tr key={index}>
+        <tr className='clickable' onClick={() => history.push(`/patients/${patientId}/rxs/${curPrescription.hash}/`)} key={index}>
           <td className='first-row-element'>{patient.lastName}</td>
           <td>{patient.firstName}</td>
           <td>{new Date(patient.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>

@@ -45,6 +45,14 @@ div.dropdown button.dropdown-toggle {
 .table {
   border-collapse: separate;
   border-spacing: 0 8px;
+
+  .clickable:hover {
+    background: #F5F4FF;
+    border-color: $light;
+    color: $black;
+    text-decoration: none;
+    cursor: pointer;
+  }
 }
 
 .table thead th {
@@ -125,7 +133,7 @@ div.dropdown button.dropdown-toggle {
     display: flex;
     justify-content: center;
   }
-  
+
   .icon {
     background: #ECEFFF;
     cursor: pointer;
