@@ -11,7 +11,7 @@ function Invites() {
       <div className='mb-4'>
         <h3>Invitations</h3>
 
-        {invitations.length > 0 ?
+        {invitations.data.length > 0 ?
           <>
             <p>Pending invitations that have not yet been accepted.</p>
             <Table>
