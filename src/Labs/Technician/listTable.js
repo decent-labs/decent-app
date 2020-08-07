@@ -7,12 +7,12 @@ function ListTable(params) {
 
 
   if (! users )
-    return <><p> No Lab Agents</p></>
+    return <><p> No Lab Technicians</p></>
 
-  const rows = users.map((agent, index) =>{
+  const rows = users.map((technician, index) =>{
       return (
         <tr key={index}>
-          <td className='first-row-element'>{agent.fullName}</td>
+          <td className='first-row-element'>{technician.fullName}</td>
         </tr>
       )
     }
@@ -23,7 +23,7 @@ function ListTable(params) {
       <Table>
         <thead>
         <tr>
-          <th>Agent Name</th>
+          <th>Technician Name</th>
         </tr>
         </thead>
         <tbody>

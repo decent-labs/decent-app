@@ -41,7 +41,7 @@ function Invite({alert}) {
     <>
       <Col lg={6} md={8}>
         <Row>
-          <h2>Invite Lab Agent</h2>
+          <h2>Invite Lab Technician</h2>
         </Row>
         <Form onSubmit={sendRequest}>
           <Form.Group className='required'>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import List from "./Agent/listTable";
+import List from "./Technician/listTable";
 import { Link, useRouteMatch } from "react-router-dom"
 import { useAsyncState } from "../redux/actions/useAsyncState";
 import { StateProperty } from "../redux/reducers";
@@ -62,7 +62,7 @@ export default function LabDetails({ labDetails, users }) {
         <Col>
           {userProfiles.data.currentProfile.admin &&
             <Link to={`${match.url}/invite`} className='float-right'>
-              <Button className='styled-form-button'>New Agent</Button>
+              <Button className='styled-form-button'>New Technician</Button>
             </Link>
           }
         </Col>

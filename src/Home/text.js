@@ -1,7 +1,7 @@
 export const AccountPrefixes = {
     internal: "(Admin)",
     prescriber: "Physician:",
-    labAgent: "(Lab)",
+    labAgent: "(Lab Tech)",
     labOrg: "(Lab Admin)",
 }
 
