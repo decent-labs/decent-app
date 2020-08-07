@@ -114,8 +114,8 @@ function List({ patient, items }) {
           <th>Last Name</th>
           <th>First Name</th>
           <th>Date of Birth</th>
-          <th>Date Tested</th>
-          <th>Covid Test</th>
+          <th>Date of Results</th>
+          <th>Test Results</th>
           <th>Actions</th>
         </tr>
         </thead>
