@@ -87,6 +87,7 @@ function List({alert}) {
               <th>Last Name</th>
               <th>First Name</th>
               <th>Email</th>
+              <th>Phone</th>
               <th>Date of Birth</th>
               <th>DEA Number</th>
               <th>Actions</th>
@@ -99,6 +100,7 @@ function List({alert}) {
                   <td className='first-row-element'>{curPhysician.lastName}</td>
                   <td>{curPhysician.firstName}</td>
                   <td>{curPhysician.email}</td>
+                  <td>{curPhysician.phoneNumber}</td>
                   <td>{new Date(curPhysician.dob).toLocaleDateString(undefined, { timeZone: 'UTC' })}</td>
                   <td>{curPhysician.deaNumber}</td>
                   <td className='action-items last-row-element'>

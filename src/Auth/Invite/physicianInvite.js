@@ -15,9 +15,10 @@ function PhysicianInvite({alert}) {
   const [ssn, setSsn] = useState('');
   const [ssnIsValid, setSsnIsValid] = useState(true);
   const [deaNumber, setDeaNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   function sendRequest() {
-    request(`invitation/claimInvitation/${inviteCode}`, 'POST', { fullName, email, password, dob: dob.replace(/[/]/g, '-'), ssn, deaNumber })
+    request(`invitation/claimInvitation/${inviteCode}`, 'POST', { fullName, email, password, dob: dob.replace(/[/]/g, '-'), ssn, deaNumber, phoneNumber })
       .then(() => {
         alert({ message: 'Invite Successfully Accepted', variant: 'primary' })
         history.push('/auth/login')
@@ -77,6 +78,16 @@ function PhysicianInvite({alert}) {
             autoComplete='dob'
             value={dob}
             onChange={event => setDob(event.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group className='required'>
+          <Form.Label>Phone Number</Form.Label>
+          <Form.Control
+            type='tel'
+            autoComplete='tel'
+            value={phoneNumber}
+            onChange={event => setPhoneNumber(event.target.value)}
             required
           />
         </Form.Group>
