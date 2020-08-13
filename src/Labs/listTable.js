@@ -1,12 +1,13 @@
 import React from "react";
 import {Image, Table} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import PatientDetailsIcon from '../assets/images/bmx-patient-details-icon.svg';
 
 export default function ListTable({ labs }) {
+  const history = useHistory();
   const rows = labs.map((lab, index) =>{
       return (
-        <tr key={index}>
+        <tr key={index} className='clickable' onClick={() => history.push(`/labs/${lab.id}`)}>
           <td className='first-row-element'>{lab.name}</td>
           <td className='action-items last-row-element'>
             <div>
