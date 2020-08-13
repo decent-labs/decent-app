@@ -24,7 +24,7 @@ function PhysicianInvite({alert}) {
       })
       .catch(error => {
         alert({ message: 'Error with accepting invite', variant: 'danger' })
-        console.log('error ', error);
+        console.error(error);
       });
   }
 

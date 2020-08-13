@@ -32,7 +32,7 @@ function Invite({alert}) {
         history.replace('/physicians')
       })
       .catch(err => {
-        console.log('error in creating invitation ', err);
+        console.error(err);
         alert({ message:'There was an error in creating invitation, try again', variant: 'danger'})
       })
   }

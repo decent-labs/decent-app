@@ -57,7 +57,6 @@ function Home() {
     }
     return fetchUserProfiles()
       .then((response) => {
-        console.log(response)
         const filtered = response.profiles.filter(profile => {
           return !(profile.profileType === "labOrg" && profile.admin === false)
         })

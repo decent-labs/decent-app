@@ -16,4 +16,13 @@ function addData(state = initialState, action) {
   };
 }
 
-export { initialState, setData, addData };
+function updateData(state = initialState, action) {
+  const newState = { ...state }
+  const currentPatient = newState.patients.find(p => p.id === action.data.id)
+  const otherPatients = newState.patients.filter(p => p.id !== action.data.id)
+  otherPatients.push({ ...currentPatient, ...action.data })
+  newState.patients = otherPatients;
+  return newState;
+}
+
+export { initialState, setData, addData, updateData };

@@ -37,7 +37,7 @@ function Internal({alert}) {
       })
       .catch((e) => {
         alert({ message:'Error deleting user', variant:'danger'});
-        console.log('Error deleting user', e);
+        console.error(e);
       })
   }
 

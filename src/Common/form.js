@@ -75,3 +75,10 @@ export function formatHtmlDate(date) {
   const datePieces = date.split('-');
   return `${datePieces[1]}-${datePieces[2]}-${datePieces[0]}`;
 }
+
+export function formatFormDate(date) {
+  const d = new Date(date);
+  let month = (d.getMonth() + 1).toString()
+  if (month.length === 1) month = `0${month}`
+  return `${d.getFullYear()}-${month}-${d.getDate()}`
+}

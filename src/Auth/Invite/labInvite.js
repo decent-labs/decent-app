@@ -19,7 +19,7 @@ function LabInvite({alert}) {
       })
       .catch(error => {
         alert({ message: 'Error with accepting invite', variant: 'warning' })
-        console.log('error ', error);
+        console.error(error);
       });
   }
 

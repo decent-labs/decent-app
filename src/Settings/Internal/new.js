@@ -29,7 +29,7 @@ function New({ alert }) {
         history.push(`/settings/internal`);
       }).catch(error => {
         alert({ message: 'Error with internal user invite', variant: 'danger' });
-        console.log('Error with internal user invite', error);
+        console.error(error);
       })
   }
 

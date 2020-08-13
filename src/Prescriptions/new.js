@@ -54,7 +54,7 @@ function New({alert}) {
           });
       })
       .catch(err => {
-        console.log('Error in adding a new test kit ', err);
+        console.error(err);
         alert({ message:'Error in adding a new test kit, try again', variant: 'danger'})
       })
   }

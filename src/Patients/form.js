@@ -1,10 +1,23 @@
 import {Col, Form} from "react-bootstrap";
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import React, {useState} from "react";
-import { getStateOptions } from "../Common/form";
+import React, {useState, useEffect} from "react";
+import { getStateOptions, formatFormDate } from "../Common/form";
 
-function PatientForm({submitHandler}) {
+function PatientForm({
+  submitHandler,
+  firstName: oFirstName,
+  lastName: oLastName,
+  dob: oDob,
+  phoneNumber: oPhoneNumber,
+  ssn: oSsn,
+  streetAddress: oStreetAddress,
+  streetAddress2: oStreetAddress2,
+  city: oCity,
+  state: oState,
+  zipCode: oZipCode,
+  id: patientId
+}) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,13 +31,18 @@ function PatientForm({submitHandler}) {
   const [state, setState] = useState('');
   const [zipCode, setZipCode] = useState('');
 
-  function formatSsn(){
-    const ssnRegex = /(\d{3})(\d{2})(\d{4})/;
-    const ssnCheck = ssnRegex.test(ssn);
-    setSsnIsValid(ssnCheck);
-    if(ssnCheck)
-      setSsn(ssn.replace(ssnRegex,"$1-$2-$3"));
-  }
+  useEffect(() => {
+    setFirstName(oFirstName || '')
+    setLastName(oLastName || '')
+    setDob(oDob ? formatFormDate(oDob) : '')
+    setPhoneNumber(oPhoneNumber || '')
+    setSsn(oSsn || '')
+    setStreetAddress(oStreetAddress || '')
+    setStreetAddress2(oStreetAddress2 || '')
+    setCity(oCity || '')
+    setState(oState || '')
+    setZipCode(oZipCode || '')
+  }, [oFirstName, oLastName, oDob, oPhoneNumber, oSsn, oStreetAddress, oStreetAddress2, oCity, oState, oZipCode])
 
   function handleSubmit(event){
     event.preventDefault();
@@ -34,7 +52,7 @@ function PatientForm({submitHandler}) {
   return (
     <Col lg={6} md={8}>
       <Form onSubmit={handleSubmit}>
-        <Form.Row>
+        {!patientId && <Form.Row>
           <Form.Group className='required' lg={6} md={8} as={Col} controlId='formEmail'>
             <Form.Label>Email</Form.Label>
             <Form.Control
@@ -46,7 +64,7 @@ function PatientForm({submitHandler}) {
               required
             />
           </Form.Group>
-        </Form.Row>
+        </Form.Row>}
         <Form.Row>
           <Col>
             <Form.Group className='required' controlId='formFirstName'>
@@ -84,13 +102,14 @@ function PatientForm({submitHandler}) {
               required
             />
           </Form.Group></Col>
-          <Col><Form.Group controlId='formPhoneNumber'>
+          <Col><Form.Group className='required' controlId='formPhoneNumber'>
             <Form.Label>Phone Number</Form.Label>
             <Form.Control
               type='tel'
               placeholder='555-555-5555'
               value={phoneNumber}
               onChange={event => setPhoneNumber(event.target.value)}
+              required
             />
           </Form.Group></Col>
         </Form.Row>
@@ -103,8 +122,10 @@ function PatientForm({submitHandler}) {
               minLength={11}
               placeholder='555-55-5555'
               value={ssn}
-              onChange={event => setSsn(event.target.value)}
-              onBlur={event => formatSsn()}
+              onChange={event => {
+                setSsnIsValid(event.target.value.length === 11)
+                setSsn(event.target.value)
+              }}
               isInvalid={!ssnIsValid}
               required
             />
@@ -163,7 +184,7 @@ function PatientForm({submitHandler}) {
         </Form.Row>
         <Form.Row className='justify-content-end align-middle'>
           <Form.Group style={{width:'50%'}} className='pt-4 d-flex flex-row align-items-center' controlId='formSubmit'>
-            <NavLink className='font-weight-bold m-2' to='/patients'>Cancel</NavLink>
+            <Link className='font-weight-bold m-2' to='.'>Cancel</Link>
             <Button
               variant='primary'
               type='submit'

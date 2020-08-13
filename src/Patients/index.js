@@ -5,6 +5,7 @@ import List from "./list";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import Details from "./details";
+import Edit from "./edit";
 import SearchResults from "./searchResults";
 import PersonPlus from "../assets/images/person-plus.svg";
 import {Image} from "react-bootstrap";
@@ -56,6 +57,9 @@ function Patients() {
         </Route>
         <Route path={`${match.path}/search`}>
           <SearchResults alert={autodismissingAlert} />
+        </Route>
+        <Route path={`${match.path}/:id/edit`}>
+          <Edit alert={autodismissingAlert} />
         </Route>
         <Route path={`${match.path}/:id`}>
           <Details alert={autodismissingAlert} />

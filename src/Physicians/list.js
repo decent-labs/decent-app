@@ -73,7 +73,7 @@ function List({alert}) {
       })
       .catch((e) => {
         alert({ message:'Error deleting physician', variant:'danger'});
-        console.log('Error deleting physician', e);
+        console.error(e);
       })
   }
 

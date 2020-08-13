@@ -6,6 +6,7 @@ import { useAsyncState } from "../redux/actions/useAsyncState";
 import { StateProperty } from "../redux/reducers";
 import ProfilePhoto from "./profilePhoto"
 import isEmpty from 'lodash.isempty';
+import pencil from "../assets/images/bmx-pencil.svg";
 
 function PatientDetails({ patientDetails }) {
   const profiles = useAsyncState(StateProperty.userProfile);
@@ -50,6 +51,12 @@ function PatientDetails({ patientDetails }) {
             <Row>
               <Col>
                 <h2>{`${patientDetails.firstName} ${patientDetails.lastName}`}</h2>
+              </Col>
+              <Col md="auto">
+                <Link to={`/patients/${patientDetails.id}/edit`} className="edit-profile">
+                  <img src={pencil} alt="edit" className="pr-1" />
+                  <u>Edit patient</u>
+                </Link>
               </Col>
             </Row>
             <Row>

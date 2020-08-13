@@ -51,7 +51,7 @@ export const getAsyncDataReducer = stateProperty => {
     specificUpdateDataReducer = specificReducerModule['updateData'];
   } catch (error) {
     // swallow
-    console.log(`couldn't find a specific module or exported functions for ${stateProperty} reducer`)
+    console.error(`couldn't find a specific module or exported functions for ${stateProperty} reducer`)
   }
 
   if (specificInitialState) initialState.data = specificInitialState;
