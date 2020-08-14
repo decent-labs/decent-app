@@ -12,6 +12,12 @@ export default function DetailsModal({show, closeHandler}) {
   const patientDetails = patients.data.patients.find(curPatient => curPatient.id === parseInt(id));
   const [rxDetails, setRxDetails] = useState({});
   const [diagnosis, setDiagnosis] = useState('');
+  const [testType, setTestType] = useState('');
+  const [kitId, setKitId] = useState('');
+  const [dateOfTest, setDateOfTest] = useState('');
+  const [dateOfResults, setDateOfResults] = useState('');
+  const [labLocation, setLabLocation] = useState('');
+  const [techName, setTechName] = useState('');
   const [description, setDescription] = useState('');
   useEffect(() => {
     if(!!selectedHash){
@@ -23,9 +29,21 @@ export default function DetailsModal({show, closeHandler}) {
     if(!!rxDetails && !isEmpty(rxDetails.data)){
       const results = JSON.parse(rxDetails.data.slice(-1).pop().data);
       setDiagnosis(results.covidTestResult);
+      setTestType(results.testType);
+      setKitId(results.kitId);
+      setDateOfTest(results.dateOfTest);
+      setDateOfResults(results.dateOfResults);
+      setLabLocation(results.labLocation);
+      setTechName(results.techName);
       setDescription(results.description);
     }else{
       setDiagnosis('');
+      setTestType('');
+      setKitId('');
+      setDateOfTest('');
+      setDateOfResults('');
+      setLabLocation('');
+      setTechName('');
       setDescription('');
     }
   }, [rxDetails, rxDetails.data])
@@ -61,6 +79,18 @@ export default function DetailsModal({show, closeHandler}) {
               <Card.Text className={`${diagnosis === 'Positive' ? 'positive' : 'negative'} form-text small`}>{diagnosis}</Card.Text>
               <Card.Subtitle className="form-label">Description</Card.Subtitle>
               <Card.Text className="form-text small">{description}</Card.Text>
+              <Card.Subtitle className="form-label">Test Type</Card.Subtitle>
+              <Card.Text className="form-text small">{testType}</Card.Text>
+              <Card.Subtitle className="form-label">Kit ID</Card.Subtitle>
+              <Card.Text className="form-text small">{kitId}</Card.Text>
+              <Card.Subtitle className="form-label">Date of Test</Card.Subtitle>
+              <Card.Text className="form-text small">{dateOfTest}</Card.Text>
+              <Card.Subtitle className="form-label">Date of Results</Card.Subtitle>
+              <Card.Text className="form-text small">{dateOfResults}</Card.Text>
+              <Card.Subtitle className="form-label">Lab Location</Card.Subtitle>
+              <Card.Text className="form-text small">{labLocation}</Card.Text>
+              <Card.Subtitle className="form-label">Technician Name</Card.Subtitle>
+              <Card.Text className="form-text small">{techName}</Card.Text>
             </Card>
           }
         </Modal.Body>
