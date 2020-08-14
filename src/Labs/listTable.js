@@ -11,7 +11,7 @@ export default function ListTable({ labs }) {
           <td className='first-row-element'>{lab.name}</td>
           <td className='action-items last-row-element'>
             <div>
-              <Link to={`/labs/${lab.id}`}>
+              <Link onClick={event => event.stopPropagation()} to={`/labs/${lab.id}`}>
                 <div className="icon">
                   <Image src={PatientDetailsIcon} />
                 </div>

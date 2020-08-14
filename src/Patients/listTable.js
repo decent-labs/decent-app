@@ -35,7 +35,7 @@ function ListTable({ patients }) {
         <td>{getLatestPrescriptionDate(patient)}</td>
         <td className='action-items last-row-element'>
           <div>
-            <Link to={`/patients/${patient.id}`}>
+            <Link onClick={event => event.stopPropagation()} to={`/patients/${patient.id}`}>
               <div className="icon">
                 <Image src={PatientDetailsIcon} />
               </div>
